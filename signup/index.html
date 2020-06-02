@@ -1,0 +1,271 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" name=viewport id=viewport><title>报名大厅</title><script>~function () {
+      computedFont();
+      window.addEventListener('resize', computedFont, false);
+      function computedFont() {
+        var deviceW = document.documentElement.clientWidth;
+        if (deviceW > 750) return;
+        document.documentElement.style.fontSize = deviceW / 750 * 100 + 'px';
+      }
+    }();</script><link href=//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css rel=stylesheet><style>/*清除默认样式*/
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .iconbody .mint-swipe-indicator.is-active {
+      width: 0.3rem !important;
+      background: #cbcbcb;
+      -webkit-transition: all 0s;
+      transition: all 0s;
+    }
+
+    .iconbody .mint-swipe-indicator {
+      width: 0.14rem;
+      height: 0.1rem;
+      background: #979797;
+      border-radius: 0.3rem;
+      margin: 0 0.1rem;
+      opacity: 1;
+    }
+
+    .mytoast {
+      padding: 1.2rem 0.6rem 0.4rem !important;
+      box-sizing: border-box !important;
+      width: 4.3rem;
+    }
+
+    .mint-toast-text {
+      font-size: 0.28rem !important;
+    }
+
+    .mytoast:after {
+      position: absolute;
+      top: 0.4rem;
+      width: 100%;
+      left: 0;
+      text-align: center;
+      content: '提交成功！';
+      color: #ffb72c;
+      font-size: 0.4rem;
+      margin-bottom: 0.1rem;
+      height: 1.2rem;
+    }
+
+    body,
+    div,
+    ul,
+    li,
+    ol,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    input,
+    textarea,
+    select,
+    p,
+    dl,
+    dt,
+    dd,
+    a,
+    img,
+    button,
+    form,
+    table,
+    th,
+    tr,
+    td,
+    tbody,
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    section {
+      margin: 0;
+      padding: 0;
+      border: none;
+      list-style: none;
+      font-weight: normal;
+    }
+
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    section {
+      display: block;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      width: auto \9;
+      /*ie8*/
+      -ms-interpolation-mode: bicubic;
+      /*涓轰簡鐓ч【ie鍥剧墖缂╂斁澶辩湡*/
+      display: block
+    }
+
+    a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    html,
+    body {
+      font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      height: 100%;
+      font-size: 100px;
+      max-width: 750px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    #main {
+      /* width:7.5rem; */
+     
+    }
+
+    body {
+      color: #000;
+      font-size: 0.32rem;
+    }
+
+    input,
+
+    textarea,
+    select {
+      background: none;
+      border: none;
+      outline: none;
+      font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+      margin: 0;
+      padding: 0;
+      -moz-user-select: all !important;
+      -o-user-select: all !important;
+      -khtml-user-select: all !important;
+      -webkit-user-select: all !important;
+      -ms-user-select: all !important;
+      user-select: all !important;
+    }
+
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    }
+
+    input[type="text"],
+    input[type="button"],
+    input[type="submit"],
+    input[type="number"],
+    input[type="reset"],
+    select,
+    textarea,
+    button {
+      -webkit-appearance: none;
+
+    }
+
+    table {
+      text-align: center;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    #main {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #app {
+      display: flex;
+      height: 100%;
+    }
+
+    #app div {
+      margin: 0 auto;
+    }
+
+    .distpicker-address-wrapper .address-header {
+      position: absolute;
+      top: 0;
+      height: 0.8rem;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .distpicker-address-wrapper .address-container {
+      position: absolute;
+      top: 0.8rem;
+      height: 5.2rem;
+      width: 100%;
+      z-index: 1;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .pup {
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 40
+    }
+
+    .pup_con {
+      width: 5rem;
+      height: auto;
+      background: #fff;
+      border-radius: 0.15rem;
+      text-align: center;
+
+    }
+
+    .pup_con p {
+      color: #666;
+      height: 1.4rem;
+      line-height: 1.4rem;
+    }
+
+    .pup_con button {
+      height: 0.9rem;
+      font-size: 0.3rem;
+      font-weight: bold;
+      line-height: 0.9rem;
+      width: 100%;
+      border-top: 0.02rem solid #bfbfbf;
+      color: #1d388b;
+    }</style><link href=./static/css/app.c9e706d9a6941987c2fe7f318339ad73.css rel=stylesheet></head><body><div id=app><div>报名大厅加载中</div></div><div style="display: none;"><script type=text/javascript src="https://s9.cnzz.com/z_stat.php?id=1278675244&web_id=1278675244"></script></div><script type=text/javascript src=./static/js/manifest.3ad1d5771e9b13dbdad2.js></script><script type=text/javascript src=./static/js/vendor.a21a9778e1e1841ad41c.js></script><script type=text/javascript src=./static/js/app.cabd17cc841a14be3e4b.js></script></body></html>

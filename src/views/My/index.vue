@@ -1,0 +1,113 @@
+<template>
+  <div class="content">
+    <!-- 首页 -->
+    <div class="my">
+      <p class="my_head">
+        <img src="../../assets/feng.jpg" />
+        <span>点击登录或注册</span>
+      </p>
+      <div class="my_hua">
+        <router-link tag="p" to="/my/topic">我的话题</router-link>
+        <router-link tag="p" to="/my/lesson">我的课程</router-link>
+      </div>
+      <ul class="my_list">
+        <router-link tag="li" :to="item.routeto" v-for="(item,i) in mylist" :key="i">
+          <p>
+            <i :class="item.classname"></i>
+            {{item.name}}
+          </p>
+          <i class="fa fa-angle-right"></i>
+        </router-link>
+      </ul>
+    </div>
+       <router-view />
+        <Tab></Tab>
+  </div>
+</template>
+
+<script>
+import Tab from "@/components/TabBar";
+export default {
+  name: "my",
+  data() {
+    return {
+      mylist: [
+        { name: "提问", classname: "fa fa-star-o", routeto: "/my/quection" },
+        { name: "评论", classname: "fa fa-star-o", routeto: "/my/comment" },
+        { name: "收藏", classname: "fa fa-star-o", routeto: "/my/collection" },
+        { name: "反馈", classname: "fa fa-star-o", routeto: "/my/feedback" },
+        { name: "设置", classname: "fa fa-star-o", routeto: "/my/setup" }
+      ]
+    };
+  },
+  components:{
+    Tab,
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.content {
+  flex: 1;
+  overflow: auto;
+  margin-bottom: 1.2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0.2rem;
+  background: #fff url(../../assets/top.png) no-repeat top center;
+  background-size: 7.5rem 3.27rem;
+  .my {
+    margin: 0 0.4rem;
+    .my_head {
+      margin: 0.7rem 0 0.6rem;
+      display: flex;
+      height: 1.18rem;
+      align-items: center;
+      img {
+        width: 1.18rem;
+        height: 1.18rem;
+        border-radius: 50%;
+        margin-right: 0.2rem;
+      }
+      span {
+        font-size: 0.34rem;
+      }
+    }
+    .my_hua {
+      width: 6.7rem;
+      height: 1.2rem;
+      margin: 0 auto;
+      box-shadow: 0 0 0.16rem rgba(0, 0, 0, 0.07);
+      display: flex;
+      border-radius: 0.2rem;
+      p {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.3rem;
+      }
+    }
+    .my_list {
+        margin-top:0.3rem;
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 0.9rem;
+        font-size:0.28rem;
+        p {
+          i {
+            color: #bfbfbf;
+          }
+        }
+        i {
+          color: #a2a2a2;
+          font-size:0.32rem;
+        }
+      }
+    }
+  }
+}
+</style>

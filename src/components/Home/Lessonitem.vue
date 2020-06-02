@@ -1,0 +1,75 @@
+
+<template>
+    <div class="lessonitem">
+          <img :src="list.img"/>
+          <h4>{{list.title}}</h4>
+          <span>{{list.scholl}}</span>
+          <p>
+            <span>￥<font>{{list.price}}</font></span>
+            <button v-if="ceflag">立即注册</button>
+          </p>
+    </div>
+</template>
+<script>
+export default {
+  name: "lessonitem",
+  props:{
+      list:Object,
+      ceflag:Boolean
+  },
+  data() {
+    return {
+     
+    };
+  },
+}
+</script>
+
+<style lang='less' scoped>
+  .lessonitem {
+        display: flex;
+        flex-direction: column;
+        img {
+          width: 3.3rem;
+          height: 1.68rem;
+        }
+        h4 {
+          font-size: 0.28rem;
+          color: #333;
+          margin-top: 0.1rem;
+          line-height: 0.45rem;
+          padding: 0 0.1rem;
+        }
+        span {
+          font-size: 0.24rem;
+          color: #999;
+          padding: 0 0.1rem;
+        }
+        p {
+          display: flex;
+          justify-content: space-between;
+          height: 0.5rem;
+          align-items: center;
+          margin-top: 0.2rem;
+          padding: 0 0.08rem;
+          span {
+            font-size: 0.24rem;
+            color: #ff610f;
+            font {
+              font-size: 0.34rem;
+            }
+          }
+          button {
+            width: 1.28rem;
+            height: 0.5rem;
+            border: 0.02rem solid #36b936;
+            color: #36b936;
+            border-radius: 0.1rem;
+            font-size: 0.24rem;
+          }
+        }
+      }
+</style>
+
+
+
