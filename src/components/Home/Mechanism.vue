@@ -2,16 +2,16 @@
 <template>
     <div class="mechan">
         <!-- 每个机构 -->
-        <img src="https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg">
+        <img :src="list.logo">
         <div>
             <h4>{{list.name}}</h4>
             <p class="itemlesson">
                 <span>优势课程：</span>
-                <font v-for="(lesson,i) in list.lesson" :key="i">
-                    {{lesson}}
+                <font>
+                    {{list.courselist}}
                 </font>
             </p>
-            <p class="itemzan"><img src="../../assets/zan.png"><font>{{list.zanpeople}}人</font>参与投票</p>
+            <p class="itemzan"><img src="../../assets/zan.png"><font>{{list.cnum}}人</font>参与投票</p>
         </div>   
     </div>
 </template>

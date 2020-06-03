@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
-import home from '@/components/Imgcai.vue';
+import home from '@/views/Home/home.vue';
 import top from '@/views/Home/top.vue';
 import signup from '@/views/Home/signup.vue';
 import search from '@/views/Search/index.vue';

@@ -1,26 +1,26 @@
 <template>
-<div id="main">
-  <div class="content">
-    <scroller ref="aa" :handleToScroll="handleToScroll" >
-      <div>
-        <!--    前三条-->
-        <Item :list="topList" @toDeatils="toDeatils"/>
-      
-        <SwiperLeft />
-      
-        <!--      后面的内容-->
-        <Item :list="list" @toDeatils="toDeatils" />
-        <!-- 展开更多 -->
+  <div id="main">
+    <div class="content">
+      <scroller ref="aa" :handleToScroll="handleToScroll">
+        <div>
+          <!--    前三条-->
+          <Item :list="topList" @toDeatils="toDeatils" />
+
+          <SwiperLeft />
+
+          <!--      后面的内容-->
+          <Item :list="list" @toDeatils="toDeatils" />
+          <!-- 展开更多 -->
           <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
-      </div>
-    </scroller>
+        </div>
+      </scroller>
     </div>
     <!--    创建问吧 浮窗-->
     <p class="fileask" @click="toAskfile">
       <img src="../../assets/wen.png" alt />
     </p>
     <Tab></Tab>
-</div>
+  </div>
 </template>
 
   <script>
@@ -52,17 +52,21 @@ export default {
   methods: {
     //进入详情
     toDeatils(id) {
-      this.$router.push("/askdetails/"+id);
+      this.$router.push("/askdetails/" + id);
     },
     toAskfile() {
-      this.$router.push("/askfile");
+      var self = this;
+      self.common.Login(self);
+      self.$nextTick(function(){
+        self.$router.push("/askfile");
+      });
     },
     handleToScroll(pos) {
       //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
       if (this.payload) {
         if (this.$refs.aa.scroll.y <= this.$refs.aa.scroll.maxScrollY + 50) {
-         this.getMoreList();
-         this.$refs.aa.scroll.refresh();
+          this.getMoreList();
+          this.$refs.aa.scroll.refresh();
         }
       }
     },
@@ -79,12 +83,12 @@ export default {
         })
         .then(res => {
           if (res.data.list) {
-            this.topList = res.data.list.splice(0,3);
+            this.topList = res.data.list.splice(0, 3);
             this.list = res.data.list;
           }
         });
     },
-    getMoreList(){
+    getMoreList() {
       if (this.payload) {
         this.page++;
         this.axios
@@ -118,29 +122,28 @@ export default {
   <style scoped lang="less">
 .content {
   flex: 1;
-    overflow: auto;
-    margin:0.2rem 0 1.2rem;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: #f9f9f9;
- 
+  overflow: auto;
+  margin: 0.2rem 0 1.2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
 }
- .fileask {
-    width: 1.48rem;
-    height: 1.48rem;
-    position: fixed;
-    top: 40%;
-    right: 0;
-    z-index:10;
-  }
-  
-    .more {
-      width: 4rem;
-      margin: 0 auto;
-      text-align: center;
-      line-height: 0.8rem;
-      color: #282828;
-      font-size: 0.28rem;
-    }
+.fileask {
+  width: 1.48rem;
+  height: 1.48rem;
+  position: fixed;
+  top: 40%;
+  right: 0;
+  z-index: 10;
+}
+
+.more {
+  width: 4rem;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 0.8rem;
+  color: #282828;
+  font-size: 0.28rem;
+}
 </style>

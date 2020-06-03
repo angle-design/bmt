@@ -63,6 +63,7 @@ export default {
   data() {
     return {
       school: "小学",
+        school_:1,
       sheetVisible: false,
       actions: [],
       title: "", //题目
@@ -128,7 +129,7 @@ export default {
       }
       this.axios
         .post("/api/api/Ask/addhuati", {
-          tag: this.school,
+          tag: this.school_,
           title: this.title,
           title2: this.hua_con,
           content: this.contenthua,
@@ -160,6 +161,7 @@ export default {
     },
     clickAction(e) {
       this.school = e.name;
+      this.school_ = e.id;
     }
   }
 };

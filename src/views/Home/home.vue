@@ -81,16 +81,7 @@ export default {
       colorActiveText: '#36b936',
       colorActiveBack: '',
       activeIndex: 0,
-      list:[
-        {'name':'尚德机构1','lesson':['课程1，课程11课程1，课程11，课程22课程1，课程11，课程22，课程22'],'zanpeople':1000},
-        {'name':'尚德机构2','lesson':['课程1，课程11，课程22'],'zanpeople':2000},
-        {'name':'尚德机构3','lesson':['课程1，课程11，课程22'],'zanpeople':3000},
-        {'name':'尚德机构4','lesson':['课程1，课程11，课程22'],'zanpeople':4000},
-        {'name':'尚德机构5','lesson':['课程1，课程11，课程22'],'zanpeople':5000},
-        {'name':'尚德机构6','lesson':['课程1，课程11，课程22'],'zanpeople':6000},
-        {'name':'尚德机构7','lesson':['课程1，课程11，课程22'],'zanpeople':7000},
-        {'name':'尚德机构8','lesson':['课程1，课程11，课程22'],'zanpeople':8000}
-        ],
+      list:[],
         page:1,
         xuan:1,
     };
@@ -103,7 +94,7 @@ export default {
   mounted() {
     this.cc();
     this.getalist();
-    this.getmechanlist(2,1)
+    this.getmechanlist(this.xuan,this.page)
   },
   methods: {
     //获取首页分类
@@ -123,7 +114,9 @@ export default {
           p:page
         }
       }).then(res=>{
-        console.log(res.data)
+        if(res.data.code==200)[
+          this.list=res.data.list
+        ]
       })
     },
     swipertwoInit() {
@@ -142,6 +135,8 @@ export default {
     },
     chooseItem(val){
       this.activeIndex = val[0];
+      this.xuan= this.dataArr[this.activeIndex].id;
+      this.getmechanlist(this.xuan,this.page)
     },
 
     //获取轮播图

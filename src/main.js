@@ -19,6 +19,8 @@ Vue.component('Scroller',Scroller)
 
 // import VueCropper from 'vue-cropper'
 // Vue.use(VueCropper)
+import common from '@/components/js/common.js'
+Vue.prototype.common=common;
 
 var qs = require('qs')
 Vue.prototype.qs=qs;
