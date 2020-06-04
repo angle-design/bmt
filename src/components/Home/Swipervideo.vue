@@ -3,7 +3,11 @@
   <div ref="wrapper" class="swiperLeft">
     <ul class="cont" ref="cont">
       <li v-for="(item,index) in videolist" :key="index" ref="lislide">
-            <p><img :src="item"><span><img src="../../assets/bo.png"></span></p>
+          
+            <!-- 是视频 -->
+            <p v-if="item.mp4" @click="$emit('toVideo',item.mp4)"><img :src="item.image"><span><img src="../../assets/bo.png"></span></p>
+              <!-- 只是图片 -->
+            <p v-else><img :src="item.image"></p>
       </li>
     </ul>
   </div>
@@ -13,17 +17,13 @@ import BScroll from "better-scroll";
 
 export default {
   name: "swiperleft",
+  props:{
+    videolist:Array,
+    len:Number
+  },
   data() {
     return {
-      videolist: [
-          'https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg',
-          'https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200506/e53237cf8d3f3e08de3d2626246fbb6d.png',
-           'https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg',
-          'https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200506/e53237cf8d3f3e08de3d2626246fbb6d.png',
-           'https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg',
-          'https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200506/e53237cf8d3f3e08de3d2626246fbb6d.png',
-          ],
-      len: 6
+      
     };
   },
 mounted(){
@@ -31,8 +31,9 @@ mounted(){
 },
   methods: {
     verScroll() {
-      console.log(this.$refs.lislide[0].clientWidth)
-      let width = this.len * this.$refs.lislide[0].clientWidth*1.07; // 动态计算出滚动区域的大小，前面已经说过了，产生滚动的原因是滚动区域宽度大于父盒子宽度
+      // this.len=this.$refs.cont.cloneNode;
+      console.log(this.videolist)
+      let width = this.len * this.$refs.lislide[0].clientWidth*1.1; // 动态计算出滚动区域的大小，前面已经说过了，产生滚动的原因是滚动区域宽度大于父盒子宽度
       this.$refs.cont.style.width = width + "px"; // 修改滚动区域的宽度
       this.$nextTick(() => {
         if (!this.scroll) {

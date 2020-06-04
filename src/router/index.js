@@ -3,6 +3,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import home from '@/views/Home/home.vue';
+import lessoni from '@/views/Home/lesson.vue';
 import top from '@/views/Home/top.vue';
 import signup from '@/views/Home/signup.vue';
 import search from '@/views/Search/index.vue';
@@ -47,6 +48,12 @@ export default new Router({
           component: top
         }
       ]
+    },
+     // 机构详情
+     {
+      path: '/lessoni',
+      name:'lessoni',
+      component: lessoni,
     },
     // 登录
     {

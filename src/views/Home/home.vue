@@ -114,9 +114,9 @@ export default {
           p:page
         }
       }).then(res=>{
-        if(res.data.code==200)[
-          this.list=res.data.list
-        ]
+        if(res.data.code==200){
+          this.list=res.data.list;
+       }
       })
     },
     swipertwoInit() {

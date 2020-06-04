@@ -1,6 +1,6 @@
 
 <template>
-    <div class="mechan">
+    <div class="mechan" @click="toDEtails(list.id)">
         <!-- 每个机构 -->
         <img :src="list.logo">
         <div>
@@ -26,6 +26,11 @@ export default {
      
     };
   },
+  methods:{
+      toDEtails(id){
+          this.$router.push({name:'lessoni',query:{id:id}})
+      }
+  }
 }
 </script>
 

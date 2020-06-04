@@ -56,8 +56,7 @@ export default {
     },
     toAskfile() {
       var self = this;
-      self.common.Login(self);
-      self.$nextTick(function(){
+      self.common.Login(self).then(() => {
         self.$router.push("/askfile");
       });
     },

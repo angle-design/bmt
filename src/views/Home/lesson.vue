@@ -4,10 +4,10 @@
     <div class="lesson_body">
       <div class="lesson_top">
         <div>
-          <h4>尚德机构</h4>
+          <h4>{{lesson.name}}</h4>
           <p>
             <img src="../../assets/zan.png" />
-            <font>5000人</font>参与投票
+            <font>{{lesson.cnum}}人</font>参与投票
           </p>
         </div>
         <span>
@@ -15,7 +15,12 @@
           <i class="fa fa-share-square-o"></i>
         </span>
       </div>
-      <SwiperLeft />
+      <SwiperLeft
+        v-if="lesson.piclist"
+        :videolist="lesson.piclist"
+        :len="lesson.piclist.length"
+        @toVideo="toVideo"
+      />
     </div>
     <!-- 列表 -->
     <div class="lesson_con">
@@ -39,9 +44,9 @@
         <span>数学</span>
       </div>
       <ul>
-        <li v-for="(lesson,index) in lessonlist" :key="index">
+        <!-- <li v-for="(lesson,index) in lessonlist" :key="index">
           <lessonitem :list="lesson" :ceflag="true"></lessonitem>
-        </li>
+        </li>-->
       </ul>
     </div>
     <!-- 评价 -->
@@ -64,6 +69,10 @@
         <button>提交</button>
       </div>
     </div>
+    <div class="video_pup" v-if="videoflag">
+      <video :src="video" controls="controls" autoplay>您的浏览器不支持 video 标签。</video>
+      <i class="fa fa-times-circle" @click="videoflag=false"></i>
+    </div>
   </div>
 </template>
 
@@ -75,21 +84,13 @@ export default {
   name: "",
   data() {
     return {
+      videoflag: false,
+      video: "",
+      sid: 0,
       comtext: "",
       remnant: 0,
       scrollWay: "horizontal", // vertical  horizontal
       //   itemStr: 'title',
-      dataArr: [
-        "小学",
-        "初中",
-        "少儿英语",
-        "高中",
-        "小学",
-        "初中",
-        "大学",
-        "研究生",
-        "初中"
-      ],
       navWH: 0,
       scrollMargin: 0,
       colorText: "#999",
@@ -98,40 +99,40 @@ export default {
       colorActiveBack: "",
       activeIndex: 0,
       zanlist: ["品牌指数", "课程体系", "教学成果", "服务质量", "师资力量"],
-      lessonlist:
-        [
-          {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "1小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-         {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "2小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-         {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "3小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-        ] 
+      lesson: {},
+      dataArr: []
     };
   },
+  created() {
+    this.sid = this.$route.query.id;
+    this.getLessonList(this.sid);
+  },
   methods: {
+    // 视频弹窗
+    toVideo(data) {
+      this.video = data;
+      this.videoflag = true;
+    },
+    getLessonList(sid) {
+      this.axios
+        .get("/api/api/school/getSinfo", {
+          params: {
+            sid: sid
+          }
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.lesson = res.data.list;
+            this.dataArr = res.data.list.clist;
+          }
+        });
+    },
     chooseItem(val) {
       this.activeIndex = val[0];
     },
     descInput() {
       var txtVal = this.comtext.length;
       this.remnant = 200 - txtVal;
-      console.log(200 - txtVal);
     }
   },
   components: {
@@ -143,6 +144,27 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.video_pup {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  video {
+    width: 7rem;
+    height: 6rem;
+  }
+  i {
+    font-size: 0.8rem;
+    color: #fff;
+    margin-top: 0.3rem;
+  }
+}
 .content {
   flex: 1;
   overflow: auto;
@@ -223,7 +245,6 @@ export default {
         overflow: hidden;
         margin-left: 0.3rem;
         margin-bottom: 0.22rem;
-
       }
     }
   }
