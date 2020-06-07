@@ -13,11 +13,7 @@
           <font>性&nbsp;&nbsp;&nbsp;别</font>
           <input type="text">
         </p>
-        <p>
-          <font>城&nbsp;&nbsp;&nbsp;市</font>
-          <input type="text">
-        </p>
-        <button>退出账户</button>
+        <button @click="loginout">退出账户</button>
 </div>
 </template>
 
@@ -28,6 +24,16 @@ export default {
     return {
     
     };
+  },
+  methods:{
+    loginout(){
+      this.axios.get('/api/api/user/logout').then(res=>{
+        console.log(res.data)
+        if(res.data.statu==200){
+          this.$router.push('/login')
+        }
+      })
+    }
   }
 };
 </script>

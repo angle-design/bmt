@@ -18,13 +18,7 @@
               <div>
                 <ul>
                   <li v-for="(item,index) in movieList" :key="index">
-                    <a :href="item.url">
-                      <img :src="item.image"/>
-                      <div>
-                        <h3>{{item.title}}</h3>
-                        <p>{{item.content}}</p>
-                      </div>
-                    </a>
+                    <mechanitem :list="item"></mechanitem>
                   </li>
                 </ul>
                 <!-- 展开更多 -->
@@ -40,7 +34,7 @@
 </template>
 
 <script>
-
+import mechanitem from "@/components/Home/Mechanism.vue"
     export default {
         name: "search",
         data() {
@@ -53,7 +47,9 @@
                 sLoad: true
             };
         },
-        components: {},
+        components: {
+            mechanitem
+        },
 
         methods: {
             shandleToScroll(pos) {
@@ -75,7 +71,7 @@
             search(aa) {
                 if (this.sLoad&&this.message) {
                     this.axios
-                        .get("/api/Api/index/getPlist", {
+                        .get("/api/api/school/getSearchSchool", {
                             params: {
                                 p: this.spage,
                                 key: aa

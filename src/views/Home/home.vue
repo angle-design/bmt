@@ -7,7 +7,7 @@
         :handleToTouchEnd="handleToTouchEnd"
     >-->
     <div>
-      <div class="searchbody" @tap="tosearch">
+      <div class="searchbody" @click="tosearch">
         <div class="search">
           <img src="../../assets/search.png" />搜索机构名称、课程名称
         </div>
@@ -55,6 +55,7 @@
             </div>
         </div>
     </div>
+    <router-view></router-view>
     <!-- </scroller> -->
     <Tab />
   </div>
@@ -89,7 +90,7 @@ export default {
   components: {
     Tab,
     tabNav,
-    mechanitem
+    mechanitem,
   },
   mounted() {
     this.cc();

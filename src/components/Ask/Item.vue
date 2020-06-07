@@ -6,10 +6,10 @@
         <img :src="item.h_image" />
         <span v-if="item.ishot==2">置顶</span>
         <div>
-          <dl>
+          <dl v-if="item.uinfo">
             <dt>
               <img v-if="item.uinfo.a_image" :src="item.uinfo.a_image" />
-              <img v-else src="../../assets/feng.jpg" />
+              <img v-else src="../../assets/mohead.png" />
               <font></font>
             </dt>
             <dd>{{item.uinfo.a_uname}}</dd>
@@ -44,7 +44,6 @@ export default {
   }
 };
 </script>
-
 <style lang='less' scoped>
 
   .ask_body {

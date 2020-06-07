@@ -5,7 +5,7 @@
       <router-link tag="li" to="/lesson">课程头条</router-link>
       <router-link tag="li" to="/ask">问吧</router-link>
       <router-link tag="li" to="/mechanism">机构入驻</router-link>
-      <router-link tag="li" to="/my">学生留言</router-link>
+      <router-link tag="li" to="/my">我的</router-link>
     </ul>
 
   </footer>

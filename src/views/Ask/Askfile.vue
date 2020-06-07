@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       school: "小学",
-        school_:1,
+      school_:1,
       sheetVisible: false,
       actions: [],
       title: "", //题目

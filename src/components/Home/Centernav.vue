@@ -16,6 +16,7 @@
         v-for="(item,index) in dataArr"
         :key="index"
         :style="scrollWay == 'vertical' ? {'margin': scrollMargin + 'px' + ' 0','padding': itemPadding,'color': index == activeIndex ? colorActiveText : '','background-color': index == activeIndex ? colorActiveBack : ''} : {'margin': '0 ' + scrollMargin + 'px','padding': itemPadding,'color': index == activeIndex ? colorActiveText : '','background-color': index == activeIndex ? colorActiveBack : ''}"
+      v-clickdown="index"
       >{{item.name}}</div>
     </div>
   </div>
@@ -42,6 +43,9 @@ export default {
       activeIndex: this.activeIndexParent
     };
   },
+  directives: {
+           
+        },
   props: {
     activeIndexParent: {
       type: Number,
@@ -162,6 +166,7 @@ export default {
       this.scrollEnd(e);
     });
   },
+
   methods: {
     refresh() {
       this.deviceWH =
@@ -409,12 +414,15 @@ export default {
   display: flex;
   overflow: hidden;
   height:0.7rem;
-  box-shadow: 0 0 0.14rem rgba(214,214,214,0.4);
+  box-shadow: 0 0.2rem 0.14rem rgba(214,214,214,0.4);
+  // justify-content: center;
   margin-bottom:0.2rem;
   .scroll-box {
     display: flex;
     white-space: nowrap;
     height:0.7rem;
+    width:100%!important;
+    // justify-content: flex-start;
     .scroll-item {
       cursor: pointer;
       font-size:0.28rem;

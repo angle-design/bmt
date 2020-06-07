@@ -1,80 +1,69 @@
 <template>
   <div class="collection">
-      <div class="collect_top">
-        <span :class="[active==1?'active':'']" @click="toggle(1)">机构</span>|
-        <span :class="[active==2?'active':'']" @click="toggle(2)">课程</span>
+    <div class="collect_top">
+      <span :class="[active==1?'active':'']" @click="toggle(1)">机构</span>|
+      <span :class="[active==2?'active':'']" @click="toggle(2)">课程</span>
+    </div>
+    <!-- 机构 -->
+    <div class="jigou" v-if="active==1">
+      <div class="listitem" v-for="(item,index) in list" :key="index">
+        <mechanitem :list="item"></mechanitem>
       </div>
-      <!-- 机构 -->
-      <div class="jigou" v-if="active==1">
-          <div class="listitem" v-for="(item,index) in list" :key="index">
-              <mechanitem :list="item"></mechanitem>
-          </div>
-      </div>
-      <!-- 课程 -->
-       <div class="lesson"  v-if="active==2">
-           <ul>
+    </div>
+    <!-- 课程 -->
+    <div class="lesson" v-if="active==2">
+      <ul>
         <li v-for="(lesson,index) in lessonlist" :key="index">
           <lessonitem :list="lesson" :ceflag="true"></lessonitem>
         </li>
       </ul>
-      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import lessonitem from "@/components/Home/Lessonitem.vue";
-import mechanitem from "@/components/Home/Mechanism.vue"
+import mechanitem from "@/components/Home/Mechanism.vue";
 export default {
   name: "collection",
   data() {
     return {
-      active:1,
-     list:[
-        {'name':'尚德机构1','lesson':['课程1，课程11课程1，课程11，课程22课程1，课程11，课程22，课程22'],'zanpeople':1000},
-        {'name':'尚德机构2','lesson':['课程1，课程11，课程22'],'zanpeople':2000},
-        {'name':'尚德机构3','lesson':['课程1，课程11，课程22'],'zanpeople':3000},
-        {'name':'尚德机构4','lesson':['课程1，课程11，课程22'],'zanpeople':4000},
-        {'name':'尚德机构5','lesson':['课程1，课程11，课程22'],'zanpeople':5000},
-        {'name':'尚德机构6','lesson':['课程1，课程11，课程22'],'zanpeople':6000},
-        {'name':'尚德机构7','lesson':['课程1，课程11，课程22'],'zanpeople':7000},
-        {'name':'尚德机构8','lesson':['课程1，课程11，课程22'],'zanpeople':8000}
-        ],
-          lessonlist:
-        [
-          {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "1小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-         {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "2小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-         {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "3小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-        ] 
+      active: 1,
+      list: [],
+      lessonlist: []
     };
+  },
+  mounted() {
+    this.getlist(1);
+  },
+  methods: {
+     toggle(i) {
+      this.active = i;
+      this.getlist(i)
     },
-    methods:{
-      toggle(i){
-      this.active=i;
-    },
-    },
-    components:{
-      mechanitem,
-      lessonitem
+    getlist(num) {
+      this.axios
+        .get("/api/api/my/getMycollect", {
+          params: {
+            type: num
+          }
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            if (num == 1) {
+              this.list = res.data.list;
+            } else if (num == 2) {
+              this.lessonlist = res.data.list;
+            }
+          }
+        });
     }
+  },
+  components: {
+    mechanitem,
+    lessonitem
   }
+};
 </script>
 
 <style lang="less" scoped>
@@ -87,56 +76,56 @@ export default {
   bottom: 1.2rem;
   background: #fff;
   width: 100%;
-  z-index:2;
-  padding-top:1rem;
+  z-index: 2;
+  padding-top: 1rem;
   box-sizing: border-box;
-  overflow-x:hidden;
-  .collect_top{
+  overflow-x: hidden;
+  .collect_top {
     display: flex;
     align-items: center;
-    padding:0 0.4rem 0;
-    color:#efeeee;
+    padding: 0 0.4rem 0;
+    color: #efeeee;
     position: absolute;
     position: fixed;
-    top:0;
-    left:0;
-    z-index:2;
-    width:100%;
-    background:#fff;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    background: #fff;
     box-sizing: border-box;
-    span{
+    span {
       display: flex;
       justify-content: center;
-      flex:1;
+      flex: 1;
       position: relative;
-      font-size:0.3rem;
-      color:#999999;
-          padding:0.2rem 0.4rem 0.3rem;
-      &.active{
-        color:#36b936;
-         &:after{
-          content:'';
+      font-size: 0.3rem;
+      color: #999999;
+      padding: 0.2rem 0.4rem 0.3rem;
+      &.active {
+        color: #36b936;
+        &:after {
+          content: "";
           position: absolute;
-          width:0.3rem;
-          height:0.08rem;
+          width: 0.3rem;
+          height: 0.08rem;
           // background:#efeeee;
-          background:#36b936;
-          bottom:0.1rem;
-          border-radius:0.3rem;
-          left:50%;
-          margin-left:-0.15rem;
+          background: #36b936;
+          bottom: 0.1rem;
+          border-radius: 0.3rem;
+          left: 50%;
+          margin-left: -0.15rem;
         }
       }
     }
   }
-  .jigou{
-      padding:0 0.25rem;
-    .mechan{
+  .jigou {
+    padding: 0 0.25rem;
+    .mechan {
       background: #f8f8f8;
     }
   }
-  .lesson{
-      ul {
+  .lesson {
+    ul {
       display: flex;
       flex-wrap: wrap;
       margin-top: 0.4rem;
@@ -152,7 +141,6 @@ export default {
         overflow: hidden;
         margin-left: 0.23rem;
         margin-bottom: 0.22rem;
-
       }
     }
   }

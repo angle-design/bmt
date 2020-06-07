@@ -6,7 +6,8 @@
         <div>
           <dl v-if="listtop.uinfo">
             <dt>
-              <img :src="listtop.uinfo.a_image" />
+              <img v-if="listtop.uinfo.a_image"  :src="listtop.uinfo.a_image" />
+               <img v-else src="../../assets/mohead.png" />
               <font v-if="listtop.isvip"></font>
             </dt>
             <dd>
@@ -33,7 +34,8 @@
         <div>
           <dl v-if="listtop.qlist.uinfo">
             <dt>
-              <img :src="listtop.qlist.uinfo.a_image" />
+              <img v-if="listtop.qlist.uinfo.a_image" :src="listtop.qlist.uinfo.a_image" />
+               <img v-else src="../../assets/mohead.png" />
               <font v-if="listtop.isvip"></font>
             </dt>
             <dd>

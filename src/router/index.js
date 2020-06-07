@@ -4,6 +4,7 @@ Vue.use(Router)
 
 import home from '@/views/Home/home.vue';
 import lessoni from '@/views/Home/lesson.vue';
+import lessondetails from '@/views/Home/lessondetails.vue'
 import top from '@/views/Home/top.vue';
 import signup from '@/views/Home/signup.vue';
 import search from '@/views/Search/index.vue';
@@ -30,9 +31,9 @@ import mysetup from '@/views/My/setup.vue';
 import mytopic from '@/views/My/topic.vue';
 import mylesson from '@/views/My/lesson.vue';
 export default new Router({
-  mode:'hash',
+  mode: 'hash',
   //base:process.env.BABEL_URL,
-  base:"lesson",
+  base: "lesson",
   routes: [
     {
       path: '/',
@@ -41,19 +42,26 @@ export default new Router({
     {
       path: '/home',
       component: home,
-      meta:{keepAlive:true},
-      children:[
+      meta: { keepAlive: true },
+      children: [
         {
-          path: '/home/top/:cid',
-          component: top
-        }
+          path: '/home/lessoni',
+          name: 'lessoni',
+          component: lessoni,
+        },
+        
       ]
     },
-     // 机构详情
-     {
-      path: '/lessoni',
-      name:'lessoni',
-      component: lessoni,
+    // 机构详情
+    // {
+    //   path: '/lessoni',
+    //   name: 'lessoni',
+    //   component: lessoni,
+    // },
+    {
+      path: '/lessondetails',
+      name: 'lessondetails',
+      component: lessondetails,
     },
     // 登录
     {
@@ -65,23 +73,24 @@ export default new Router({
       path: '/setpassword',
       component: setpassword,
     },
-     // 找回密码
-     {
+    // 找回密码
+    {
       path: '/backpassword',
       component: backpassword,
     },
-      // 注册
-      {
-        path: '/register',
-        component: register,
-      },
-    
+    // 注册
+    {
+      path: '/register',
+      component: register,
+    },
+
     {
       path: '/home/search',
       component: search
     },
     {
-      path: '/signup/:name',
+      path: '/signup',
+      name: 'signup',
       component: signup
     },
     {
@@ -91,7 +100,7 @@ export default new Router({
     {
       path: '/lesson',
       component: lesson,
-      meta:{keepAlive:true},
+      meta: { keepAlive: true },
     },
     {
       path: '/mechanism',
@@ -120,43 +129,41 @@ export default new Router({
     {
       path: '/my',
       component: my,
-      children:[
-        {
-          path: '/my/quection',
-          name:'myquestion',
-          component: myquestion
-        },
-        {
-          path: '/my/comment',
-          name:'mycomment',
-          component: mycomment
-        },
-        {
-          path: '/my/collection',
-          name:'mycollection',
-          component: mycollection
-        },
-        {
-          path: '/my/feedback',
-          name:'myfeedback',
-          component: myfeedback
-        },
-        {
-          path: '/my/setup',
-          name:'mysetup',
-          component: mysetup
-        },
-        {
-          path: '/my/lesson',
-          name:'mylesson',
-          component: mylesson
-        },
-        {
-          path: '/my/topic',
-          name:'mytopic',
-          component: mytopic
-        }
-     ]
+    },
+    {
+      path: '/my/quection',
+      name: 'myquestion',
+      component: myquestion
+    },
+    {
+      path: '/my/comment',
+      name: 'mycomment',
+      component: mycomment
+    },
+    {
+      path: '/my/collection',
+      name: 'mycollection',
+      component: mycollection
+    },
+    {
+      path: '/my/feedback',
+      name: 'myfeedback',
+      component: myfeedback
+    },
+    {
+      path: '/my/setup',
+      name: 'mysetup',
+      component: mysetup
+    },
+    {
+      path: '/my/lesson',
+      name: 'mylesson',
+      component: mylesson
+    },
+    {
+      path: '/my/topic',
+      name: 'mytopic',
+      component: mytopic
     },
     {
       path: '/askdetails/:id',

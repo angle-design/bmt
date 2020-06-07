@@ -15,7 +15,7 @@
                   <dl v-if="list.uinfo">
                     <dt>
                       <img v-if="list.uinfo.a_image" :src="list.uinfo.a_image" />
-                      <img v-else src="../../assets/feng.jpg" alt />
+                      <img v-else src="../../assets/mohead.png" />
                       <font></font>
                     </dt>
                     <dd>
@@ -41,7 +41,7 @@
                   <dl v-if="list.uinfo">
                     <dt>
                       <img v-if="list.uinfo.a_image" :src="list.uinfo.a_image" />
-                      <img v-else src="../../assets/feng.jpg" alt />
+                      <img v-else src="../../assets/mohead.png" />
                       <font></font>
                     </dt>
                     <dd>
@@ -109,12 +109,7 @@ export default {
     // 问答回复
     toComment() {
       this.replaydata = [this.listtop.id];
-      if (localStorage.ele_login) {
-        this.replyflag = true;
-      } else {
-        //未登录
-        this.$router.push("/login");
-      }
+      this.getlogin();
     },
     // 点赞
     zan(event, id) {
@@ -145,8 +140,7 @@ export default {
             fuid: this.replaydata[3],
             content: this.conmessage
           })
-          .then(res => {
-            console.log(res.data);
+          .then(res => {1                
             if (res.data.code == 200) {
               //成功，刷新当前页面
               window.location.reload();
@@ -157,25 +151,23 @@ export default {
           });
       }
     },
-     // 二次回复
+    // 二次回复
     replaya(item) {
       this.replaydata = [item.aid, item.id, item.id, item.uid];
-      if (localStorage.ele_login) {
-        this.replyflag = true;
-      } else {
-        //未登录
-        this.$router.push("/login");
-      }
+      this.getlogin();
+    },
+    getlogin() {
+      var self = this;
+      var login = this.common.Login(self).then(res => {
+        if (res) {
+          self.replyflag = true;
+        }
+      });
     },
     // 三次回复
-    replay(item,id) {
-      this.replaydata = [item.aid,item.id,id,item.uid];
-      if (localStorage.ele_login) {
-        this.replyflag = true;
-      } else {
-        //未登录
-        this.$router.push("/login");
-      }
+    replay(item, id) {
+      this.replaydata = [item.aid, item.id, id, item.uid];
+      this.getlogin();
     },
     // 上拉加载更多数据
     handleToScroll() {
@@ -195,7 +187,7 @@ export default {
           }
         })
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.list) {
             this.listtop = res.data.list;
           }
@@ -215,7 +207,7 @@ export default {
           }
         })
         .then(res => {
-          console.log(res.data.list);
+          // console.log(res.data.list);
           if (res.data.list) {
             this.fulist = res.data.list;
           }
@@ -230,7 +222,7 @@ export default {
           }
         })
         .then(res => {
-          console.log(res.data.list);
+          // console.log(res.data.list);
           if (res.data.list) {
             this.fulist = res.data.list;
           }
@@ -342,6 +334,9 @@ export default {
     li {
       padding: 0.3rem 0.3rem;
       border-bottom: 0.1rem solid #f4f4f4;
+      &:last-child{
+        border-bottom:none;
+      }
     }
   }
 }

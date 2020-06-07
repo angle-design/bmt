@@ -1,19 +1,12 @@
 <template>
   <div class="comment">
         <ul>
-          <li>
-            <p class="title"><span>评论:</span>回答的很精回答的很精回答的很精回答的很精回答的很精回答的很精彩！</p>
+          <li v-for="(item,index) in replylist" :key="index">
+            <p class="title"><span>评论:</span>{{item.content}}</p>
             <div>
-              <span>中国好青年超20个省份明确高校开学时间份明确高校开学时间?</span>
+              <span>{{item.hinfo.content}}</span>
             </div>
-            <p class="time"><font>2020-3-30  12:02</font></p>
-          </li>
-           <li>
-            <p class="title"><span>评论:</span>回答的很精彩？</p>
-            <div>
-              <span>中国好青年超20个省份明确高校开学时间份明确高校开学时间?</span>
-            </div>
-            <p class="time"><font>2020-3-30  12:02</font>></p>
+            <p class="time"><font>{{item.ctime}}</font></p>
           </li>
         </ul>
 </div>
@@ -24,8 +17,16 @@ export default {
   name: "comment",
   data() {
     return {
-    
+    replylist:[]
     };
+  },
+  created(){
+    this.axios.get('/api/api/my/getmyreply').then(res=>{
+      if(res.data.code==200){
+        console.log(res.data)
+        this.replylist=res.data.list
+      }
+    })
   }
 };
 </script>

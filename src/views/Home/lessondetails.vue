@@ -3,32 +3,32 @@
   <div class="content">
     <div class="details_top">
       <img
-        src="https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg"
+        :src="lesson.image"
       />
       <p>
         <span>
-          课程少儿英语提高班
-          <span>￥<font>188</font></span>
+          {{lesson.name}}
+          <span>￥<font>{{lesson.price}}</font></span>
         </span>
-        <i class="fa fa-star-o"></i>
+            <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @click="toCollect"></i>
       </p>
     </div>
     <div class="details_con">
       <div>
         <h3>适用对象</h3>
-        <p>中小学生</p>
+        <p v-html="lesson.objects"></p>
       </div>
       <div>
         <h3>课程特色</h3>
-        <p>微商微信商学院导师讲师课程表讲课海报宣传介绍图 朋友圈封面-淘宝网</p>
+        <p v-html="lesson.features"></p>
       </div>
       <div>
         <h3>课程简介</h3>
-        <p>微商微信商学院导师讲师课程表讲课海报宣传介绍图 朋友圈封面-淘宝网</p>
+        <p v-html="lesson.content"></p>
       </div>
     </div>
     <div class="fix_bottom">
-        <button>立即注册</button>
+        <button @click="handlemessage(lesson.sid)">立即注册</button>
     </div>
   </div>
 </template>
@@ -37,9 +37,56 @@
 export default {
   name: "",
   data() {
-    return {};
+    return {
+      lesson:{},
+      collectflag:false
+    };
   },
-  methods: {},
+mounted(){
+  this.getDetails()
+},
+  methods: {
+     // 收藏
+    toCollect() {
+      this.axios
+        .post("/api/api/school/schoolCollect", {
+          type:2,
+          sid: this.$route.query.id
+        })
+        .then(res => {
+          
+          if (res.data.code == 200) {
+            console.log(res.data)
+           if (res.data.list.status ==2) {
+              this.collectflag = false;
+              return false;
+            } else if (res.data.list.status ==1) {
+              this.collectflag = true;
+              this.$toast("收藏成功");
+            }
+          } else if (res.data.code == 205) {
+            //未登录
+            this.$router.push("/login");
+          }
+        });
+    },
+     // 进入立即注册
+  handlemessage(id) {
+      this.$router.push({name:'signup',query:{id:id}});
+    },
+    getDetails(){
+      this.axios.get('/api/api/school/getCinfo',{
+        params:{
+          courseid:this.$route.query.id
+        }
+      }).then(res=>{
+        // console.log(res.data)
+        if(res.data.code==200){
+            this.lesson=res.data.list
+        }
+      })
+    }
+  },
   components: {}
 };
 </script>
@@ -81,6 +128,9 @@ export default {
       i {
         color: #9a9a9a;
         font-size: 0.4rem;
+         &.fa-star{
+            color:#ffae00;
+          }
       }
     }
   }

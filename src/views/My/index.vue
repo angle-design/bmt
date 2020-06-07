@@ -3,8 +3,9 @@
     <!-- 首页 -->
     <div class="my">
       <p class="my_head">
-        <img src="../../assets/feng.jpg" />
-        <span>点击登录或注册</span>
+        <img v-if="userinfo.a_image" :src="userinfo.a_image" />
+        <img v-else src="../../assets/mohead.png" />
+        <span>{{userinfo.a_uname}}</span>
       </p>
       <div class="my_hua">
         <router-link tag="p" to="/my/topic">我的话题</router-link>
@@ -20,7 +21,7 @@
         </router-link>
       </ul>
     </div>
-       <router-view />
+       <!-- <router-view /> -->
         <Tab></Tab>
   </div>
 </template>
@@ -31,6 +32,7 @@ export default {
   name: "my",
   data() {
     return {
+      userinfo:{},
       mylist: [
         { name: "提问", classname: "fa fa-star-o", routeto: "/my/quection" },
         { name: "评论", classname: "fa fa-star-o", routeto: "/my/comment" },
@@ -39,6 +41,16 @@ export default {
         { name: "设置", classname: "fa fa-star-o", routeto: "/my/setup" }
       ]
     };
+  },
+  created(){
+    this.axios.get('/api/api/my/getUinfo').then(res=>{
+      console.log(res.data);
+      if(res.data.code==205){
+        this.$router.push('/login')
+      }else if(res.data.code==200){
+        this.userinfo=res.data.list
+      }
+    })
   },
   components:{
     Tab,

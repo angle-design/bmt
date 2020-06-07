@@ -1,12 +1,12 @@
 
 <template>
     <div class="lessonitem">
-          <img :src="list.img"/>
-          <h4>{{list.title}}</h4>
-          <span>{{list.scholl}}</span>
+          <img :src="list.image" @click="toDetails(list.id)"/>
+          <h4>{{list.name}}</h4>
+          <span>适用人群：{{list.objects}}</span>
           <p>
             <span>￥<font>{{list.price}}</font></span>
-            <button v-if="ceflag">立即注册</button>
+            <button v-if="ceflag" @click="handlemessage(list.id)">立即注册</button>
           </p>
     </div>
 </template>
@@ -22,6 +22,15 @@ export default {
      
     };
   },
+  methods:{
+     // 进入立即注册
+    handlemessage(id) {
+      this.$router.push({name:'signup',query:{id:id}});
+    },
+    toDetails(id){
+      this.$router.push({name:'lessondetails',query:{id:id}})
+    }
+  }
 }
 </script>
 

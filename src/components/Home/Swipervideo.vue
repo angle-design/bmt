@@ -31,8 +31,6 @@ mounted(){
 },
   methods: {
     verScroll() {
-      // this.len=this.$refs.cont.cloneNode;
-      console.log(this.videolist)
       let width = this.len * this.$refs.lislide[0].clientWidth*1.1; // 动态计算出滚动区域的大小，前面已经说过了，产生滚动的原因是滚动区域宽度大于父盒子宽度
       this.$refs.cont.style.width = width + "px"; // 修改滚动区域的宽度
       this.$nextTick(() => {

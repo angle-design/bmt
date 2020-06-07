@@ -78,14 +78,15 @@ export default {
   },
     created(){
       this.axios
-          .get("/api/api/index/getPinfo", {
+          .get("/api/api/school/getSchoolName", {
             params: {
-              id: this.$route.params.name
+              sid: this.$route.query.id
             }
           })
           .then(res => {
+            // console.log(res.data)
             if (res.data.code == 200) {
-              this.logoName = res.data.info;
+              this.logoName = res.data.list.name;
             }
           });
   },
@@ -93,14 +94,14 @@ export default {
     $route: {
       handler() {
         this.axios
-          .get("/api/api/index/getPinfo", {
+          .get("/api/api/school/getSchoolName", {
             params: {
-              id:this.$route.params.name
+              sid: this.$route.query.id
             }
           })
           .then(res => {
             if (res.data.code == 200) {
-              this.logoName = res.data.info;
+              this.logoName = res.data.list.name;
             }
           });
       },

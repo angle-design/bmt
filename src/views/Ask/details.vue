@@ -18,7 +18,7 @@
             <dl v-if="hinfo.uinfo">
               <dt>
                 <img v-if="hinfo.uinfo.a_image" :src="hinfo.uinfo.a_image" />
-                <img v-else src="../../assets/feng.jpg" />
+                <img v-else src="../../assets/mohead.png" />
                 <font></font>
               </dt>
               <dd>
@@ -113,6 +113,7 @@ export default {
           aid: this.uid
         })
         .then(res => {
+          
           if (res.data.code == 200) {
             this.zanflag = true;
           } else if (res.data.code == 205) {

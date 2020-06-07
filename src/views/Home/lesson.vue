@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="content">
+  <div class="lesson">
     <div class="lesson_body">
       <div class="lesson_top">
         <div>
@@ -11,7 +11,7 @@
           </p>
         </div>
         <span>
-          <i class="fa fa-star-o"></i>
+          <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @click="toCollect"></i>
           <i class="fa fa-share-square-o"></i>
         </span>
       </div>
@@ -23,6 +23,7 @@
       />
     </div>
     <!-- 列表 -->
+
     <div class="lesson_con">
       <tabNav
         @choose-item="chooseItem"
@@ -36,25 +37,31 @@
         :colorActiveText="colorActiveText"
         :colorActiveBack="colorActiveBack"
       ></tabNav>
-      <div class="item_list">
-        <span class="active">数学</span>
-        <span>数学</span>
-        <span>数学</span>
-        <span>数学</span>
-        <span>数学</span>
+      <div class="item_list" v-if="data2Arr">
+        <span
+          v-for="(c2list,i) in data2Arr"
+          :key="i"
+          :class="c2idindex==i?'active':''"
+          @click="csidclick(i)"
+        >{{c2list.name}}</span>
       </div>
       <ul>
-        <!-- <li v-for="(lesson,index) in lessonlist" :key="index">
+        <li v-for="(lesson,index) in lessonlist" :key="index">
           <lessonitem :list="lesson" :ceflag="true"></lessonitem>
-        </li>-->
+        </li>
       </ul>
     </div>
     <!-- 评价 -->
     <div class="lesson_star">
       <h4>我要评价</h4>
       <ul>
-        <li v-for="(zan,index) in zanlist" :key="index" class="active">
-          {{zan}}
+        <li
+          v-for="(zan,index) in zanlist"
+          :key="index"
+          @click="tagzan(index)"
+          :class="[zan.check?'active':'']"
+        >
+          {{zan.name}}
           <i class="fa fa-thumbs-up"></i>
         </li>
       </ul>
@@ -66,7 +73,7 @@
             <font>{{remnant}}</font>字~
           </span>
         </p>
-        <button>提交</button>
+        <button @click="commit">提交</button>
       </div>
     </div>
     <div class="video_pup" v-if="videoflag">
@@ -80,6 +87,7 @@
 import SwiperLeft from "@/components/Home/Swipervideo.vue";
 import tabNav from "@/components/Home/Centernav.vue";
 import lessonitem from "@/components/Home/Lessonitem.vue";
+
 export default {
   name: "",
   data() {
@@ -88,7 +96,7 @@ export default {
       video: "",
       sid: 0,
       comtext: "",
-      remnant: 0,
+      remnant: 200,
       scrollWay: "horizontal", // vertical  horizontal
       //   itemStr: 'title',
       navWH: 0,
@@ -97,17 +105,92 @@ export default {
       colorBack: "#fff",
       colorActiveText: "#36b936",
       colorActiveBack: "",
-      activeIndex: 0,
-      zanlist: ["品牌指数", "课程体系", "教学成果", "服务质量", "师资力量"],
-      lesson: {},
-      dataArr: []
+      activeIndex: 0, //一级分类选中索引
+      zanlist: [
+        { name: "品牌指数", shu: 0, check: false },
+        { name: "课程体系", shu: 0, check: false },
+        { name: "教学成果", shu: 0, check: false },
+        { name: "服务质量", shu: 0, check: false },
+        { name: "师资力量", shu: 0, check: false }
+      ],
+      lesson: {}, //课程详情
+      dataArr: [], //一级分类
+      lessonlist: [], //课程列表
+      id: 0, //获取二级分类id
+      c2idindex: 0, //二级分类index
+      data2Arr: [], //二级分类内容
+      collectflag: false
     };
   },
   created() {
     this.sid = this.$route.query.id;
     this.getLessonList(this.sid);
+    // 看看用户是不是收藏了
+    this.axios
+      .post("/api/api/school/checkiscollect", {
+        type: 1,
+        sid: this.$route.query.id
+      })
+      .then(res => {
+        console.log(res.data)
+        if (res.data.code == 200) {
+          this.collectflag = true;
+        }
+      });
   },
   methods: {
+    // 收藏
+    toCollect() {
+      this.axios
+        .post("/api/api/school/schoolCollect", {
+          type: 1,
+          sid: this.sid
+        })
+        .then(res => {
+          console.log(res.data);
+          if (res.data.code == 200) {
+            if (res.data.list.status ==2) {
+              this.collectflag = false;
+              return false;
+            } else if (res.data.list.status ==1) {
+              this.collectflag = true;
+              this.$toast("收藏成功");
+            }
+          } else if (res.data.code == 205) {
+            //未登录
+            this.$router.push("/login");
+          }
+        });
+    },
+    // 点击选中评价
+    tagzan(index) {
+      var check = this.zanlist[index].check;
+      this.zanlist[index].check = check === true ? false : true;
+      if (this.zanlist[index].check) {
+        this.zanlist[index].shu = 1;
+      } else {
+        this.zanlist[index].shu = 0;
+      }
+    },
+    // 评价提交
+    commit() {
+      this.axios
+        .post("/api/api/school/comment", {
+          sid: this.$route.query.id,
+          pinpai: this.zanlist[0].shu,
+          kecheng: this.zanlist[1].shu,
+          jiaoxue: this.zanlist[2].shu,
+          fuwu: this.zanlist[3].shu,
+          shizi: this.zanlist[4].shu,
+          dianping: this.comtext
+        })
+        .then(res => {
+          console.log(res.data);
+          if (res.data.code == 200) {
+            this.$toast("评价提交成功！");
+          }
+        });
+    },
     // 视频弹窗
     toVideo(data) {
       this.video = data;
@@ -124,11 +207,37 @@ export default {
           if (res.data.code == 200) {
             this.lesson = res.data.list;
             this.dataArr = res.data.list.clist;
+            this.id = this.dataArr[this.activeIndex].id;
+            this.data2Arr = this.lesson.clist[this.activeIndex].c2list;
           }
         });
     },
+    getList(sid, id, c2id) {
+      this.axios
+        .get("/api/api/school/getCourse", {
+          params: {
+            sid: sid,
+            cid: id,
+            c2id: c2id
+          }
+        })
+        .then(res => {
+          // console.log(res.data);
+          if (res.data.code == 200) {
+            this.lessonlist = res.data.list;
+          }
+        });
+    },
+    csidclick(i) {
+      this.c2idindex = i;
+      this.c2id = this.lesson.clist[this.activeIndex].c2list[i].id;
+      this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
+    },
     chooseItem(val) {
       this.activeIndex = val[0];
+      this.c2idindex = 0;
+      this.c2id = this.lesson.clist[this.activeIndex].c2list[0].id;
+      this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
     },
     descInput() {
       var txtVal = this.comtext.length;
@@ -144,6 +253,13 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.scroll-nav {
+  box-shadow: none !important;
+  justify-content: center !important;
+}
+.scroll-box {
+  justify-content: center !important;
+}
 .video_pup {
   width: 100%;
   height: 100%;
@@ -165,14 +281,16 @@ export default {
     margin-top: 0.3rem;
   }
 }
-.content {
+.lesson {
   flex: 1;
   overflow: auto;
-  margin-bottom: 1.2rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 0.2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 1.2rem;
+  background: #fff;
+  width: 100%;
+  z-index: 12;
   overflow-x: hidden;
   .lesson_body {
     background: #f4f4f4;
@@ -206,6 +324,9 @@ export default {
         padding-top: 0.1rem;
         i {
           margin: 0 0.15rem;
+          &.fa-star {
+            color: #ffae00;
+          }
         }
       }
     }
@@ -263,7 +384,7 @@ export default {
         width: 2.8rem;
         height: 0.8rem;
         background: #f8f8f8;
-        background: #ccc;
+        // background: #ccc;
         font-size: 0.28rem;
         border-radius: 0.4rem;
         display: flex;

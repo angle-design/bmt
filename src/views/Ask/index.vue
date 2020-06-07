@@ -56,8 +56,10 @@ export default {
     },
     toAskfile() {
       var self = this;
-      self.common.Login(self).then(() => {
-        self.$router.push("/askfile");
+      var login = this.common.Login(self).then(res=>{
+          if(res){
+              this.$router.push("/askfile");
+          }
       });
     },
     handleToScroll(pos) {
