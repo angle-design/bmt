@@ -1,820 +1,200 @@
-<template> 
-<div id="demo"> 
-
-  <!-- 遮罩层 --> 
-
-  <div class="container" v-show="panel"> 
-   <div> 
-       <img id="image" :src="url" alt="Picture"> 
+<template>
+    <div style="min-width: 540px;width:600px;">
+        <div class="eleme">
+            <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :before-upload="beforeUpload"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :auto-upload="true"
+                    :show-file-list="false"
+            >
+                <el-button slot="trigger" size="small" type="primary">选择图片</el-button>
+                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传头像</el-button>
+            </el-upload>
+        </div>
+        <div>
+            <br />
+            <el-button type="primary" icon="el-icon-refresh-right" circle @click="rotateRight"></el-button>
+            <el-button type="success" icon="el-icon-refresh-left" circle @click="rotateLeft"></el-button>
+            <el-button type="danger" icon="el-icon-plus" circle @click="changeScale(1)"></el-button>
+            <el-button type="warning" icon="el-icon-minus" circle @click="changeScale(-1)"></el-button>
+        </div>
+        <div class="cropper">
+            <div class="cropper-content" style="margin-top:60px;margin-left:60px;">
+                <div class="cropper">
+                    <vueCropper
+                            ref="cropper"
+                            :img="option.img"
+                            :outputSize="option.size"
+                            :outputType="option.outputType"
+                            :info="true"
+                            :full="option.full"
+                            :canMove="option.canMove"
+                            :canMoveBox="option.canMoveBox"
+                            :original="option.original"
+                            :autoCrop="option.autoCrop"
+                            :autoCropWidth="option.autoCropWidth"
+                            :autoCropHeight="option.autoCropHeight"
+                            :fixedBox="option.fixedBox"
+                            @realTime="realTime"
+                            @imgLoad="imgLoad"
+                    ></vueCropper>
+                </div>
+                <div style="margin-left:20px;">
+                    <div
+                            class="show-preview"
+                            :style="{'width': '150px', 'height':'155px',  'overflow': 'hidden', 'margin': '5px'}"
+                    ></div>
+                </div>
+            </div>
+        </div>
     </div>
-   <button type="button" id="button" @click="crop">确定</button>
-  </div>
-
-  <div style="padding:20px;"> 
-    <div class="show"> 
-     <div class="picture" :style="'backgroundImage:url('+headerImage+')'"> 
-         </div> 
-    </div>
-    <div style="margin-top:20px;"> 
-     <input type="file" id="change" accept="image" @change="change"> 
-     <label for="change"></label> 
-    </div>
-    </div> 
-  </div> 
-
-
 </template>
 <script>
-import Cropper from 'cropperjs'
-
-export default { 
-
- components: { 
-
- }, 
-
- data () { 
-
-  return { 
-
-   headerImage:'', 
-
-   picValue:'', 
-
-   cropper:'', 
-
-   croppable:false, 
-
-   panel:false, 
-
-   url:''
-
-  } 
-
- }, 
-
- mounted () { 
-
-  //初始化这个裁剪框 
-
-  var self = this; 
-
-  var image = document.getElementById('image'); 
-
-  this.cropper = new Cropper(image, { 
-
-   aspectRatio: 1, 
-
-   viewMode: 1, 
-
-   background:false, 
-
-   zoomable:false, 
-
-   ready: function () { 
-
-    self.croppable = true; 
-
-   } 
-
-  }); 
-
- }, 
-
- methods: { 
-
-  getObjectURL (file) { 
-
-   var url = null ;  
-
-   if (window.createObjectURL!=undefined) { // basic 
-
-    url = window.createObjectURL(file) ; 
-
-   } else if (window.URL!=undefined) { // mozilla(firefox) 
-
-    url = window.URL.createObjectURL(file) ; 
-
-   } else if (window.webkitURL!=undefined) { // webkit or chrome 
-
-    url = window.webkitURL.createObjectURL(file) ; 
-
-   } 
-
-   return url ; 
-
-  }, 
-
-  change (e) { 
-
-   let files = e.target.files || e.dataTransfer.files; 
-
-   if (!files.length) return; 
-
-   this.panel = true; 
-
-   this.picValue = files[0]; 
-
-   this.url = this.getObjectURL(this.picValue); 
-
-   //每次替换图片要重新得到新的url 
-
-   if(this.cropper){ 
-
-    this.cropper.replace(this.url); 
-
-   } 
-
-   this.panel = true; 
-
-  }, 
-
-  crop () { 
-
-    this.panel = false; 
-
-    var croppedCanvas; 
-
-    var roundedCanvas; 
-
-    if (!this.croppable) { 
-
-     return; 
-
-    } 
-
-    // Crop 
-
-    croppedCanvas = this.cropper.getCroppedCanvas(); 
-
-    console.log(this.cropper) 
-
-    // Round 
-
-    roundedCanvas = this.getRoundedCanvas(croppedCanvas); 
-
-    this.headerImage = roundedCanvas.toDataURL(); 
-
-    this.postImg() 
-
-  }, 
-
-  getRoundedCanvas (sourceCanvas) { 
-
-   var canvas = document.createElement('canvas'); 
-
-   var context = canvas.getContext('2d'); 
-
-   var width = sourceCanvas.width; 
-
-   var height = sourceCanvas.height; 
-
-   canvas.width = width; 
-
-   canvas.height = height; 
-
-   context.imageSmoothingEnabled = true; 
-
-   context.drawImage(sourceCanvas, 0, 0, width, height); 
-
-   context.globalCompositeOperation = 'destination-in'; 
-
-   context.beginPath(); 
-
-   context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true); 
-
-   context.fill(); 
-
-   return canvas; 
-
-  }, 
-
-  postImg () { 
-
-   //这边写图片的上传 
-
-  } 
-
- } 
-
-}
+    export default {
+        data() {
+            return {
+                headImg: '',
+                //剪切图片上传
+                crap: false,
+                previews: {},
+                option: {
+                    img: '',
+                    outputSize: 1, //剪切后的图片质量（0.1-1）
+                    full: false, //输出原图比例截图 props名full
+                    outputType: 'png',
+                    canMove: true,
+                    original: false,
+                    canMoveBox: true,
+                    autoCrop: true,
+                    autoCropWidth: 150,
+                    autoCropHeight: 150,
+                    fixedBox: false
+                },
+                fileName: '', //本机文件地址
+                downImg: '#',
+                imgFile: '',
+                uploadImgRelaPath: '' //上传后的图片的地址（不带服务器域名）
+            }
+        },
+
+        methods: {
+            submitUpload(file) {
+                // this.$refs.upload.submit();
+                this.finish('blob')
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList)
+            },
+            handlePreview(file) {
+                console.log(file)
+                //   let data = window.URL.createObjectURL(new Blob([file]));
+                //   this.option.img = data;
+            },
+            beforeUpload(file) {
+                console.log('上传文件')
+                console.log(file)
+                let data = window.URL.createObjectURL(new Blob([file]))
+                this.fileName = file.name
+                this.option.img = data
+            },
+            //放大/缩小
+            changeScale(num) {
+                console.log('changeScale')
+                num = num || 1
+                this.$refs.cropper.changeScale(num)
+            },
+            //坐旋转
+            rotateLeft() {
+                console.log('rotateLeft')
+                this.$refs.cropper.rotateLeft()
+            },
+            //右旋转
+            rotateRight() {
+                console.log('rotateRight')
+                this.$refs.cropper.rotateRight()
+            },
+            //上传图片（点击上传按钮）
+            finish(type) {
+                console.log('finish')
+                let _this = this
+                let formData = new FormData()
+                // 输出
+                if (type === 'blob') {
+                    this.$refs.cropper.getCropBlob(data => {
+                        let img = window.URL.createObjectURL(data)
+                        this.model = true
+                        this.modelSrc = img
+                        formData.append('file', data, this.fileName)
+                        this.$axios
+                            .post(config.upLoadFileURL, formData, {
+                                contentType: false,
+                                processData: false,
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                            })
+                            .then(response => {
+                                var res = response.data
+                                if (res == 'success') {
+                                    console.log('上传成功！')
+                                }
+                            })
+                    })
+                } else {
+                    this.$refs.cropper.getCropData(data => {
+                        this.model = true
+                        this.modelSrc = data
+                    })
+                }
+            },
+            // 实时预览函数
+            realTime(data) {
+                console.log('realTime')
+                this.previews = data
+            },
+            imgLoad(msg) {
+                console.log('imgLoad')
+                console.log(msg)
+            }
+        }
+    }
 </script>
-<style scoped>
-*{ 
-
- margin: 0; 
-
- padding: 0; 
-
-}
-
-#demo #button { 
-
- position: absolute; 
-
- right: 10px; 
-
- top: 10px; 
-
- width: 80px; 
-
- height: 40px; 
-
- border:none; 
-
- border-radius: 5px; 
-
- background:white; 
-
-}
-
-#demo .show { 
-
- width: 100px; 
-
- height: 100px; 
-
- overflow: hidden; 
-
- position: relative; 
-
- border-radius: 50%; 
-
- border: 1px solid #d5d5d5; 
-
-}
-
-#demo .picture { 
-
- width: 100%; 
-
- height: 100%; 
-
- overflow: hidden; 
-
- background-position: center center; 
-
- background-repeat: no-repeat; 
-
- background-size: cover;  
-
-}
-
-#demo .container { 
-
-  z-index: 99; 
-
-  position: fixed; 
-
-  padding-top: 60px; 
-
-  left: 0; 
-
-  top: 0; 
-
-  right: 0; 
-
-  bottom: 0; 
-
-  background:rgba(0,0,0,1); 
-
-}
-
-#demo #image { 
-
- max-width: 100%; 
-
-}
-
-.cropper-view-box,.cropper-face { 
-
- border-radius: 50%; 
-
-} 
-
-/*! 
-
- * Cropper.js v1.0.0-rc 
-
- * https://github.com/fengyuanchen/cropperjs 
-
- * 
-
- * Copyright (c) 2017 Fengyuan Chen 
-
- * Released under the MIT license 
-
- * 
-
- * Date: 2017-03-25T12:02:21.062Z 
-
- */
-
-.cropper-container { 
-
- font-size: 0; 
-
- line-height: 0;
-
- position: relative;
-
- -webkit-user-select: none;
-
- -moz-user-select: none;
-
- -ms-user-select: none;
-
- user-select: none;
-
- direction: ltr; 
-
- -ms-touch-action: none; 
-
- touch-action: none
-
-} 
-
-.cropper-container img { 
-
- /* Avoid margin top issue (Occur only when margin-top <= -height) */
-
- display: block; 
-
- min-width: 0 !important; 
-
- max-width: none !important; 
-
- min-height: 0 !important; 
-
- max-height: none !important; 
-
- width: 100%; 
-
- height: 100%; 
-
- image-orientation: 0deg 
-
-}
-
-.cropper-wrap-box, 
-
-.cropper-canvas, 
-
-.cropper-drag-box, 
-
-.cropper-crop-box, 
-
-.cropper-modal { 
-
- position: absolute; 
-
- top: 0; 
-
- right: 0; 
-
- bottom: 0; 
-
- left: 0; 
-
-}
-
-.cropper-wrap-box { 
-
- overflow: hidden; 
-
-}
-
-.cropper-drag-box { 
-
- opacity: 0; 
-
- background-color: #fff; 
-
-}
-
-.cropper-modal { 
-
- opacity: .5; 
-
- background-color: #000; 
-
-}
-
-.cropper-view-box { 
-
- display: block; 
-
- overflow: hidden;
-
- width: 100%; 
-
- height: 100%;
-
- outline: 1px solid #39f; 
-
- outline-color: rgba(51, 153, 255, 0.75); 
-
-} 
-
-.cropper-dashed { 
-
- position: absolute;
-
- display: block;
-
- opacity: .5; 
-
- border: 0 dashed #eee 
-
-}
-
-.cropper-dashed.dashed-h { 
-
- top: 33.33333%; 
-
- left: 0; 
-
- width: 100%; 
-
- height: 33.33333%; 
-
- border-top-width: 1px; 
-
- border-bottom-width: 1px 
-
-}
-
-.cropper-dashed.dashed-v { 
-
- top: 0; 
-
- left: 33.33333%; 
-
- width: 33.33333%; 
-
- height: 100%; 
-
- border-right-width: 1px; 
-
- border-left-width: 1px 
-
-}
-
-.cropper-center { 
-
- position: absolute; 
-
- top: 50%; 
-
- left: 50%;
-
- display: block;
-
- width: 0; 
-
- height: 0;
-
- opacity: .75 
-
-}
-
-.cropper-center:before, 
-
- .cropper-center:after { 
-
- position: absolute; 
-
- display: block; 
-
- content: ' '; 
-
- background-color: #eee 
-
-}
-
-.cropper-center:before { 
-
- top: 0; 
-
- left: -3px; 
-
- width: 7px; 
-
- height: 1px 
-
-}
-
-.cropper-center:after { 
-
- top: -3px; 
-
- left: 0; 
-
- width: 1px; 
-
- height: 7px 
-
-}
-
-.cropper-face, 
-
-.cropper-line, 
-
-.cropper-point { 
-
- position: absolute;
-
- display: block;
-
- width: 100%; 
-
- height: 100%;
-
- opacity: .1; 
-
-}
-
-.cropper-face { 
-
- top: 0; 
-
- left: 0;
-
- background-color: #fff; 
-
-}
-
-.cropper-line { 
-
- background-color: #39f 
-
-}
-
-.cropper-line.line-e { 
-
- top: 0; 
-
- right: -3px; 
-
- width: 5px; 
-
- cursor: e-resize 
-
-}
-
-.cropper-line.line-n { 
-
- top: -3px; 
-
- left: 0; 
-
- height: 5px; 
-
- cursor: n-resize 
-
-}
-
-.cropper-line.line-w { 
-
- top: 0; 
-
- left: -3px; 
-
- width: 5px; 
-
- cursor: w-resize 
-
-}
-
-.cropper-line.line-s { 
-
- bottom: -3px; 
-
- left: 0; 
-
- height: 5px; 
-
- cursor: s-resize 
-
-}
-
-.cropper-point { 
-
- width: 5px; 
-
- height: 5px; 
-
- opacity: .75; 
-
- background-color: #39f 
-
-}
-
-.cropper-point.point-e { 
-
- top: 50%; 
-
- right: -3px; 
-
- margin-top: -3px; 
-
- cursor: e-resize 
-
-}
-
-.cropper-point.point-n { 
-
- top: -3px; 
-
- left: 50%; 
-
- margin-left: -3px; 
-
- cursor: n-resize 
-
-}
-
-.cropper-point.point-w { 
-
- top: 50%; 
-
- left: -3px; 
-
- margin-top: -3px; 
-
- cursor: w-resize 
-
-}
-
-.cropper-point.point-s { 
-
- bottom: -3px; 
-
- left: 50%; 
-
- margin-left: -3px; 
-
- cursor: s-resize 
-
-}
-
-.cropper-point.point-ne { 
-
- top: -3px; 
-
- right: -3px; 
-
- cursor: ne-resize 
-
-}
-
-.cropper-point.point-nw { 
-
- top: -3px; 
-
- left: -3px; 
-
- cursor: nw-resize 
-
-}
-
-.cropper-point.point-sw { 
-
- bottom: -3px; 
-
- left: -3px; 
-
- cursor: sw-resize 
-
-}
-
-.cropper-point.point-se { 
-
- right: -3px; 
-
- bottom: -3px; 
-
- width: 20px; 
-
- height: 20px; 
-
- cursor: se-resize; 
-
- opacity: 1 
-
-}
-
-@media (min-width: 768px) {
-
- .cropper-point.point-se { 
-
-  width: 15px; 
-
-  height: 15px 
-
- } 
-
-}
-
-@media (min-width: 992px) {
-
- .cropper-point.point-se { 
-
-  width: 10px; 
-
-  height: 10px 
-
- } 
-
-}
-
-@media (min-width: 1200px) {
-
- .cropper-point.point-se { 
-
-  width: 5px; 
-
-  height: 5px; 
-
-  opacity: .75 
-
- } 
-
-}
-
-.cropper-point.point-se:before { 
-
- position: absolute; 
-
- right: -50%; 
-
- bottom: -50%; 
-
- display: block; 
-
- width: 200%; 
-
- height: 200%; 
-
- content: ' '; 
-
- opacity: 0; 
-
- background-color: #39f 
-
-}
-
-.cropper-invisible { 
-
- opacity: 0; 
-
-}
-
-.cropper-bg { 
-
- background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC'); 
-
-}
-
-.cropper-hide { 
-
- position: absolute;
-
- display: block;
-
- width: 0; 
-
- height: 0; 
-
-}
-
-.cropper-hidden { 
-
- display: none !important; 
-
-}
-
-.cropper-move { 
-
- cursor: move; 
-
-}
-
-.cropper-crop { 
-
- cursor: crosshair; 
-
-}
-
-.cropper-disabled .cropper-drag-box, 
-
-.cropper-disabled .cropper-face, 
-
-.cropper-disabled .cropper-line, 
-
-.cropper-disabled .cropper-point { 
-
- cursor: not-allowed; 
-
-}
+<style lang="less">
+    .cropper-content {
+        min-width: 540px;
+        display: flex;
+        .cropper {
+            width: 260px;
+            height: 260px;
+        }
+        .show-preview {
+            flex: 1;
+            -webkit-flex: 1;
+            display: flex;
+            display: -webkit-flex;
+            justify-content: center;
+            -webkit-justify-content: center;
+            .preview {
+                overflow: hidden;
+                border-radius: 50%;
+                border: 1px solid #cccccc;
+                background: #cccccc;
+                margin-left: 40px;
+            }
+        }
+    }
+    .cropper-content .show-preview .preview {
+        margin-left: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -khtml-user-select: none;
+        user-select: none;
+    }
 </style>
+
+
+
+

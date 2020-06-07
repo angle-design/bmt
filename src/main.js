@@ -21,6 +21,13 @@ Vue.component('Scroller', Scroller)
 // Vue.use(VueCropper)
 import common from '@/components/js/common.js'
 Vue.prototype.common = common;
+import VueCropper from 'vue-cropper'
+Vue.use(VueCropper);
+
+import ElementUI from 'element-ui' //element-ui的全部组件
+import 'element-ui/lib/theme-chalk/index.css'//element-ui的css
+Vue.use(ElementUI) //使用elementUI
+
 
 var qs = require('qs')
 Vue.prototype.qs = qs;
