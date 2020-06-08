@@ -153,7 +153,7 @@ export default {
         if (res.data.code == 200) {
           res.data.list.forEach((item, index) => {
             this.actions.push(
-              Object.assign({}, item, { method: this.clickAction })
+              Object.assign({}, item, { method: this.clickAction})
             );
           });
         }

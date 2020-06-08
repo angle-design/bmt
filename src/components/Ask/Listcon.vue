@@ -28,7 +28,7 @@
         </div>
         <p class="new_text">{{listtop.content}}</p>
       </div>
-
+      <div class="jieda" v-if="listtop.isq" @click="$emit('toaswer',listtop)"><i class="fa fa-star-o"></i>解答问题</div>
       <!-- 答 -->
       <div class="list_item" v-if="listtop.qlist">
         <div>
@@ -95,6 +95,16 @@ export default {
 
 <style lang='less' scoped>
 .new {
+  .jieda{
+    color:#369836;
+    padding:0.1rem 0;
+    margin-top:0.2rem;
+    display: block;
+    text-align: right;
+    i{
+      margin-right:0.05rem;
+    }
+  }
   .list_body {
     position: relative;
     padding: 0.3rem 0 0.2rem;
@@ -110,17 +120,7 @@ export default {
       &:nth-child(2) {
         padding-top: 0.2rem;
         div {
-          padding-top: 0.2rem;
           position: relative;
-          &::after {
-            content: "";
-            height: 0.02rem;
-            width: 6rem;
-            position: absolute;
-            top: 0rem;
-            left: 1rem;
-            background: #f4f4f4;
-          }
         }
       }
       div {
@@ -191,7 +191,17 @@ export default {
       background-size: 0.4rem 0.4rem;
       font-size: 0.3rem;
       padding-left: 1rem;
+      padding-bottom:0.2rem;
       position: relative;
+      &:after{
+        position: absolute;
+        bottom:0rem;
+        content:'';
+        height:0.02rem;
+        background:#f4f4f4;
+        right:0;
+        left:1rem;
+      }
       &.new_text_ask {
         background: url(../../assets/wen_03.png) no-repeat 0.2rem 0.05rem;
         background-size: 0.4rem 0.4rem;

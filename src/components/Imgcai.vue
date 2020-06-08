@@ -1,9 +1,8 @@
 <template>
-    <div style="min-width: 540px;width:600px;">
-
-
-        <div class="cropper">
-            <div class="cropper-content" style="margin-top:60px;margin-left:60px;">
+    <div class="content">
+    <div >
+        <div class="cropper1">
+            <div class="cropper-content">
                 <div class="cropper">
                     <vueCropper
                             ref="cropper"
@@ -25,12 +24,12 @@
 
                     ></vueCropper>
                 </div>
-                <div style="margin-left:20px;">
+                <!-- <div style="margin-left:20px;">
                     <div
                             class="show-preview"
                             :style="{'width': '150px', 'height':'155px',  'overflow': 'hidden', 'margin': '5px'}"
                     ></div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="eleme">
@@ -49,6 +48,7 @@
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传头像</el-button>
             </el-upload>
         </div>
+    </div>
     </div>
 </template>
 <script>
@@ -170,13 +170,29 @@
         }
     }
 </script>
-<style lang="less">
+<style lang="less" scoped>
+.content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #f8f8f8;
+  padding-bottom: 0.2rem;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  height:100%;
+//   align-items: center;
+  width:100%;
+  overflow-x:hidden;
+}
     .cropper-content {
-        min-width: 540px;
-        display: flex;
+        width:100%;
+    
         .cropper {
-            width: 260px;
-            height: 260px;
+            width:5rem;
+            margin:0 auto;
+            height:5rem;
         }
         .show-preview {
             flex: 1;
@@ -203,8 +219,11 @@
         user-select: none;
     }
     .eleme{
-        padding-top: 41px;
-        padding-left: 100px;
+        width:100%;
+        display: flex;
+       align-items: center;
+       justify-content: center;
+       padding-top:30px;
     }
 </style>
 

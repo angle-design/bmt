@@ -1,15 +1,14 @@
 <template>
   <div class="content">
     <!-- 搜索框 -->
-    <!-- <scroller
+    <scroller
         ref="aa"
         :handleToScroll="handleToScroll"
-        :handleToTouchEnd="handleToTouchEnd"
-    >-->
+    >
     <div>
-      <div class="searchbody" @click="tosearch">
+      <div class="searchbody" @tap="tosearch">
         <div class="search">
-          <img src="../../assets/search.png" />搜索机构名称、课程名称
+          <img src="../../assets/search.png" />搜索机构名称
         </div>
       </div>
       <!-- 分类 -->
@@ -46,17 +45,20 @@
                 <div class="listitem" v-for="(item,index) in list" :key="index">
                    <mechanitem :list="item"></mechanitem>
                     <span class="pai">
-                        <font v-if="index>2&&index<30" class="smalltop">{{index}}</font>
+                       
                         <img v-if="index==0" src="../../assets/top1.png">
                         <img v-if="index==1" src="../../assets/top2.png">
                         <img v-if="index==2" src="../../assets/top3.png">
+                         <font v-if="index>2&&index<30" class="smalltop">{{index+1}}</font>
                     </span>
                 </div> 
             </div>
         </div>
+                  <!-- 展开更多 -->
+          <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
     </div>
     <router-view></router-view>
-    <!-- </scroller> -->
+    </scroller>
     <Tab />
   </div>
 </template>
@@ -85,6 +87,9 @@ export default {
       list:[],
         page:1,
         xuan:1,
+        payload: true,
+        pullDownMsg: "",
+      pullflag:true,
     };
   },
   components: {
@@ -98,6 +103,20 @@ export default {
     this.getmechanlist(this.xuan,this.page)
   },
   methods: {
+     handleToScroll(pos) {
+      //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
+       if (this.payload) {
+         this.pullDownMsg='上拉加载...';
+      if (this.$refs.aa.scroll.y <= this.$refs.aa.scroll.maxScrollY + 20) {
+        //使用refresh 方法 来更新scroll 解决无法滚动的问题
+        this.page++;
+        this.$nextTick(() => {
+           this.getmechanlist(this.xuan,this.page)
+          this.$refs.aa.scroll.refresh();
+        });
+      }
+       }
+    },
     //获取首页分类
     getalist(){
       this.axios.get('/api/api/school/getScate').then(res=>{
@@ -109,16 +128,30 @@ export default {
     },
     // 获取首页列表
     getmechanlist(cid,page){
-      this.axios.get('/api/api/school/getSlist',{
+      if(this.payload){
+ this.axios.get('/api/api/school/getSlist',{
         params:{
           cid:cid,
           p:page
         }
       }).then(res=>{
-        if(res.data.code==200){
-          this.list=res.data.list;
-       }
+        if (res.data.list) {
+              res.data.list.forEach(item => {
+                this.list.push(item);
+              });
+              if (this.page > 1 && res.data.list.length < 6) {
+                this.payload = false;
+                this.pullflag = true;
+              this.pullDownMsg = "精彩课程待更新...";
+              }
+            } else {
+              this.payload = false;
+              this.pullflag = true;
+              this.pullDownMsg = "精彩课程待更新...";
+            }
       })
+      }
+     
     },
     swipertwoInit() {
       var mySwiper = new Swiper(this.$refs.piccontainer, {
@@ -135,6 +168,9 @@ export default {
       })
     },
     chooseItem(val){
+      this.page=1;
+      this.payload=true;
+      this.list=[];
       this.activeIndex = val[0];
       this.xuan= this.dataArr[this.activeIndex].id;
       this.getmechanlist(this.xuan,this.page)
@@ -248,4 +284,12 @@ export default {
         }
   }
 }
+ .more {
+    width: 4rem;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 0.8rem;
+    color: #282828;
+    font-size: 0.28rem;
+  }
 </style>

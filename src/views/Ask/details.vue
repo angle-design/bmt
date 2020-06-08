@@ -50,7 +50,7 @@
             <div class="new">
               <ul>
                 <li v-for="(listitem,index) in ListInfo" :key="index">
-                  <Listcon :listtop="listitem" @toComment="toComment" />
+                  <Listcon :listtop="listitem" @toComment="toComment" @toaswer="toaswer" />
                 </li>
               </ul>
               <!-- 展开更多 -->
@@ -61,10 +61,12 @@
       </scroller>
       <!-- 底部 -->
       <Input :flag="flag" @pupClick="flag=false" @toSend="toSend($event)" />
+      <!-- 解答问题弹窗 -->
+      <Input :flag="awflag" @pupClick="awflag=false" @toSend="toquaswer($event)" />
       <div class="fixed_bottom">
-        <p>
+        <!-- <p>
           <i class="fa fa-share-square-o"></i>分享
-        </p>
+        </p> -->
         <p @click="toquestion">
           <i class="fa fa-question-circle-o"></i>提问
         </p>
@@ -83,6 +85,7 @@ export default {
   name: "adetails",
   data() {
     return {
+      awflag: false,
       flag: false,
       hinfo: {},
       time: "",
@@ -97,7 +100,8 @@ export default {
       order: 0,
       count: {},
       comtext: "",
-      zanflag: false
+      zanflag: false,
+      awitem: {} //解答某一项
     };
   },
   mounted() {
@@ -113,7 +117,6 @@ export default {
           aid: this.uid
         })
         .then(res => {
-          
           if (res.data.code == 200) {
             this.zanflag = true;
           } else if (res.data.code == 205) {
@@ -124,19 +127,12 @@ export default {
     },
     // 提问
     toquestion() {
-      this.axios
-        .post("/api/Api/Ask/addask", {
-          hid: this.uid,
-          content: this.comtext
-        })
-        .then(res => {
-          if (res.data.code == 205) {
-            //未登录
-            this.$router.push("/login");
-          } else {
-            this.flag = true;
-          }
-        });
+      var self = this;
+      var login = this.common.Login(self).then(res => {
+        if (res) {
+          this.flag = true;
+        }
+      });
     },
     // 提交提问
     toSend(data) {
@@ -153,11 +149,6 @@ export default {
               //提问成功
               this.flag = false;
               this.$router.go(0);
-            } else if (res.data.code == 205) {
-              //未登录
-              this.$router.push("/login");
-            } else {
-              alert("发表失败");
             }
           });
       }
@@ -165,6 +156,32 @@ export default {
     // 进入回复详情
     toComment(id) {
       this.$router.push("/comment/" + id);
+    },
+    toquaswer(data) {
+      this.comtext = data;
+      // 提交解答
+      this.axios
+        .post("/api/api/ask/addq", {
+          hid: this.awitem.hid,
+          pid: this.awitem.id,
+          content: this.comtext
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            //提问成功
+            this.awflag = false;
+            this.$router.go(0);
+          }
+        });
+    },
+    toaswer(data) {
+      this.awitem = data;
+      var self = this;
+      var login = this.common.Login(self).then(res => {
+        if (res) {
+          this.awflag = true;
+        }
+      });
     },
     // 获取头部
     getInfo(id) {
@@ -417,7 +434,7 @@ export default {
         margin-right: 0.1rem;
       }
       &:nth-child(2) {
-        margin: 0 0.8rem;
+        // margin: 0 0.8rem;
       }
     }
   }
@@ -430,7 +447,8 @@ export default {
   color: #282828;
   font-size: 0.28rem;
 }
-.content ul li{
-  padding:0 0.2rem
+.content ul li {
+  padding: 0 0.2rem;
+  border-bottom: 0.1rem solid #f4f4f4;
 }
 </style>

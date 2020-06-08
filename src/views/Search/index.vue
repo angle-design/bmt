@@ -134,6 +134,9 @@ import mechanitem from "@/components/Home/Mechanism.vue"
     flex-direction: column;
     background: #f9f9f9;
     padding-top: 0.7rem;
+    .mechan{
+      padding-right:0.2rem;
+    }
   }
 
   .search_input {
@@ -177,7 +180,7 @@ import mechanitem from "@/components/Home/Mechanism.vue"
         padding: 0.2rem;
 
         li {
-          padding: 0.2rem 0.1rem 0.3rem;
+          padding:0 0.1rem 0;
 
           &:last-child {
             padding-bottom: 0;

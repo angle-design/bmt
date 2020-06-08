@@ -1,6 +1,6 @@
 
 <template>
-    <div class="mechan" @click="toDEtails(list.id)">
+    <div class="mechan" @tap="toDEtails(list.id)">
         <!-- 每个机构 -->
         <img :src="list.logo">
         <div>
@@ -52,8 +52,13 @@ export default {
             }
             div{
                 h4{
-                  font-size:0.32rem;  
-                  line-height:0.5rem;
+                  font-size:0.31rem;  
+                  line-height:0.55rem;
+                  overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
                 }
                 .itemlesson{
                     font-size:0.26rem;

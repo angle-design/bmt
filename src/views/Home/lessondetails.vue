@@ -1,6 +1,8 @@
 <!--  -->
 <template>
   <div class="content">
+    <scroller>
+    <div>
     <div class="details_top">
       <img
         :src="lesson.image"
@@ -30,6 +32,8 @@
     <div class="fix_bottom">
         <button @click="handlemessage(lesson.sid,lesson.id)">立即注册</button>
     </div>
+    </div>
+    </scroller>
   </div>
 </template>
 
@@ -179,6 +183,7 @@ mounted(){
       border-radius:0.6rem;
       background:#36b936;
       color:#fff;
+      font-size:0.32rem;
     }
   }
 }

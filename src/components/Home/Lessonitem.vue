@@ -6,7 +6,7 @@
           <span>适用人群：{{list.objects}}</span>
           <p>
             <span>￥<font>{{list.price}}</font></span>
-            <button v-if="ceflag" @click="handlemessage(list.id)">立即注册</button>
+            <button v-if="ceflag" @click="handlemessage(list.sid,list.id)">立即注册</button>
           </p>
     </div>
 </template>
@@ -15,17 +15,20 @@ export default {
   name: "lessonitem",
   props:{
       list:Object,
-      ceflag:Boolean
+      ceflag:Boolean,
   },
   data() {
     return {
      
     };
   },
+  created(){
+    console.log(this.list)
+  },
   methods:{
      // 进入立即注册
-    handlemessage(id) {
-      this.$router.push({name:'signup',query:{id:id}});
+     handlemessage(id,cid) {
+      this.$router.push({name:'signup2',query:{id:id,cid:cid}});
     },
     toDetails(id){
       this.$router.push({name:'lessondetails',query:{id:id}})

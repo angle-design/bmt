@@ -45,14 +45,12 @@ export default new Router({
       path: '/home',
       component: home,
       meta: { keepAlive: true },
-      children: [
-        {
-          path: '/home/lessoni',
-          name: 'lessoni',
-          component: lessoni,
-        },
-        
-      ]
+    },
+    {
+      path: '/home/lessoni',
+      name: 'lessoni',
+      component: lessoni,
+      // meta: { keepAlive: true },
     },
     // 机构详情
     // {

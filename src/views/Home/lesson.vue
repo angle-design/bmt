@@ -1,6 +1,8 @@
 <!--  -->
 <template>
   <div class="lesson">
+    <!-- <scroller> -->
+    <div>
     <div class="lesson_body">
       <div class="lesson_top">
         <div>
@@ -12,7 +14,7 @@
         </div>
         <span>
           <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @click="toCollect"></i>
-          <i class="fa fa-share-square-o"></i>
+          <!-- <i class="fa fa-share-square-o"></i> -->
         </span>
       </div>
       <SwiperLeft
@@ -80,6 +82,8 @@
       <video :src="video" controls="controls" autoplay>您的浏览器不支持 video 标签。</video>
       <i class="fa fa-times-circle" @click="videoflag=false"></i>
     </div>
+    </div>
+    <!-- </scroller> -->
   </div>
 </template>
 
@@ -213,6 +217,7 @@ export default {
         });
     },
     getList(sid, id, c2id) {
+
       this.axios
         .get("/api/api/school/getCourse", {
           params: {
@@ -287,11 +292,13 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 1.2rem;
+bottom:0;
+padding-bottom:0.3rem;
   background: #fff;
   width: 100%;
   z-index: 12;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   .lesson_body {
     background: #f4f4f4;
     padding: 0.3rem 0;
