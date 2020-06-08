@@ -26,7 +26,7 @@
             <font>回答</font>
           </span>
         </p>
-        <button>问他</button>
+        <button @click="toDeatils(item.id)">问他</button>
       </li>
     </ul>
   </div>
@@ -72,13 +72,17 @@ export default {
         if (res.data.list) {
           this.recommendList = res.data.list;
           this.len = res.data.list.length;
-          console.log(res.data.list)
         }
       });
-    }
+    },
+      //进入详情
+     toDeatils(id) {
+          this.$router.push("/askdetails/" + id);
+     },
   },
   mounted() {
     this.getTeachList();
+
   }
 };
 </script>

@@ -1,27 +1,7 @@
 <template>
     <div style="min-width: 540px;width:600px;">
-        <div class="eleme">
-            <el-upload
-                    class="upload-demo"
-                    ref="upload"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :before-upload="beforeUpload"
-                    :on-preview="handlePreview"
-                    :on-remove="handleRemove"
-                    :auto-upload="true"
-                    :show-file-list="false"
-            >
-                <el-button slot="trigger" size="small" type="primary">选择图片</el-button>
-                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传头像</el-button>
-            </el-upload>
-        </div>
-        <div>
-            <br />
-            <el-button type="primary" icon="el-icon-refresh-right" circle @click="rotateRight"></el-button>
-            <el-button type="success" icon="el-icon-refresh-left" circle @click="rotateLeft"></el-button>
-            <el-button type="danger" icon="el-icon-plus" circle @click="changeScale(1)"></el-button>
-            <el-button type="warning" icon="el-icon-minus" circle @click="changeScale(-1)"></el-button>
-        </div>
+
+
         <div class="cropper">
             <div class="cropper-content" style="margin-top:60px;margin-left:60px;">
                 <div class="cropper">
@@ -39,8 +19,10 @@
                             :autoCropWidth="option.autoCropWidth"
                             :autoCropHeight="option.autoCropHeight"
                             :fixedBox="option.fixedBox"
+                            :fixedNumber="[1,1]"
                             @realTime="realTime"
                             @imgLoad="imgLoad"
+
                     ></vueCropper>
                 </div>
                 <div style="margin-left:20px;">
@@ -50,6 +32,22 @@
                     ></div>
                 </div>
             </div>
+        </div>
+        <div class="eleme">
+            <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :before-upload="beforeUpload"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :auto-upload="true"
+                    :show-file-list="false"
+
+            >
+                <el-button slot="trigger" size="small" type="primary">选择图片</el-button>
+                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传头像</el-button>
+            </el-upload>
         </div>
     </div>
 </template>
@@ -70,9 +68,9 @@
                     original: false,
                     canMoveBox: true,
                     autoCrop: true,
-                    autoCropWidth: 150,
-                    autoCropHeight: 150,
-                    fixedBox: false
+                    autoCropWidth: 200,
+                    autoCropHeight: 200,
+                    fixedBox: true
                 },
                 fileName: '', //本机文件地址
                 downImg: '#',
@@ -129,16 +127,27 @@
                         this.model = true
                         this.modelSrc = img
                         formData.append('file', data, this.fileName)
-                        this.$axios
-                            .post(config.upLoadFileURL, formData, {
+                        this.axios.post('/api/api/upload/uploadimage', formData, {
                                 contentType: false,
                                 processData: false,
                                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                             })
                             .then(response => {
                                 var res = response.data
-                                if (res == 'success') {
-                                    console.log('上传成功！')
+                                if (res.code == 200) {
+
+                                    this.axios.post('/api/api/my/setMyinfo',{
+                                        image: res.data.src
+                                    })
+                                    .then(res => {
+
+                                            if (res.data.code == 200) {
+                                                this.$router.push("/my/setup");
+                                            } else if (res.data.code == 205) {
+                                                //未登录
+                                                this.$toast("上传失败");
+                                            }
+                                    })
                                 }
                             })
                     })
@@ -192,6 +201,10 @@
         -ms-user-select: none;
         -khtml-user-select: none;
         user-select: none;
+    }
+    .eleme{
+        padding-top: 41px;
+        padding-left: 100px;
     }
 </style>
 

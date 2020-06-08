@@ -2,11 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
-import home from '@/components/Imgcai.vue';
+import home from '@/views/Home/home.vue';
 import lessoni from '@/views/Home/lesson.vue';
 import lessondetails from '@/views/Home/lessondetails.vue'
 import top from '@/views/Home/top.vue';
 import signup from '@/views/Home/signup.vue';
+import signup2 from '@/views/Home/signup2.vue';
 import search from '@/views/Search/index.vue';
 import message from '@/views/Message/index.vue';
 import lesson from '@/views/Lesson/index.vue';
@@ -30,6 +31,7 @@ import myfeedback from '@/views/My/feedback.vue';
 import mysetup from '@/views/My/setup.vue';
 import mytopic from '@/views/My/topic.vue';
 import mylesson from '@/views/My/lesson.vue';
+import imgcai from '@/components/Imgcai.vue';
 export default new Router({
   mode: 'hash',
   //base:process.env.BABEL_URL,
@@ -93,10 +95,19 @@ export default new Router({
       name: 'signup',
       component: signup
     },
+      {
+          path: '/signup2',
+          name: 'signup2',
+          component: signup2
+      },
     {
       path: '/message',
       component: message
     },
+      {
+          path: '/imgcai',
+          component: imgcai
+      },
     {
       path: '/lesson',
       component: lesson,

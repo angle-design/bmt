@@ -1,17 +1,18 @@
 <template>
   <div class="setup">
-        <p class="head">
-          <img src="../../assets/feng.jpg">
+        <p class="head" @click="changeimge">
+            <img v-if="userinfo.a_image" :src="userinfo.a_image" />
+            <img v-else src="../../assets/mohead.png" />
           <span>更换头像</span>
         </p>
         <p>
           <font>用户名</font>
-          <input type="text">
+          <input type="text" v-bind:value="userinfo.a_uname" >
           <span>该账户已存在</span>
         </p>
         <p>
           <font>性&nbsp;&nbsp;&nbsp;别</font>
-          <input type="text">
+          <input type="text" v-bind:value="userinfo.a_sex">
         </p>
         <button @click="loginout">退出账户</button>
 </div>
@@ -22,9 +23,19 @@ export default {
   name: "setup",
   data() {
     return {
-    
+        userinfo:{}
     };
   },
+    created(){
+        this.axios.get('/api/api/my/getUinfo').then(res=>{
+            console.log(res.data);
+            if(res.data.code==205){
+                this.$router.push('/login')
+            }else if(res.data.code==200){
+                this.userinfo=res.data.list
+            }
+        })
+    },
   methods:{
     loginout(){
       this.axios.get('/api/api/user/logout').then(res=>{
@@ -33,7 +44,10 @@ export default {
           this.$router.push('/login')
         }
       })
-    }
+    },
+      changeimge(){
+          this.$router.push("/imgcai");
+      }
   }
 };
 </script>

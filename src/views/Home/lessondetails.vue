@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="fix_bottom">
-        <button @click="handlemessage(lesson.sid)">立即注册</button>
+        <button @click="handlemessage(lesson.sid,lesson.id)">立即注册</button>
     </div>
   </div>
 </template>
@@ -71,8 +71,8 @@ mounted(){
         });
     },
      // 进入立即注册
-  handlemessage(id) {
-      this.$router.push({name:'signup',query:{id:id}});
+  handlemessage(id,cid) {
+      this.$router.push({name:'signup2',query:{id:id,cid:cid}});
     },
     getDetails(){
       this.axios.get('/api/api/school/getCinfo',{

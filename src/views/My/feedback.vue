@@ -1,7 +1,7 @@
 <template>
   <div class="feedback">
         <textarea placeholder="老师认真负责" v-model="feedmassage"></textarea>
-        <button>提交</button>  
+        <button @click="tofankui">提交</button>
 </div>
 </template>
 
@@ -12,7 +12,25 @@ export default {
     return {
       feedmassage:''
     };
-  }
+  },
+    methods: {
+        // 下面浮窗点赞
+        tofankui() {
+            this.axios
+                .post("/api/api/My/fankui", {
+                    content: this.feedmassage
+                })
+                .then(res => {
+
+                    if (res.data.code == 200) {
+                        this.$toast("反馈成功");
+                    } else if (res.data.code == 205) {
+                        //未登录
+                        this.$router.push("/login");
+                    }
+                });
+        },
+    }
 };
 </script>
 
