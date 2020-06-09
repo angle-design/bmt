@@ -66,7 +66,7 @@
       <div class="fixed_bottom">
         <!-- <p>
           <i class="fa fa-share-square-o"></i>分享
-        </p> -->
+        </p>-->
         <p @click="toquestion">
           <i class="fa fa-question-circle-o"></i>提问
         </p>

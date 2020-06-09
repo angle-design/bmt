@@ -79,10 +79,6 @@ export default {
         auname:this.uname,
         sex:this.sex
       }).then(res=>{
-        // if(res.data.code==202){
-        //   // alert(1)
-        //    this.aflag=true;
-        // }
       })
     }
   },

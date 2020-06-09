@@ -17,7 +17,7 @@
           </dl>
           <p>
             <span>
-              <i @click.once="zan($event,listtop.id)" class="fa fa-heart-o"></i>
+              <i   @click.once="zan($event,listtop.id)" class="fa fa-heart-o"></i>
               <font>{{listtop.zan?listtop.zan:'0'}}</font>
             </span>
             <span @click="$emit('toComment',listtop.id)">
@@ -44,8 +44,8 @@
             </dd>
           </dl>
           <p>
-            <span>
-              <i @click.once="zan($event,listtop.id)" class="fa fa-heart-o"></i>
+            <span >
+              <i  @click.once="zan($event,listtop.id)" class="fa fa-heart-o"></i>
               <font>{{listtop.qlist.zan?listtop.qlist.zan:'0'}}</font>
             </span>
             <span @click="$emit('toComment',listtop.id)">
@@ -80,9 +80,9 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
-            event.target.className = "fa fa-heart";
-            event.path[1].childNodes[2].innerText =
-              parseInt(event.path[1].childNodes[2].innerText) + 1;
+           event.target.className = "fa fa-heart";
+            event.target.nextElementSibling.innerHTML =
+                  parseInt(event.target.nextElementSibling.innerHTML) + 1;
           } else if (res.data.code == 205) {
             //未登录
             this.$router.push("/login");
@@ -107,7 +107,7 @@ export default {
   }
   .list_body {
     position: relative;
-    padding: 0.3rem 0 0.2rem;
+    padding: 0.3rem 0 0.1rem;
     .new_bottom {
       margin-left: 1.1rem;
       padding-top: 0.3rem;
@@ -177,7 +177,7 @@ export default {
           span {
             margin-left: 0.3rem;
             i {
-              margin-right: 0.06rem;
+                  padding: 0.1rem 0.06rem;
               color: #bfbfbf;
               font-size: 0.3rem;
             }
@@ -205,6 +205,10 @@ export default {
       &.new_text_ask {
         background: url(../../assets/wen_03.png) no-repeat 0.2rem 0.05rem;
         background-size: 0.4rem 0.4rem;
+         &:after{
+           width:0;
+           height:0;
+         }
       }
     }
   }

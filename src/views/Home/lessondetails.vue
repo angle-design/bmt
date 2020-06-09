@@ -58,10 +58,9 @@ mounted(){
           sid: this.$route.query.id
         })
         .then(res => {
-          
+          // console.log(res.data.list.status);
           if (res.data.code == 200) {
-            console.log(res.data)
-           if (res.data.list.status ==2) {
+            if (res.data.list.status ==2) {
               this.collectflag = false;
               return false;
             } else if (res.data.list.status ==1) {

@@ -25,7 +25,7 @@
                   </dl>
                   <p>
                     <span>
-                      <i class="fa fa-heart-o" @click.once="zan($event,list.id)"></i>
+                      <i @click.once="zanlist($event,list.id)" class="fa fa-heart-o"></i>
                       <font>{{list.zan?list.zan:'0'}}</font>
                     </span>
                     <span @click="replaya(list)">
@@ -112,16 +112,17 @@ export default {
       this.getlogin();
     },
     // 点赞
-    zan(event, id) {
+    zanlist(event, id) {
       this.axios
         .post("/api/api/Ask/readdzan", {
           aid: id
         })
         .then(res => {
           if (res.data.code == 200) {
+            // console.log(event)
             event.target.className = "fa fa-heart";
-              event.target.nextElementSibling.innerHTML =
-                  parseInt(event.target.nextElementSibling.innerHTML) + 1;
+            event.target.nextElementSibling.innerHTML =
+              parseInt(event.target.nextElementSibling.innerHTML) + 1;
           } else if (res.data.code == 205) {
             //未登录
             this.$router.push("/login");
@@ -141,7 +142,8 @@ export default {
             fuid: this.replaydata[3],
             content: this.conmessage
           })
-          .then(res => {1                
+          .then(res => {
+            1;
             if (res.data.code == 200) {
               //成功，刷新当前页面
               window.location.reload();
@@ -208,7 +210,6 @@ export default {
           }
         })
         .then(res => {
-          // console.log(res.data.list);
           if (res.data.list) {
             this.fulist = res.data.list;
           }
@@ -223,7 +224,6 @@ export default {
           }
         })
         .then(res => {
-          // console.log(res.data.list);
           if (res.data.list) {
             this.fulist = res.data.list;
           }
@@ -335,8 +335,8 @@ export default {
     li {
       padding: 0.3rem 0.3rem;
       border-bottom: 0.1rem solid #f4f4f4;
-      &:last-child{
-        border-bottom:none;
+      &:last-child {
+        border-bottom: none;
       }
     }
   }
@@ -450,7 +450,7 @@ export default {
         margin-left: 0.3rem;
 
         i {
-          margin-right: 0.06rem;
+          padding: 0.1rem 0.06rem;
           color: #bfbfbf;
           font-size: 0.3rem;
         }

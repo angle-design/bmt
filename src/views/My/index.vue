@@ -21,8 +21,8 @@
         </router-link>
       </ul>
     </div>
-       <!-- <router-view /> -->
-        <Tab></Tab>
+    <!-- <router-view /> -->
+    <Tab></Tab>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
   name: "my",
   data() {
     return {
-      userinfo:{},
+      userinfo: {},
       mylist: [
         { name: "提问", classname: "fa fa-star-o", routeto: "/my/quection" },
         { name: "评论", classname: "fa fa-star-o", routeto: "/my/comment" },
@@ -42,18 +42,18 @@ export default {
       ]
     };
   },
-  created(){
-    this.axios.get('/api/api/my/getUinfo').then(res=>{
+  created() {
+    this.axios.get("/api/api/my/getUinfo").then(res => {
       console.log(res.data);
-      if(res.data.code==205){
-        this.$router.push('/login')
-      }else if(res.data.code==200){
-        this.userinfo=res.data.list
+      if (res.data.code == 205) {
+        this.$router.push("/login");
+      } else if (res.data.code == 200) {
+        this.userinfo = res.data.list;
       }
-    })
+    });
   },
-  components:{
-    Tab,
+  components: {
+    Tab
   }
 };
 </script>
@@ -102,13 +102,13 @@ export default {
       }
     }
     .my_list {
-        margin-top:0.3rem;
+      margin-top: 0.3rem;
       li {
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: 0.9rem;
-        font-size:0.28rem;
+        font-size: 0.28rem;
         p {
           i {
             color: #bfbfbf;
@@ -116,7 +116,7 @@ export default {
         }
         i {
           color: #a2a2a2;
-          font-size:0.32rem;
+          font-size: 0.32rem;
         }
       }
     }

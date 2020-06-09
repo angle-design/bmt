@@ -1,23 +1,10 @@
 <template>
   <div class="collection">
     <div class="collect_top">
-      <span :class="[active==1?'active':'']" @click="toggle(1)">机构</span>|
-      <span :class="[active==2?'active':'']" @click="toggle(2)">课程</span>
+      <router-link tag="span" to="/my/collection/jigou">机构</router-link>
+      <router-link tag="span" to="/my/collection/lesson">课程</router-link>
     </div>
-    <!-- 机构 -->
-    <div class="jigou" v-if="active==1">
-      <div class="listitem" v-for="(item,index) in list" :key="index">
-        <mechanitem :list="item"></mechanitem>
-      </div>
-    </div>
-    <!-- 课程 -->
-    <div class="lesson" v-if="active==2">
-      <ul>
-        <li v-for="(lesson,index) in lessonlist" :key="index">
-          <lessonitem :list="lesson" :ceflag="true"></lessonitem>
-        </li>
-      </ul>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -29,40 +16,12 @@ export default {
   data() {
     return {
       active: 1,
-      list: [],
-      lessonlist: []
+      list: []
     };
   },
-  mounted() {
-    this.getlist(1);
-  },
-  methods: {
-     toggle(i) {
-      this.active = i;
-      this.getlist(i)
-    },
-    getlist(num) {
-      this.axios
-        .get("/api/api/my/getMycollect", {
-          params: {
-            type: num
-          }
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            if (num == 1) {
-              this.list = res.data.list;
-            } else if (num == 2) {
-              this.lessonlist = res.data.list;
-            }
-          }
-        });
-    }
-  },
-  components: {
-    mechanitem,
-    lessonitem
-  }
+  mounted() {},
+  methods: {},
+  components: {}
 };
 </script>
 
@@ -73,13 +32,14 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 1.2rem;
   background: #fff;
   width: 100%;
   z-index: 2;
-  padding-top: 1rem;
+  // padding-top: 1rem;
+  height: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
+
   .collect_top {
     display: flex;
     align-items: center;
@@ -101,9 +61,9 @@ export default {
       font-size: 0.3rem;
       color: #999999;
       padding: 0.2rem 0.4rem 0.3rem;
-      &.active {
+      &.router-link-active {
         color: #36b936;
-        &:after {
+        &.router-link-active:after {
           content: "";
           position: absolute;
           width: 0.3rem;
@@ -115,32 +75,6 @@ export default {
           left: 50%;
           margin-left: -0.15rem;
         }
-      }
-    }
-  }
-  .jigou {
-    padding: 0 0.25rem;
-    .mechan {
-      background: #f8f8f8;
-    }
-  }
-  .lesson {
-    ul {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 0.4rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 0.18rem solid #f8f8f8;
-      li {
-        display: flex;
-        width: 3.3rem;
-        height: 3.4rem;
-        border: 0.02rem solid #e7e7e7;
-        border-radius: 0.15rem;
-        flex-direction: column;
-        overflow: hidden;
-        margin-left: 0.23rem;
-        margin-bottom: 0.22rem;
       }
     }
   }

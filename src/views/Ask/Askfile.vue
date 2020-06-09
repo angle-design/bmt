@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       school: "小学",
-      school_:1,
+      school_: 1,
       sheetVisible: false,
       actions: [],
       title: "", //题目
@@ -153,7 +153,7 @@ export default {
         if (res.data.code == 200) {
           res.data.list.forEach((item, index) => {
             this.actions.push(
-              Object.assign({}, item, { method: this.clickAction})
+              Object.assign({}, item, { method: this.clickAction })
             );
           });
         }

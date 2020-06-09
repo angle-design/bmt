@@ -1,25 +1,31 @@
 <template>
-  <div class="question">
-    <ul>
-      <li v-for="(item,index) in quesctionlist" :key="index">
-        <p class="title">
-          <span>提问:</span>
-          {{item.content}}
-        </p>
-        <div>
-          <p>
-            <img v-if="item.hinfo.a_image" :src="item.hinfo.a_image" />
-            <img v-else src="../../assets/mohead.png" />
-          </p>
-          <span>{{item.hinfo.h_title}},{{item.hinfo.h_title2}}</span>
-        </div>
-        <p class="time">
-          <font>{{item.time}}</font>
-          <span v-if="item.status==1">专家已答</span>
-          <span v-else>待回答</span>
-        </p>
-      </li>
-    </ul>
+  <div class="content">
+    <scroller ref="aa" :handleToScroll="handleToScroll">
+      <div class="question">
+        <ul>
+          <li v-for="(item,index) in quesctionlist" :key="index">
+            <p class="title">
+              <span>提问:</span>
+              {{item.content}}
+            </p>
+            <div>
+              <p>
+                <img v-if="item.hinfo.a_image" :src="item.hinfo.a_image" />
+                <img v-else src="../../assets/mohead.png" />
+              </p>
+              <span>{{item.hinfo.h_title}},{{item.hinfo.h_title2}}</span>
+            </div>
+            <p class="time">
+              <font>{{item.time}}</font>
+              <span v-if="item.status==1">专家已答</span>
+              <span v-else>待回答</span>
+            </p>
+          </li>
+        </ul>
+        <!-- 展开更多 -->
+        <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
+      </div>
+    </scroller>
   </div>
 </template>
 
@@ -28,33 +34,73 @@ export default {
   name: "question",
   data() {
     return {
-      quesctionlist: []
+      quesctionlist: [],
+      page: 1,
+      payload: true,
+      pullDownMsg: "",
+      pullflag: ""
     };
   },
-  created() {
-    this.axios.get("/api/api/my/getmyask").then(res => {
-      if (res.data.code == 200) {
-        this.quesctionlist = res.data.list;
+  mounted() {
+    this.getlist();
+  },
+  methods: {
+    // 上拉加载更多数据
+    handleToScroll() {
+      //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
+      if (this.payload) {
+        if (this.$refs.aa.scroll.y <= this.$refs.aa.scroll.maxScrollY + 50) {
+          this.page++;
+          this.getlist();
+          this.$refs.aa.scroll.refresh();
+        }
       }
-    });
+    },
+    getlist() {
+      if (this.payload) {
+        this.axios
+          .get("/api/api/my/getmyask", {
+            params: {
+              p: this.page
+            }
+          })
+          .then(res => {
+            if (res.data.list) {
+              res.data.list.forEach(item => {
+                this.quesctionlist.push(item);
+              });
+              if (res.data.list.length < 4) {
+                this.payload = false;
+                this.pullflag = true;
+                this.pullDownMsg = "没有更多内容...";
+              }
+            } else {
+              this.payload = false;
+              this.pullflag = true;
+              this.pullDownMsg = "没有更多内容...";
+            }
+          });
+      }
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.question {
+.content {
   flex: 1;
   overflow: auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #fff;
-  width: 100%;
-  z-index: 2;
-  font-size: 0.28rem;
-  padding-bottom: 0.3rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 0;
+  font-size: 0.3rem;
   box-sizing: border-box;
+  width: 100%;
   height: 100%;
+  background: #fff;
+}
+.question {
   ul {
     li {
       padding: 0.3rem 0.3rem 0.15rem;
@@ -106,5 +152,13 @@ export default {
       }
     }
   }
+}
+.more {
+  width: 4rem;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 0.8rem;
+  color: #282828;
+  font-size: 0.28rem;
 }
 </style>

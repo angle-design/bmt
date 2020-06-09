@@ -5,8 +5,7 @@ Vue.use(Router)
 import home from '@/views/Home/home.vue';
 import lessoni from '@/views/Home/lesson.vue';
 import lessondetails from '@/views/Home/lessondetails.vue'
-import top from '@/views/Home/top.vue';
-import signup from '@/views/Home/signup.vue';
+// import signup from '@/views/Home/signup.vue';
 import signup2 from '@/views/Home/signup2.vue';
 import search from '@/views/Search/index.vue';
 import message from '@/views/Message/index.vue';
@@ -16,8 +15,6 @@ import mechanism from '@/views/Mechanism/index.vue';
 import ask from '@/views/Ask/index.vue';
 import askdetails from '@/views/Ask/details.vue';
 import comment from '@/views/Ask/Comment.vue';
-import hot from '@/components/Ask/Hot.vue';
-import new1 from '@/components/Ask/New.vue';
 import askfile from '@/views/Ask/Askfile.vue';
 import login from '@/views/Login/index.vue';
 import setpassword from '@/views/Login/setpassword';
@@ -32,6 +29,8 @@ import mysetup from '@/views/My/setup.vue';
 import mytopic from '@/views/My/topic.vue';
 import mylesson from '@/views/My/lesson.vue';
 import imgcai from '@/components/Imgcai.vue';
+import mycojigou from '@/components/My/jigou.vue';
+import mycolesson from '@/components/My/lesson.vue';
 export default new Router({
   mode: 'hash',
   //base:process.env.BABEL_URL,
@@ -87,11 +86,6 @@ export default new Router({
     {
       path: '/home/search',
       component: search
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: signup
     },
       {
           path: '/signup2',
@@ -152,7 +146,24 @@ export default new Router({
     {
       path: '/my/collection',
       name: 'mycollection',
-      component: mycollection
+      component: mycollection,
+      
+      children:[
+        {
+          path: '/',
+          redirect: '/my/collection/jigou'
+        },
+        {
+          path: '/my/collection/jigou',
+          name: 'mycojigou',
+          component: mycojigou,
+        },
+        {
+          path: '/my/collection/lesson',
+          name: 'mycolesson',
+          component: mycolesson,
+        }
+      ]
     },
     {
       path: '/my/feedback',

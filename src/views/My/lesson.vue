@@ -1,11 +1,11 @@
 <template>
   <div class="lesson">
-           <ul>
-        <li v-for="(lesson,index) in lessonlist" :key="index">
-          <lessonitem :list="lesson" :ceflag="false"></lessonitem>
-        </li>
-      </ul>
-</div>
+    <ul>
+      <li v-for="(lesson,index) in lessonlist" :key="index">
+        <lessonitem :list="lesson" :ceflag="false"></lessonitem>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -14,19 +14,18 @@ export default {
   name: "topic",
   data() {
     return {
-      lessonlist:''
+      lessonlist: ""
     };
   },
-    created(){
-        this.axios.get("/api/api/my/getMycourse").then(res => {
-            if (res.data.code == 200) {
-                this.lessonlist = res.data.list;
-            }
-        });
-
-    },
-  components:{
-      lessonitem
+  created() {
+    this.axios.get("/api/api/my/getMycourse").then(res => {
+      if (res.data.code == 200) {
+        this.lessonlist = res.data.list;
+      }
+    });
+  },
+  components: {
+    lessonitem
   }
 };
 </script>
@@ -41,28 +40,28 @@ export default {
   bottom: 1.2rem;
   background: #fff;
   width: 100%;
-  z-index:2;
-  font-size:0.28rem;
+  z-index: 2;
+  font-size: 0.28rem;
   ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 0.18rem solid #f8f8f8;
+    li {
       display: flex;
-      flex-wrap: wrap;
-      margin-top: 0.4rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 0.18rem solid #f8f8f8;
-      li {
-        display: flex;
-        width: 3.3rem;
-        height: 3.4rem;
-        border: 0.02rem solid #e7e7e7;
-        border-radius: 0.15rem;
-        flex-direction: column;
-        overflow: hidden;
-        margin-left: 0.23rem;
-        margin-bottom: 0.22rem;
-
-      }
+      width: 3.3rem;
+      height: 3.4rem;
+      border: 0.02rem solid #e7e7e7;
+      border-radius: 0.15rem;
+      flex-direction: column;
+      overflow: hidden;
+      margin-left: 0.23rem;
+      margin-bottom: 0.22rem;
+    }
   }
-
 }
-  .lessonitem p button{display: none!important;}
+.lessonitem p button {
+  display: none !important;
+}
 </style>
