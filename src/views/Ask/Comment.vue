@@ -120,14 +120,15 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             event.target.className = "fa fa-heart";
-            event.path[1].childNodes[2].innerText =
-              parseInt(event.path[1].childNodes[2].innerText) + 1;
+              event.target.nextElementSibling.innerHTML =
+                  parseInt(event.target.nextElementSibling.innerHTML) + 1;
           } else if (res.data.code == 205) {
             //未登录
             this.$router.push("/login");
           }
         });
     },
+
     //提交回复
     tosend() {
       if (this.conmessage) {

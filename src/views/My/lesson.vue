@@ -14,32 +14,17 @@ export default {
   name: "topic",
   data() {
     return {
-      lessonlist:
-        [
-          {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "1小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-         {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "2小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-         {
-            'img':
-              "https://zgnstatic.oss-cn-beijing.aliyuncs.com/zgnimage/20200519/f8104b454aac5c2862d0b6fa43a09e72.jpg",
-            'title': "3小学数学思维训练",
-            'scholl': "适用人群：小学",
-            'price': 188
-          },
-        ] 
+      lessonlist:''
     };
   },
+    created(){
+        this.axios.get("/api/api/my/getMycourse").then(res => {
+            if (res.data.code == 200) {
+                this.lessonlist = res.data.list;
+            }
+        });
+
+    },
   components:{
       lessonitem
   }

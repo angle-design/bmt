@@ -160,11 +160,9 @@ export default {
     //    alert(1)
     //  },
     toSummit() {
-      this.axios
-        .post(
-          "/api/api/index/addBm",
-          this.qs.stringify({
-            jigou: this.logo.trim(),
+      this.axios.post("/api/api/index/addBm",
+         {
+            jigou: this.logoName.trim(),
             name: this.name.trim(),
             phone: this.phone.trim(),
             sheng: this.$refs.cityData.a[0],
@@ -173,13 +171,8 @@ export default {
             dizhi: this.dizhi.trim(),
             xingzhi: this.xingzhi.trim(),
             liuyan: this.liuyan.trim(),
-              kecheng:this.kecheng.trim(),
+              kecheng:this.courseName,
               cid:this.$route.query.cid
-          }),
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            }
           }
         )
         .then(res => {

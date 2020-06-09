@@ -49,10 +49,10 @@ export default {
       } else if (res.data.code == 200) {
         this.userinfo = res.data.list;
         this.uname=this.userinfo.a_uname;
-        console.log(res.data.list)
-        if(this.userinfo.a_sex=1){
+
+        if(this.userinfo.a_sex==1){
           this.sex='男'
-        }else if(this.userinfo.actions=2){
+        }else if(this.userinfo.a_sex==2){
           this.sex='女'
         }
       }
@@ -65,7 +65,7 @@ export default {
     },
     loginout() {
       this.axios.get("/api/api/user/logout").then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.statu == 200) {
           this.$router.push("/login");
         }
