@@ -17,8 +17,8 @@
             </div>
             <p class="time">
               <font>{{item.time}}</font>
-              <span v-if="item.status==1">专家已答</span>
-              <span v-else>待回答</span>
+              <span v-if="item.status==1" style="color:#36b937">专家已答</span>
+              <span v-else  style="color:#f1a91f">待回答</span>
             </p>
           </li>
         </ul>

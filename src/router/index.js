@@ -132,6 +132,7 @@ export default new Router({
     {
       path: '/my',
       component: my,
+  meta: { keepAlive: true },
     },
     {
       path: '/my/quection',

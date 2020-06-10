@@ -146,6 +146,7 @@ export default {
             1;
             if (res.data.code == 200) {
               //成功，刷新当前页面
+               this.$toast('提交成功~')
               window.location.reload();
             } else if (res.data.code == 205) {
               //未登录

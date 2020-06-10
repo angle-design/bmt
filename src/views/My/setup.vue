@@ -115,6 +115,7 @@ export default {
       padding: 0.15rem 0.2rem;
       border-bottom: 0.02rem solid #e7e7e7;
       width: 5rem;
+      font-size:0.28rem;
     }
     span {
       position: absolute;

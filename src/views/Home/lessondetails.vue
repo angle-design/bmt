@@ -1,8 +1,6 @@
 <!--  -->
 <template>
   <div class="content">
-    <scroller>
-    <div>
     <div class="details_top">
       <img
         :src="lesson.image"
@@ -33,8 +31,6 @@
         <button @click="handlemessage(lesson.sid,lesson.id)">立即注册</button>
     </div>
     </div>
-    </scroller>
-  </div>
 </template>
 
 <script>

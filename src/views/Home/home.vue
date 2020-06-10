@@ -140,7 +140,6 @@ export default {
             if (res.data.code == 200) {
                this.kongflag=false
               if (res.data.list) {
-               
                 res.data.list.forEach(item => {
                   this.list.push(item);
                 });

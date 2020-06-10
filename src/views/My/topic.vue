@@ -7,18 +7,19 @@
           <div>
             <font>{{item.h_ctime}}</font>
             <p>
-              <span v-if="item.h_status==1">进行中</span>
-              <span v-else-if="item.h_status==2">待审核</span>
-              <span v-else>>已关闭</span>
+              <span v-if="item.h_status==1" style="color:#36b937">进行中</span>
+              <span v-else-if="item.h_status==2" style="color:#f1a91f">待审核</span>
+              <span v-else style="color:#999999">>已关闭</span>
               <i class="fa fa-close" @click="closepup(item)"></i>
             </p>
           </div>
         </div>
-        <mt-actionsheet :actions="actions" v-model="sheetVisible" class="sheet"></mt-actionsheet>
+       
         <!-- 展开更多 -->
         <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
       </div>
     </scroller>
+     <mt-actionsheet :actions="actions" v-model="sheetVisible" class="sheet"></mt-actionsheet>
   </div>
 </template>
 
