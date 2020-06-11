@@ -1,5 +1,5 @@
 <template>
-  <div class="cropper_content" @click="$emit('closecrop')">
+  <div class="cropper_content" @click.self="$emit('closecrop')">
     <div class="cropper1">
       <div class="cropper-content">
         <div class="cropper">
@@ -132,10 +132,9 @@ export default {
             .then(response => {
               var res = response.data;
               if (res.code == 200) {
-                this.$router.push({
-                  name: "askfile",
-                  query: { img: res.data.src }
-                });
+                  // console.log(res.data.src);
+                  this.$emit('changeimg',res.data.src);
+                  this.$emit('closecrop')
               }
             });
         });
