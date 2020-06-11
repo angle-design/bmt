@@ -28,7 +28,7 @@
     </div>
     <div>
       <p>
-        <input @change="add_img" type="file" ref="filElem" style="display:none" />
+        <!--<input @change="add_img" type="file" ref="filElem" style="display:none" />-->
 
         <span v-if="!btnShow" @click="choiceImg">
           <i class="fa fa-camera"></i>
@@ -72,7 +72,7 @@ export default {
       name: "", //姓名
       tel: "", //电话号码
       img: "",
-      imgs: "",
+      imgs:"",
       imgData: {
         accept: "image/jpeg, image/png, image/jpg"
       },
@@ -83,12 +83,16 @@ export default {
   },
   mounted() {
     this.getTag();
+    this.imgs = this.$route.query.img;
+    if(this.imgs){}
+      this.btnShow = true;
   },
   components: {},
   methods: {
     //吊起上传图片
     choiceImg() {
-      this.$refs.filElem.dispatchEvent(new MouseEvent("click"));
+      //this.$refs.filElem.dispatchEvent(new MouseEvent("click"));
+        this.$router.push("/imgcai2");
     },
     //上传图片
     add_img(event) {
@@ -163,7 +167,12 @@ export default {
       this.school = e.name;
       this.school_ = e.id;
     }
-  }
+  },
+    watch:{
+        imgs:function(val){
+            console.log(val);
+        }
+    }
 };
 </script>
 
