@@ -53,7 +53,7 @@
 
     <button @click="toSend">提交问吧</button>
     <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
-    <imgcai v-if="imgflag"></imgcai>
+    <imgcai v-if="imgflag" @closecrop="closecrop"></imgcai>
   </div>
 </template>
 
@@ -94,6 +94,9 @@ export default {
     imgcai
   },
   methods: {
+    closecrop(){
+      this.imgflag=false
+    },
     //吊起上传图片
     choiceImg() {
       //this.$refs.filElem.dispatchEvent(new MouseEvent("click"));

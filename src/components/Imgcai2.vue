@@ -1,5 +1,5 @@
 <template>
-  <div class="cropper_content">
+  <div class="cropper_content" @click="$emit('closecrop')">
     <div class="cropper1">
       <div class="cropper-content">
         <div class="cropper">
@@ -168,7 +168,7 @@ export default {
   flex-direction: column;
   background: #f8f8f8;
   padding-bottom: 0.2rem;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.8)!important;
   justify-content: center;
   height: 100%;
   //   align-items: center;
