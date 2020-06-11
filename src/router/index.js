@@ -29,6 +29,7 @@ import mysetup from '@/views/My/setup.vue';
 import mytopic from '@/views/My/topic.vue';
 import mylesson from '@/views/My/lesson.vue';
 import imgcai from '@/components/Imgcai.vue';
+import imgcai2 from '@/components/Imgcai2.vue';
 import mycojigou from '@/components/My/jigou.vue';
 import mycolesson from '@/components/My/lesson.vue';
 export default new Router({
@@ -100,6 +101,10 @@ export default new Router({
           path: '/imgcai',
           component: imgcai
       },
+      {
+          path: '/imgcai2',
+          component: imgcai2
+      },
     {
       path: '/lesson',
       component: lesson,
@@ -120,7 +125,11 @@ export default new Router({
     },
     {
       path: '/askfile',
+        name:'askfile',
       component: askfile,
+        meta: {
+            keepAlive: true
+        }
 
     },
     {
