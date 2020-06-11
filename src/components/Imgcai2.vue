@@ -1,5 +1,5 @@
 <template>
-  <div class="cropper_content" @click="$emit('closecrop')">
+  <div class="cropper_content" @click.self="$emit('closecrop')">
     <div class="cropper1">
       <div class="cropper-content">
         <div class="cropper">

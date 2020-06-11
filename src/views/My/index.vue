@@ -128,7 +128,7 @@ export default {
           font{
             width:0.36rem;
             height:0.36rem;
-            background:url(../../assets/icon.png) no-repeat;
+            background:url(../../assets/aa.png) no-repeat;
             background-size:0.36rem auto;
             background-position: 0 0 ;
             margin-right:0.1rem;

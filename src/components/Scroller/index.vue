@@ -32,7 +32,9 @@
           scroll.on('touchEnd',(pos)=>{
             this.handleToTouchEnd(pos)
           })
-          
+            // scroll.addEventListener('touchstart', (e) => { 
+            //         e.stopPropagation();
+            //     });
       },
       methods:{
         toScrollTop(y){
