@@ -3,17 +3,18 @@
     <!-- 首页 -->
     <div class="my">
       <p class="my_head">
-        <img v-if="userinfo.a_image" :src="userinfo.a_image" />
-        <img v-else src="../../assets/mohead.png" />
-        <span v-if="showflag">点击登录或注册</span>
+         <img v-if="showflag" src="../../assets/mohead.png" />
+        <img v-else :src="userinfo.a_image" />
+       
+        <span v-if="showflag" @click="$router.push('/login')">点击登录或注册</span>
         <span v-else>{{userinfo.a_uname}}</span>
       </p>
       <div class="my_hua">
-        <router-link tag="p" to="/my/topic"><img src="../../assets/hua.png">我的话题</router-link>
-        <router-link tag="p" to="/my/lesson"><img src="../../assets/ke.png">我的课程</router-link>
+        <router-link tag="p" :to="showflag?'/login':'/my/topic'"><img src="../../assets/hua.png">我的话题</router-link>
+        <router-link tag="p" :to="showflag?'/login':'/my/lesson'"><img src="../../assets/ke.png">我的课程</router-link>
       </div>
       <ul class="my_list">
-        <router-link tag="li" :to="!showflag?'/login':item.routeto" v-for="(item,i) in mylist" :key="i">
+        <router-link tag="li" :to="showflag?'/login':item.routeto" v-for="(item,i) in mylist" :key="i">
           <p>
            <font></font>
             {{item.name}}
@@ -34,7 +35,7 @@ export default {
   data() {
     return {
       userinfo: {},
-      showflag:false,
+      showflag:true,
       mylist: [
         { name: "提问", classname: "fa fa-star-o", routeto: "/my/quection" },
         { name: "评论", classname: "fa fa-star-o", routeto: "/my/comment" },
@@ -48,8 +49,11 @@ export default {
     this.axios.get("/api/api/my/getUinfo").then(res => {
       console.log(res.data);
       if (res.data.code == 205) {
+        //  this.showflag=true;
+        
         // this.$router.push("/login");
-      } else if (res.data.code == 200) {
+      }
+       if (res.data.code == 200) {
         this.showflag=false
         this.userinfo = res.data.list;
       }
@@ -62,6 +66,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+[v-cloak] { display: none } 
 .content {
   flex: 1;
   overflow: auto;

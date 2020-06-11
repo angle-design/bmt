@@ -53,15 +53,18 @@
 
     <button @click="toSend">提交问吧</button>
     <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
+    <imgcai v-if="imgflag"></imgcai>
   </div>
 </template>
 
 <script>
+import imgcai from "@/components/Imgcai2.vue";
 import { Actionsheet, Toast } from "mint-ui";
 export default {
   name: "Askinput",
   data() {
     return {
+      imgflag: false,
       school: "小学",
       school_: 1,
       sheetVisible: false,
@@ -72,7 +75,7 @@ export default {
       name: "", //姓名
       tel: "", //电话号码
       img: "",
-      imgs:"",
+      imgs: "",
       imgData: {
         accept: "image/jpeg, image/png, image/jpg"
       },
@@ -83,16 +86,19 @@ export default {
   },
   mounted() {
     this.getTag();
-    this.imgs = this.$route.query.img;
-    if(this.imgs){}
-      this.btnShow = true;
+    // this.imgs = this.$route.query.img;
+    // if(this.imgs){}
+    //   this.btnShow = true;
   },
-  components: {},
+  components: {
+    imgcai
+  },
   methods: {
     //吊起上传图片
     choiceImg() {
       //this.$refs.filElem.dispatchEvent(new MouseEvent("click"));
-        this.$router.push("/imgcai2");
+      // this.$router.push("/imgcai2");
+      this.imgflag = true;
     },
     //上传图片
     add_img(event) {
@@ -168,11 +174,11 @@ export default {
       this.school_ = e.id;
     }
   },
-    watch:{
-        imgs:function(val){
-            console.log(val);
-        }
+  watch: {
+    imgs: function(val) {
+      console.log(val);
     }
+  }
 };
 </script>
 

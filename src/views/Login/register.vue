@@ -8,7 +8,7 @@
       v-model="phone"
       placeholder="手机号"
       :error="errors.phone"
-      :fontclass="fontclass"
+      fontclass="font3"
       :btnTitle="btnTitle"
       @btnClick="getVerifyCode"
     />
@@ -18,7 +18,7 @@
       v-model="verifyCode"
       placeholder="请输入验证码"
       :error="errors.code"
-      fontclass="font3"
+      fontclass="font4"
     />
     <!-- 密码 -->
     <InputGroup

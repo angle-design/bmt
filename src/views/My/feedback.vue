@@ -58,6 +58,7 @@ export default {
     box-sizing: border-box;
     margin: 0.5rem 0;
     color: #333;
+    font-size:0.28rem
   }
   button {
     width: 2.8rem;

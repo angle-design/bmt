@@ -127,9 +127,9 @@ export default new Router({
       path: '/askfile',
         name:'askfile',
       component: askfile,
-        meta: {
-            keepAlive: true
-        }
+        // meta: {
+        //     keepAlive: true
+        // }
 
     },
     {
