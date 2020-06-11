@@ -148,7 +148,8 @@ export default {
             if (res.data.code == 200) {
               //提问成功
               this.flag = false;
-              this.$router.go(0);
+              this.$toast('提问成功~')
+              window.location.reload();
             }
           });
       }
