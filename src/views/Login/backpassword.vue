@@ -9,17 +9,17 @@
       :btnTitle="btnTitle"
       :disabled="disabled"
       :error="errors.phone"
-      :fontclass="fontclass"
+      fontclass="font3"
       @btnClick="getVerifyCode"
     />
 
     <!-- 验证码 -->
-    <InputGroup type="number" v-model="verifyCode" placeholder="请输入验证码" :error="errors.code" :fontclass="lock"/>
+    <InputGroup type="number" v-model="verifyCode" placeholder="请输入验证码" :error="errors.code" fontclass="font4"/>
     <!-- 第一次输入密码 -->
     <InputGroup type="text" v-model="passwd1" placeholder="请输入6-12位数字和字母组合形式" :error="errors.passwd1"
-                :fontclass="lock"/>
+                fontclass="font2"/>
     <!-- 第二次输入密码 -->
-    <InputGroup type="text" v-model="passwd2" placeholder="再次输入密码" :error="errors.passwd2" :fontclass="lock"/>
+    <InputGroup type="text" v-model="passwd2" placeholder="再次输入密码" :error="errors.passwd2" fontclass="font2"/>
     <!-- 登录按钮 -->
     <div class="login_btn">
       <button @click="handleLogin">确定</button>

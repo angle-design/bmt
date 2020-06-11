@@ -18,14 +18,14 @@
       v-model="verifyCode"
       placeholder="请输入验证码"
       :error="errors.code"
-      :fontclass="lock"
+      fontclass="font3"
     />
     <!-- 密码 -->
     <InputGroup
       v-model="password"
       placeholder="密码必须由6-12位数字加字母组成"
       :error="errors.password"
-      :fontclass="lock"
+      fontclass="font2"
     />
       <!-- 忘记密码 -->
     <router-link tag="p" to="/backpassword" class="forget">忘记密码?</router-link>

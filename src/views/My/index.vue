@@ -5,16 +5,17 @@
       <p class="my_head">
         <img v-if="userinfo.a_image" :src="userinfo.a_image" />
         <img v-else src="../../assets/mohead.png" />
-        <span>{{userinfo.a_uname}}</span>
+        <span v-if="showflag">点击登录或注册</span>
+        <span v-else>{{userinfo.a_uname}}</span>
       </p>
       <div class="my_hua">
-        <router-link tag="p" to="/my/topic">我的话题</router-link>
-        <router-link tag="p" to="/my/lesson">我的课程</router-link>
+        <router-link tag="p" to="/my/topic"><img src="../../assets/hua.png">我的话题</router-link>
+        <router-link tag="p" to="/my/lesson"><img src="../../assets/ke.png">我的课程</router-link>
       </div>
       <ul class="my_list">
-        <router-link tag="li" :to="item.routeto" v-for="(item,i) in mylist" :key="i">
+        <router-link tag="li" :to="!showflag?'/login':item.routeto" v-for="(item,i) in mylist" :key="i">
           <p>
-            <i :class="item.classname"></i>
+           <font></font>
             {{item.name}}
           </p>
           <i class="fa fa-angle-right"></i>
@@ -33,6 +34,7 @@ export default {
   data() {
     return {
       userinfo: {},
+      showflag:false,
       mylist: [
         { name: "提问", classname: "fa fa-star-o", routeto: "/my/quection" },
         { name: "评论", classname: "fa fa-star-o", routeto: "/my/comment" },
@@ -46,8 +48,9 @@ export default {
     this.axios.get("/api/api/my/getUinfo").then(res => {
       console.log(res.data);
       if (res.data.code == 205) {
-        this.$router.push("/login");
+        // this.$router.push("/login");
       } else if (res.data.code == 200) {
+        this.showflag=false
         this.userinfo = res.data.list;
       }
     });
@@ -99,6 +102,11 @@ export default {
         align-items: center;
         justify-content: center;
         font-size: 0.3rem;
+        img{
+          width:0.37rem;
+          height:0.37rem;
+          margin-right:0.1rem;
+        }
       }
     }
     .my_list {
@@ -110,13 +118,45 @@ export default {
         height: 0.9rem;
         font-size: 0.28rem;
         p {
-          i {
-            color: #bfbfbf;
+          display: flex;
+          align-items: center;
+          font{
+            width:0.36rem;
+            height:0.36rem;
+            background:url(../../assets/icon.png) no-repeat;
+            background-size:0.36rem auto;
+            background-position: 0 0 ;
+            margin-right:0.1rem;
           }
         }
         i {
           color: #a2a2a2;
           font-size: 0.32rem;
+        }
+        &:nth-child(2){
+          p
+          font{
+            background-position: 0 -0.42rem ;
+            height:0.3rem;
+          }
+        }
+         &:nth-child(3){
+          font{
+            background-position: 0 -0.76rem ;
+            height:0.32rem;
+          }
+        }
+         &:nth-child(4){
+          font{
+            background-position: 0 -1.14rem ;
+            height:0.3rem;
+          }
+        }
+         &:nth-child(5){
+          font{
+            background-position: 0 -1.48rem ;
+            height:0.38rem;
+          }
         }
       }
     }

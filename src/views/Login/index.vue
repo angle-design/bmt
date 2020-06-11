@@ -10,15 +10,15 @@
         v-model="user"
         placeholder="请输入用户名"
         :error="errors.phone"
-        :fontclass="fontclass"
+        fontclass="font1"
       />
-      <!-- 验证码 -->
+      <!-- 密码 -->
       <InputGroup
         type="password"
         v-model="password"
         placeholder="请输入密码"
         :error="errors.password"
-        :fontclass="lock"
+        fontclass="font2"
       />
     </template>
     <template v-else>
@@ -30,7 +30,7 @@
         :btnTitle="btnTitle"
         :disabled="disabled"
         :error="errors.phone"
-        :fontclass="fontclass"
+        fontclass="font3"
         @btnClick="getVerifyCode"
       />
       <!-- 验证码 -->
@@ -39,7 +39,7 @@
         v-model="verifyCode"
         placeholder="请输入验证码"
         :error="errors.code"
-        :fontclass="lock"
+        fontclass="font4"
       />
     </template>
     <!-- 忘记密码 -->
