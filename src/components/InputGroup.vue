@@ -57,7 +57,7 @@ export default {
 }
 
 font {
-  background: url(../assets/aa.png) no-repeat;
+  background: url(http://bmdt.zgn365.com/Public/aa.png) no-repeat;
   background-size: 0.36rem auto;
   width: 0.36rem;
 }
