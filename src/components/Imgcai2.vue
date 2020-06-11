@@ -132,10 +132,9 @@ export default {
             .then(response => {
               var res = response.data;
               if (res.code == 200) {
-                this.$router.push({
-                  name: "askfile",
-                  query: { img: res.data.src }
-                });
+                  // console.log(res.data.src);
+                  this.$emit('changeimg',res.data.src);
+                  this.$emit('closecrop')
               }
             });
         });

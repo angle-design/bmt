@@ -35,7 +35,7 @@
           <font>点击上传封面（可选）</font>
         </span>
         <span v-else class="img_big">
-          <img :src="imgs" class="dapic" @change="add_img" />
+          <img :src="imgs" class="dapic"/>
           <i class="fa fa-times-circle-o" @click.self="btnShow=false"></i>
         </span>
       </p>
@@ -53,7 +53,7 @@
 
     <button @click="toSend">提交问吧</button>
     <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
-    <imgcai v-if="imgflag" @closecrop="closecrop"></imgcai>
+    <imgcai v-if="imgflag" @closecrop="closecrop" @changeimg="changeimg"></imgcai>
   </div>
 </template>
 
@@ -134,6 +134,11 @@ export default {
           console.log(err);
         });
     },
+      changeimg(src){
+        // console.log(src);
+          this.imgs = src;
+          this.btnShow = true;
+      },
     // 提交问吧
     toSend() {
       this.sendflag = true;
