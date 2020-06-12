@@ -64,8 +64,8 @@ export default {
         original: false,
         canMoveBox: true,
         autoCrop: true,
-        autoCropWidth: 710,
-        autoCropHeight: 248,
+        autoCropWidth: document.body.clientWidth,
+        autoCropHeight: parseInt(document.body.clientWidth)/710*248,
         fixedBox: true
       },
       fileName: "", //本机文件地址
@@ -74,7 +74,9 @@ export default {
       uploadImgRelaPath: "" //上传后的图片的地址（不带服务器域名）
     };
   },
+    created(){
 
+    },
   methods: {
     submitUpload(file) {
       // this.$refs.upload.submit();

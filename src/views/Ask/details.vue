@@ -149,7 +149,8 @@ export default {
               //提问成功
               this.flag = false;
               this.$toast('提问成功~')
-              window.location.reload();
+              //window.location.reload();
+                this.getList(this.uid);
             }
           });
       }
@@ -171,9 +172,10 @@ export default {
           if (res.data.code == 200) {
             //提问成功
             this.awflag = false;
-            this.$toast('您也成功解答~')
+            this.$toast('您已成功解答~')
              //成功，刷新当前页面
-              window.location.reload();
+             // window.location.reload();
+              this.getList(this.uid);
           }
         });
     },

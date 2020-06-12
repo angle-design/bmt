@@ -45,6 +45,21 @@ export default {
 mounted(){
   this.getDetails()
 },
+    created() {
+
+        // 看看用户是不是收藏了
+        this.axios
+            .post("/api/api/school/checkiscollect", {
+                type: 2,
+                sid: this.$route.query.id
+            })
+            .then(res => {
+                console.log(res.data)
+                if (res.data.code == 200) {
+                    this.collectflag = true;
+                }
+            });
+    },
   methods: {
      // 收藏
     toCollect() {
