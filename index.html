@@ -6,6 +6,15 @@
   <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"
     name="viewport" id="viewport" />
   <title>报名大厅</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.8.2/theme-chalk/index.css">
+
+  <link rel="stylesheet" href="https://cdn.bootcss.com/mint-ui/2.2.13/style.css">
+  <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
+  <!--<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+  <script src="https://cdn.bootcss.com/mint-ui/2.2.13/index.js"></script>
+
+
   <script>
     ~function () {
       computedFont();
@@ -18,6 +27,7 @@
     }();
   </script>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
   <style>
     /*清除默认样式*/
     * {
@@ -286,15 +296,31 @@
       -webkit-user-select:text !important;
     }
   </style>
+  <style media="screen" type="text/css">
+    #appLoading { width: 100%; height: 100%; }
+    #appLoading span {
+      position: absolute;
+      display: block;
+      font-size: 50px;
+      line-height: 50px;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 100px;
+      -webkit-transform: translateY(-50%)  translateX(-50%);
+      transform: translateY(-50%)  translateX(-50%);
+    }
+  </style>
 </head>
 
 <body>
-  <div id="app">
+<div id="appLoading">
+  <span>Loading...</span>
+</div>
+  <div id="app"   >
     <div>报名大厅加载中</div>
   </div>
-  <div style="display: none;">
-    <script type="text/javascript" src="https://s9.cnzz.com/z_stat.php?id=1278675244&web_id=1278675244"></script>
-  </div>
+
 </body>
 
 </html>

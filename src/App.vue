@@ -11,6 +11,16 @@
   </div>
 </template>
 <script>
+    export default {
+        name: "",
+        created() {
+            let loading = document.getElementById('app');
+            if(loading !=null){
+                document.getElementById('app').style.display = 'block';
+                document.getElementById('appLoading').style.display = 'none';
+            }
+        }
+    }
 </script>
 <style>
 .fade-enter {
