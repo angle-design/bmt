@@ -134,17 +134,8 @@ export default {
   width: 1.48rem;
   height: 1.48rem;
   position: fixed;
-  top: 40%;
+  top:73%;
   right: 0;
   z-index: 10;
-}
-
-.more {
-  width: 4rem;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 0.8rem;
-  color: #282828;
-  font-size: 0.28rem;
 }
 </style>

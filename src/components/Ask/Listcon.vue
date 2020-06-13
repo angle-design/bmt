@@ -17,16 +17,16 @@
           </dl>
           <p>
             <span>
-              <i   @click.once="zan($event,listtop.id)" class="fa fa-heart-o"></i>
+              <i @click.once="zan($event,listtop.id)" ></i>
               <font>{{listtop.zan?listtop.zan:'0'}}</font>
             </span>
             <span @click="$emit('toComment',listtop.id)">
-              <i class="fa fa-commenting-o"></i>
+              <i></i>
               <font>{{listtop.huifu}}</font>
             </span>
           </p>
         </div>
-        <p class="new_text">{{listtop.content}}</p>
+        <p class="new_text" @click="$emit('toComment',listtop.id)">{{listtop.content}}</p>
       </div>
       <div class="jieda" v-if="listtop.isq" @click="$emit('toaswer',listtop)"><i class="fa fa-star-o"></i>解答问题</div>
       <!-- 答 -->
@@ -45,16 +45,16 @@
           </dl>
           <p>
             <span >
-              <i  @click.once="zan($event,listtop.id)" class="fa fa-heart-o"></i>
+              <i  @click.once="zan($event,listtop.id)"></i>
               <font>{{listtop.qlist.zan?listtop.qlist.zan:'0'}}</font>
             </span>
             <span @click="$emit('toComment',listtop.id)">
-              <i class="fa fa-commenting-o"></i>
+              <i></i>
               <font>{{listtop.qlist.huifu}}</font>
             </span>
           </p>
         </div>
-        <p class="new_text new_text_ask">{{listtop.qlist.content}}</p>
+        <p class="new_text new_text_ask" @click="$emit('toComment',listtop.id)">{{listtop.qlist.content}}</p>
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
-           event.target.className = "fa fa-heart";
+           event.target.className = "active";
             event.target.nextElementSibling.innerHTML =
                   parseInt(event.target.nextElementSibling.innerHTML) + 1;
           } else if (res.data.code == 205) {
@@ -176,10 +176,26 @@ export default {
           color: #666666;
           span {
             margin-left: 0.3rem;
+            display: flex;
             i {
-                  padding: 0.1rem 0.06rem;
-              color: #bfbfbf;
-              font-size: 0.3rem;
+              //     padding: 0.1rem 0.06rem;
+              // color: #bfbfbf;
+              // font-size: 0.3rem;
+              display: flex;
+              width:0.36rem;
+              height:0.26rem;
+              background:url(../../assets/icon.png) no-repeat;
+              background-position:0 -4.41rem;
+              background-size:0.36rem auto;
+              padding-right:0.1rem;
+              &.active{
+                background-position: 0 -4.73rem;
+              }
+            }
+            &:nth-child(2){
+              i{
+                 background-position:0 -5.08rem;
+              }
             }
           }
         }

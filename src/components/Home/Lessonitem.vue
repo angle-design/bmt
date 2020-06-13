@@ -6,7 +6,7 @@
           <span>适用人群：{{list.objects}}</span>
           <p>
             <span>￥<font>{{list.price}}</font></span>
-            <button v-if="ceflag" @click="handlemessage(list.sid,list.id)">立即注册</button>
+            <button v-if="ceflag" @click="handlemessage(list.sid,list.id)">立即报名</button>
           </p>
     </div>
 </template>

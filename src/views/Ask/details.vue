@@ -10,7 +10,7 @@
               <span>
                 {{time}} |
                 <font v-if="hinfo.isnow==1">提问进行时</font>
-                <font v-if="hinfo.isnow==2">提问已完成</font>
+                <font v-if="hinfo.isnow==2" color="#999">提问已关闭</font>
               </span>
             </div>
           </div>
@@ -68,10 +68,11 @@
           <i class="fa fa-share-square-o"></i>分享
         </p>-->
         <p @click="toquestion">
-          <i class="fa fa-question-circle-o"></i>提问
+          <i></i>提问
         </p>
         <p @click.once="togreat">
-          <i :class="[zanflag?'fa fa-heart':'fa fa-heart-o']"></i>点赞
+          <!-- <i :class="[zanflag?'fa fa-heart':'fa fa-heart-o']"></i>点赞 -->
+          <i :class="[zanflag?'active':'']"></i>点赞
         </p>
       </div>
     </div>
@@ -101,7 +102,8 @@ export default {
       count: {},
       comtext: "",
       zanflag: false,
-      awitem: {} //解答某一项
+      awitem: {}, //解答某一项
+      isshow:1
     };
   },
   mounted() {
@@ -127,12 +129,17 @@ export default {
     },
     // 提问
     toquestion() {
+      if(this.isshow==2){
+        this.$toast('提问已关闭');
+        return false;
+      }
       var self = this;
       var login = this.common.Login(self).then(res => {
         if (res) {
           this.flag = true;
         }
       });
+
     },
     // 提交提问
     toSend(data) {
@@ -201,6 +208,8 @@ export default {
           if (res.data) {
             this.hinfo = res.data.list;
             this.time = this.hinfo.h_etime.split(" ")[0];
+            this.isshow=this.hinfo.isnow;
+            // console.log(res.data.list)
           }
         });
     },
@@ -405,9 +414,9 @@ export default {
         &:nth-child(2) {
           display: flex;
 
-          font-size: 0.3rem;
+          font-size: 0.26rem;
           span {
-            font-weight: bold;
+            // font-weight: bold;
             padding: 0.2rem 0.15rem;
             &.active,
             &.router-link-active {
@@ -434,23 +443,30 @@ export default {
       justify-content: center;
       align-items: center;
       i {
-        color: #369836;
-        font-size: 0.4rem;
-        margin-right: 0.1rem;
+        // color: #369836;
+        // font-size: 0.4rem;
+        // margin-right: 0.1rem;
+        display: flex;
+        width:0.41rem;
+        height:0.44rem;
+        background:url(../../assets/bb.png) no-repeat;
+        background-size:0.63rem auto;
+        background-position: -0.19rem -0.71rem;
+        margin-right:0.1rem;
       }
       &:nth-child(2) {
-        // margin: 0 0.8rem;
+        i{
+          width:0.43rem;
+        height:0.38rem;
+          background-position: -0.19rem -1.27rem;
+          &.active{
+            background-position: -0.19rem -1.77rem;
+          }
+        }
+     
       }
     }
   }
-}
-.more {
-  width: 4rem;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 0.8rem;
-  color: #282828;
-  font-size: 0.28rem;
 }
 .content ul li {
   padding: 0 0.2rem;

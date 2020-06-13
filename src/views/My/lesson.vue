@@ -47,7 +47,7 @@ export default {
     flex-wrap: wrap;
     margin-top: 0.4rem;
     padding-bottom: 0.4rem;
-    border-bottom: 0.18rem solid #f8f8f8;
+    // border-bottom: 0.18rem solid #f8f8f8;
     li {
       display: flex;
       width: 3.3rem;

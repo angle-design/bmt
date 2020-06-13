@@ -3,7 +3,7 @@
     <scroller ref="aa" :handleToScroll="handleToScroll">
       <div class="topic">
         <div class="listitem" v-for="(item,index) in toplist" :key="index">
-          <p>{{item.h_title}},{{item.h_title2}}</p>
+          <p @click="toDeatils(item.id)">{{item.h_title}},{{item.h_title2}}</p>
           <div>
             <font>{{item.h_ctime}}</font>
             <p>
@@ -48,6 +48,10 @@ export default {
     this.getlist();
   },
   methods: {
+       //进入详情
+    toDeatils(id) {
+      this.$router.push("/askdetails/" + id);
+    },
     // 上拉加载更多数据
     handleToScroll() {
       //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
@@ -161,13 +165,5 @@ export default {
       }
     }
   }
-}
-.more {
-  width: 4rem;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 0.8rem;
-  color: #282828;
-  font-size: 0.28rem;
 }
 </style>

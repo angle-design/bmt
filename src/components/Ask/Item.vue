@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="ask_body">
-    <div class="ask_item" @click="$emit('toDeatils',item.id)" v-for="(item,index) in list" :key="index">
+    <div class="ask_item" @tap="$emit('toDeatils',item.id)" v-for="(item,index) in list" :key="index">
       <div class="ask_img">
         <img :src="item.h_image" />
         <span v-if="item.ishot==2">置顶</span>
@@ -20,15 +20,15 @@
       <p>{{item.h_title}},{{item.h_title2}}</p>
       <div class="ask_text">
         <font v-if="item.isnow==1">提问进行时</font>
-        <font v-if="item.isnow==2">提问已完成</font>
+        <font v-if="item.isnow==2" style="color:#999;">提问已关闭</font>
         <p>
           <span>
-            <i class="fa fa-heart-o"></i>
-            <font>{{item.zan}}</font>
+            <i></i>
+            <font>{{item.zan?item.zan:0}}</font>
           </span>
           <span>
-            <i class="fa fa-commenting-o"></i>
-            <font>{{item.huifu}}</font>
+            <i></i>
+            <font>{{item.huifu?item.huifu:0}}</font>
           </span>
         </p>
       </div>
@@ -45,7 +45,6 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-
   .ask_body {
     margin: 0.2rem 0.2rem;
     .ask_item {
@@ -149,10 +148,25 @@ export default {
           color: #666666;
           span {
             margin-left: 0.3rem;
+            display: flex;
+            align-items: center;
             i {
-              margin-right: 0.06rem;
-              color: #bfbfbf;
-              font-size: 0.3rem;
+
+              display: flex;
+              width:0.36rem;
+              height:0.26rem;
+              background:url(../../assets/icon.png) no-repeat;
+              background-position:0 -4.41rem;
+              background-size:0.36rem auto;
+              padding-right:0.05rem;
+              &.active{
+                background-position: 0 -4.73rem;
+              }
+            }
+            &:nth-child(2){
+              i{
+                 background-position:0 -5.08rem;
+              }
             }
           }
         }
@@ -163,6 +177,7 @@ export default {
         text-align: center;
         padding: 0.1rem 00.3rem;
         line-height: 0.45rem;
+        font-weight: bold;
       }
     }
   }

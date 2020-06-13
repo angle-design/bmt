@@ -192,6 +192,8 @@ export default {
           console.log(res.data);
           if (res.data.code == 200) {
             this.$toast("评价提交成功！");
+          }else if(res.data.code==205){
+            this.$router.push('/login')
           }
         });
     },
@@ -212,12 +214,11 @@ export default {
             this.lesson = res.data.list;
             this.dataArr = res.data.list.clist;
             this.id = this.dataArr[this.activeIndex].id;
-            this.data2Arr = this.lesson.clist[this.activeIndex].c2list;
+            // this.data2Arr = this.lesson.clist[this.activeIndex].c2list;
           }
         });
     },
     getList(sid, id, c2id) {
-
       this.axios
         .get("/api/api/school/getCourse", {
           params: {
@@ -239,6 +240,8 @@ export default {
       this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
     },
     chooseItem(val) {
+      // console.log(val)
+    this.data2Arr=this.dataArr[val[0]].c2list;
       this.activeIndex = val[0];
       this.c2idindex = 0;
       this.c2id = this.lesson.clist[this.activeIndex].c2list[0].id;
@@ -441,7 +444,7 @@ padding-bottom:0.3rem;
         width: 2.7rem;
         height: 0.9rem;
         background: #36b936;
-        border-radius: 0.4rem;
+        border-radius: 0.8rem;
         font-size: 0.3rem;
         color: #fff;
         display: flex;

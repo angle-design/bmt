@@ -19,6 +19,10 @@ export default {
   width: 100%;
   justify-content: center;
   align-items: center;
-  color:#999
+  color:#999;
+  font-size:0.26rem;
+}
+.kong img{
+  width:3.87rem;
 }
 </style>

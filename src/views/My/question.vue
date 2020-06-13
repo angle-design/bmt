@@ -8,7 +8,7 @@
               <span>提问:</span>
               {{item.content}}
             </p>
-            <div>
+            <div @click="toDeatils(item.hinfo.id)">
               <p>
                 <img v-if="item.hinfo.a_image" :src="item.hinfo.a_image" />
                 <img v-else src="../../assets/mohead.png" />
@@ -45,6 +45,10 @@ export default {
     this.getlist();
   },
   methods: {
+     //进入详情
+    toDeatils(id) {
+      this.$router.push("/askdetails/" + id);
+    },
     // 上拉加载更多数据
     handleToScroll() {
       //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
@@ -152,13 +156,5 @@ export default {
       }
     }
   }
-}
-.more {
-  width: 4rem;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 0.8rem;
-  color: #282828;
-  font-size: 0.28rem;
 }
 </style>

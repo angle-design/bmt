@@ -2,15 +2,16 @@
 <template>
   <div class="content">
     <div class="details_top">
-      <img
-        :src="lesson.image"
-      />
+      <img :src="lesson.image" />
       <p>
         <span>
           {{lesson.name}}
-          <span>￥<font>{{lesson.price}}</font></span>
+          <span>
+            ￥
+            <font>{{lesson.price}}</font>
+          </span>
         </span>
-            <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @click="toCollect"></i>
+        <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @click="toCollect"></i>
       </p>
     </div>
     <div class="details_con">
@@ -28,9 +29,10 @@
       </div>
     </div>
     <div class="fix_bottom">
-        <button @click="handlemessage(lesson.sid,lesson.id)">立即注册</button>
+      <button @click="handlemessage(lesson.sid,lesson.id)" v-if="signupflag">立即报名</button>
+      <button v-else>已报名</button>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -38,43 +40,57 @@ export default {
   name: "",
   data() {
     return {
-      lesson:{},
-      collectflag:false
+      lesson: {},
+      collectflag: false,
+      signupflag:''
     };
   },
-mounted(){
-  this.getDetails()
-},
-    created() {
-
-        // 看看用户是不是收藏了
-        this.axios
-            .post("/api/api/school/checkiscollect", {
-                type: 2,
-                sid: this.$route.query.id
-            })
-            .then(res => {
-                console.log(res.data)
-                if (res.data.code == 200) {
-                    this.collectflag = true;
-                }
-            });
-    },
+  mounted() {
+    this.getDetails();
+  },
+  created() {
+    // 看看用户是不是收藏了
+    this.axios
+      .post("/api/api/school/checkiscollect", {
+        type: 2,
+        sid: this.$route.query.id
+      })
+      .then(res => {
+        if (res.data.code == 200) {
+          this.collectflag = true;
+        }
+      });
+    this.axios
+      .get("/api/api/school/checkmycourse", {
+        params:{
+          cid: this.$route.query.id
+        }
+        
+      })
+      .then(res => {
+        console.log(res.data);
+        if (res.data.code == 200) {
+          this.signupflag = false;
+        }else{
+           this.signupflag = true;
+        }
+      });
+  },
   methods: {
-     // 收藏
+    // 收藏
     toCollect() {
       this.axios
         .post("/api/api/school/schoolCollect", {
-          type:2,
+          type: 2,
           sid: this.$route.query.id
         })
         .then(res => {
           // console.log(res.data.list.status);
           if (res.data.code == 200) {
-            if (res.data.list.status ==2) {
+            if (res.data.list.status == 2) {
               this.collectflag = false;
               return false;
-            } else if (res.data.list.status ==1) {
+            } else if (res.data.list.status == 1) {
               this.collectflag = true;
               this.$toast("收藏成功");
             }
@@ -84,21 +100,23 @@ mounted(){
           }
         });
     },
-     // 进入立即注册
-  handlemessage(id,cid) {
-      this.$router.push({name:'signup2',query:{id:id,cid:cid}});
+    // 进入立即注册
+    handlemessage(id, cid) {
+      this.$router.push({ name: "signup2", query: { id: id, cid: cid } });
     },
-    getDetails(){
-      this.axios.get('/api/api/school/getCinfo',{
-        params:{
-          courseid:this.$route.query.id
-        }
-      }).then(res=>{
-        // console.log(res.data)
-        if(res.data.code==200){
-            this.lesson=res.data.list
-        }
-      })
+    getDetails() {
+      this.axios
+        .get("/api/api/school/getCinfo", {
+          params: {
+            courseid: this.$route.query.id
+          }
+        })
+        .then(res => {
+          // console.log(res.data)
+          if (res.data.code == 200) {
+            this.lesson = res.data.list;
+          }
+        });
     }
   },
   components: {}
@@ -142,58 +160,58 @@ mounted(){
       i {
         color: #9a9a9a;
         font-size: 0.4rem;
-         &.fa-star{
-            color:#ffae00;
-          }
+        &.fa-star {
+          color: #ffae00;
+        }
       }
     }
   }
-  .details_con{
-    margin:0 0.3rem 0;
-    div{
-      margin-top:0.3rem;
-    h3{
-      padding-left:0.2rem;
-      font-size:0.28rem;
-      color:#333;
-      position: relative;
-      font-weight:600;
-      &:after{
-        content:'';
-        position: absolute;
-        left:0;
-        top:50%;
-        margin-top:-0.09rem;
-        width:0.06rem;
-        height:0.17rem;
-        background:#ffbc00;
-        border-radius:0.3rem;
+  .details_con {
+    margin: 0 0.3rem 0;
+    div {
+      margin-top: 0.3rem;
+      h3 {
+        padding-left: 0.2rem;
+        font-size: 0.28rem;
+        color: #333;
+        position: relative;
+        font-weight: 600;
+        &:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 50%;
+          margin-top: -0.09rem;
+          width: 0.06rem;
+          height: 0.17rem;
+          background: #ffbc00;
+          border-radius: 0.3rem;
+        }
+      }
+      p {
+        font-size: 0.28rem;
+        color: #666666;
+        padding: 0.1rem 0.2rem 0;
       }
     }
-    p{
-      font-size:0.28rem;
-      color:#666666;
-      padding:0.1rem 0.2rem 0;
-    }
-    }
   }
-  .fix_bottom{
+  .fix_bottom {
     position: fixed;
-    bottom:0;
-    left:0;
-    height:1.3rem;
+    bottom: 0;
+    left: 0;
+    height: 1.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    width:100%;
-    box-shadow: 0.03rem 0 0.13rem rgba(41,41,41,0.15);
-    button{
-      width:6.3rem;
-      height:0.9rem;
-      border-radius:0.6rem;
-      background:#36b936;
-      color:#fff;
-      font-size:0.32rem;
+    width: 100%;
+    box-shadow: 0.03rem 0 0.13rem rgba(41, 41, 41, 0.15);
+    button {
+      width: 6.3rem;
+      height: 0.9rem;
+      border-radius: 0.6rem;
+      background: #36b936;
+      color: #fff;
+      font-size: 0.32rem;
     }
   }
 }

@@ -8,7 +8,7 @@
               <span>评论:</span>
               {{item.content}}
             </p>
-            <div>
+            <div @tap="toDeatils(item.aid)">
               <span>{{item.hinfo.content}}</span>
             </div>
             <p class="time">
@@ -39,6 +39,10 @@ export default {
     this.getlist();
   },
   methods: {
+       //进入详情
+    toDeatils(id) {
+      this.$router.push("/comment/" + id);
+    },
     // 上拉加载更多数据
     handleToScroll() {
       //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
@@ -123,13 +127,5 @@ export default {
       }
     }
   }
-}
-.more {
-  width: 4rem;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 0.8rem;
-  color: #282828;
-  font-size: 0.28rem;
 }
 </style>

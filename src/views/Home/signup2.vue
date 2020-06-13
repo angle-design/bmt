@@ -311,11 +311,11 @@ export default {
       button {
         width: 6.5rem;
         height: 0.84rem;
-        background: #ffbc00;
+        background: #36b936;
         color: #fff;
         line-height: 0.84rem;
         text-align: center;
-        border-radius: 0.15rem;
+        border-radius: 0.8rem;
         font-size: 0.36rem;
         font-weight: bold;
         display: block;

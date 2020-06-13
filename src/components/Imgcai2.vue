@@ -215,6 +215,7 @@ export default {
   justify-content: center;
   padding-top: 30px;
 }
+
 </style>
 
 

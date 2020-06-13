@@ -11,7 +11,7 @@
       </p>
       <div class="my_hua">
         <router-link tag="p" :to="showflag?'/login':'/my/topic'"><img src="../../assets/hua.png">我的话题</router-link>
-        <router-link tag="p" :to="showflag?'/login':'/my/lesson'"><img src="../../assets/ke.png">我的课程</router-link>
+        <router-link tag="p" :to="showflag?'/login':'/my/lesson'"><img src="../../assets/ke.png">已报名课程</router-link>
       </div>
       <ul class="my_list">
         <router-link tag="li" :to="showflag?'/login':item.routeto" v-for="(item,i) in mylist" :key="i">

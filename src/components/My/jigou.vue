@@ -105,12 +105,4 @@ export default {
     background: #f8f8f8;
   }
 }
-.more {
-  width: 4rem;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 0.8rem;
-  color: #282828;
-  font-size: 0.28rem;
-}
 </style>

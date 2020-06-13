@@ -36,7 +36,7 @@
         </span>
         <span v-else class="img_big">
           <img :src="imgs" class="dapic"/>
-          <i class="fa fa-times-circle-o" @click.self="btnShow=false"></i>
+          <i @click.self="btnShow=false"></i>
         </span>
       </p>
     </div>
@@ -51,7 +51,7 @@
       </p>
     </div>
 
-    <button @click="toSend">提交问吧</button>
+    <button @click="toSend" :class="school&&title&&hua_con&&contenthua&&name&&tel&&imgs?'btnactive':''">提交问吧</button>
     <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
     <imgcai v-if="imgflag" @closecrop="closecrop" @changeimg="changeimg"></imgcai>
   </div>
@@ -316,9 +316,12 @@ export default {
     height: 0.9rem;
     border-radius: 0.15rem;
     color: #fff;
-    background: #369836;
+    background: #ccc;
     margin: 0.3rem auto;
     font-size: 0.3rem;
+    &.btnactive{
+      background:#369836
+    }
   }
 }
 .img_big {
@@ -329,6 +332,12 @@ export default {
     right: 0;
     font-size: 0.4rem;
     color: #333 !important;
+    width:0.63rem;
+    height:0.58rem;
+    display: block;
+    background:url(../../assets/bb.png) no-repeat;
+    background-size:0.63rem auto;
+    background-position: 0 0;
   }
 }
 </style>

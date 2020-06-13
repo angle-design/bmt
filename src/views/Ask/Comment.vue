@@ -25,11 +25,11 @@
                   </dl>
                   <p>
                     <span>
-                      <i @click.once="zanlist($event,list.id)" class="fa fa-heart-o"></i>
+                      <i @click.once="zanlist($event,list.id)"></i>
                       <font>{{list.zan?list.zan:'0'}}</font>
                     </span>
                     <span @click="replaya(list)">
-                      <i class="fa fa-commenting-o"></i>
+                      <i></i>
                       <font>{{list.countr}}</font>
                     </span>
                   </p>
@@ -53,12 +53,12 @@
                     </dd>
                   </dl>
                   <p>
-                    <!-- <span>
-                      <i class="fa fa-heart-o"></i>
-                      <font>{{item.zan}}</font>
-                    </span>-->
+                    <span>
+                      <!-- <i class="fa fa-heart-o"></i>
+                      <font>{{item.zan}}</font> -->
+                    </span>
                     <span @click="replay(item,list.id)">
-                      <i class="fa fa-commenting-o"></i>
+                      <i></i>
                       <!-- <font>{{item.huifu}}</font> -->
                     </span>
                   </p>
@@ -120,7 +120,7 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             // console.log(event)
-            event.target.className = "fa fa-heart";
+            event.target.className = "active";
             event.target.nextElementSibling.innerHTML =
               parseInt(event.target.nextElementSibling.innerHTML) + 1;
           } else if (res.data.code == 205) {
@@ -449,25 +449,31 @@ export default {
 
       span {
         margin-left: 0.3rem;
+        display: flex;
 
         i {
-          padding: 0.1rem 0.06rem;
-          color: #bfbfbf;
-          font-size: 0.3rem;
-        }
+              //     padding: 0.1rem 0.06rem;
+              // color: #bfbfbf;
+              // font-size: 0.3rem;
+              display: flex;
+              width:0.36rem;
+              height:0.26rem;
+              background:url(../../assets/icon.png) no-repeat;
+              background-position:0 -4.41rem;
+              background-size:0.36rem auto;
+              padding-right:0.1rem;
+              &.active{
+                background-position: 0 -4.73rem;
+              }
+            }
+            &:nth-child(2){
+              i{
+                 background-position:0 -5.08rem;
+              }
+            }
       }
     }
   }
 }
-.more {
-  width: 4rem;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 0.8rem;
-  color: #282828;
-  font-size: 0.28rem;
-}
-i.fa-heart {
-  color: #ffb72c !important;
-}
+
 </style>
