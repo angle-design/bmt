@@ -143,11 +143,11 @@ export default {
             content: this.conmessage
           })
           .then(res => {
-            1;
             if (res.data.code == 200) {
               //成功，刷新当前页面
                this.$toast('提交成功~')
-              window.location.reload();
+              // window.location.reload();
+                this.getfulist();
             } else if (res.data.code == 205) {
               //未登录
               this.$router.push("/login");
@@ -216,20 +216,20 @@ export default {
           }
         });
     },
-    getfulist() {
-      this.axios
-        .get("/api/api/Ask/getreply", {
-          params: {
-            aid: this.$route.params.id,
-            p: this.page
-          }
-        })
-        .then(res => {
-          if (res.data.list) {
-            this.fulist = res.data.list;
-          }
-        });
-    },
+    // getfulist() {
+    //   this.axios
+    //     .get("/api/api/Ask/getreply", {
+    //       params: {
+    //         aid: this.$route.params.id,
+    //         p: this.page
+    //       }
+    //     })
+    //     .then(res => {
+    //       if (res.data.list) {
+    //         this.fulist = res.data.list;
+    //       }
+    //     });
+    // },
     // 加载更多
     getMoreList(id, order) {
       if (this.payload) {
