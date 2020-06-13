@@ -98,24 +98,32 @@ export default {
     mechanitem
   },
   mounted() {
+      this.payload = true;
+      this.page = 1;
     this.cc();
     this.getalist();
     this.getmechanlist(this.xuan, this.page);
   },
   methods: {
     handleToScroll(pos) {
+        // console.log(this.payload)
       //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
-      if (this.payload) {
+
+          // console.log(this.payload)
         this.pullDownMsg = "上拉加载...";
         if (this.$refs.aa.scroll.y <= this.$refs.aa.scroll.maxScrollY + 20) {
           //使用refresh 方法 来更新scroll 解决无法滚动的问题
           this.page++;
           this.$nextTick(() => {
-            this.getmechanlist(this.xuan, this.page);
+              if (this.payload) {
+                 this.getmechanlist(this.xuan, this.page);
+              }else{
+                  this.pullDownMsg = "精彩课程待更新...";
+              }
             this.$refs.aa.scroll.refresh();
           });
         }
-      }
+
     },
     //获取首页分类
     getalist() {
@@ -144,14 +152,17 @@ export default {
                   this.list.push(item);
                 });
                 if (this.page >= 1 && res.data.list.length < 6) {
-                  this.payload = false;
                   this.pullflag = true;
                   this.pullDownMsg = "精彩课程待更新...";
                 }
               }
-            }else if(res.data.code==404){
-              this.kongflag=true;
+            }else if(res.data.code==400){
+              // this.kongflag=true;
                this.payload = false;
+                this.pullflag = true;
+            }else{
+                this.kongflag=true;
+                this.payload = false;
                 this.pullflag = false;
             }
           });
