@@ -73,7 +73,7 @@ export default {
               res.data.list.forEach(item => {
                 this.quesctionlist.push(item);
               });
-              if (res.data.list.length < 4) {
+              if (res.data.list.length < 10) {
                 this.payload = false;
                 this.pullflag = true;
                 this.pullDownMsg = "没有更多内容...";

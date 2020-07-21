@@ -155,7 +155,7 @@ export default {
               display: flex;
               width:0.36rem;
               height:0.26rem;
-              background:url(../../assets/icon.png) no-repeat;
+              background:url(http://bmdt.zgn365.com/Public/aa.png) no-repeat;
               background-position:0 -4.41rem;
               background-size:0.36rem auto;
               padding-right:0.05rem;

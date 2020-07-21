@@ -335,7 +335,7 @@ export default {
     width:0.63rem;
     height:0.58rem;
     display: block;
-    background:url(../../assets/bb.png) no-repeat;
+    background:url(http://bmdt.zgn365.com/Public/bb.png) no-repeat;
     background-size:0.63rem auto;
     background-position: 0 0;
   }

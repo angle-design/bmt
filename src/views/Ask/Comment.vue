@@ -246,7 +246,7 @@ export default {
               res.data.list.forEach(item => {
                 this.fulist.push(item);
               });
-              if (res.data.list.length < 4) {
+              if (res.data.list.length < 10) {
                 this.payload = false;
                 this.pullflag = true;
                 this.pullDownMsg = "没有更多内容...";
@@ -458,7 +458,7 @@ export default {
               display: flex;
               width:0.36rem;
               height:0.26rem;
-              background:url(../../assets/icon.png) no-repeat;
+              background:url(http://bmdt.zgn365.com/Public/aa.png) no-repeat;
               background-position:0 -4.41rem;
               background-size:0.36rem auto;
               padding-right:0.1rem;

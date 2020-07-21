@@ -102,7 +102,7 @@ export default {
       this.page = 1;
     this.cc();
     this.getalist();
-    this.getmechanlist(this.xuan, this.page);
+    //this.getmechanlist(this.xuan, this.page);
   },
   methods: {
     handleToScroll(pos) {
@@ -131,6 +131,8 @@ export default {
         if (res.data.code == 200) {
           this.dataArr = res.data.list;
           this.xuan = this.dataArr[0].id;
+            this.getmechanlist(this.xuan,this.page);
+            // console.log(111);
         }
       });
     },
@@ -151,7 +153,7 @@ export default {
                 res.data.list.forEach(item => {
                   this.list.push(item);
                 });
-                if (this.page >= 1 && res.data.list.length < 6) {
+                if (this.page >= 1 && res.data.list.length < 10) {
                   this.pullflag = true;
                   this.pullDownMsg = "精彩课程待更新...";
                 }

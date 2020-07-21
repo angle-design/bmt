@@ -30,7 +30,7 @@
       </div>
       <div class="jieda" v-if="listtop.isq" @click="$emit('toaswer',listtop)"><i class="fa fa-star-o"></i>解答问题</div>
       <!-- 答 -->
-      <div class="list_item" v-if="listtop.qlist">
+      <div class="list_item list_answer" v-if="listtop.qlist">
         <div>
           <dl v-if="listtop.qlist.uinfo">
             <dt>
@@ -101,9 +101,21 @@ export default {
     margin-top:0.2rem;
     display: block;
     text-align: right;
+    position: relative;
+    margin-left:1rem;
+
     i{
       margin-right:0.05rem;
     }
+     &:after{
+       position: absolute;
+       top:0rem;
+       content:'';
+       height:0.02rem;
+       background:#f4f4f4;
+       right:0;
+       left:0rem;
+     }
   }
   .list_body {
     position: relative;
@@ -117,8 +129,18 @@ export default {
       }
     }
     .list_item {
-      &:nth-child(2) {
+      &.list_answer{
         padding-top: 0.2rem;
+        position: relative;
+            &:after{
+              position: absolute;
+              top:0rem;
+              content:'';
+              height:0.02rem;
+              background:#f4f4f4;
+              right:0;
+              left:1rem;
+            }                     
         div {
           position: relative;
         }
@@ -184,10 +206,10 @@ export default {
               display: flex;
               width:0.36rem;
               height:0.26rem;
-              background:url(../../assets/icon.png) no-repeat;
+              background:url(http://bmdt.zgn365.com/Public/aa.png) no-repeat;
               background-position:0 -4.41rem;
               background-size:0.36rem auto;
-              padding-right:0.1rem;
+              padding-right:0.05rem;
               &.active{
                 background-position: 0 -4.73rem;
               }
@@ -209,22 +231,9 @@ export default {
       padding-left: 1rem;
       padding-bottom:0.2rem;
       position: relative;
-      &:after{
-        position: absolute;
-        bottom:0rem;
-        content:'';
-        height:0.02rem;
-        background:#f4f4f4;
-        right:0;
-        left:1rem;
-      }
       &.new_text_ask {
         background: url(../../assets/wen_03.png) no-repeat 0.2rem 0.05rem;
         background-size: 0.4rem 0.4rem;
-         &:after{
-           width:0;
-           height:0;
-         }
       }
     }
   }

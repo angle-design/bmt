@@ -10,7 +10,7 @@
               <span>
                 {{time}} |
                 <font v-if="hinfo.isnow==1">提问进行时</font>
-                <font v-if="hinfo.isnow==2" color="#999">提问已关闭</font>
+                <font v-if="hinfo.isnow==2" style="color: #999" color="#999">提问已关闭</font>
               </span>
             </div>
           </div>
@@ -278,7 +278,7 @@ export default {
               res.data.list.forEach(item => {
                 this.ListInfo.push(item);
               });
-              if (res.data.list.length < 4) {
+              if (res.data.list.length < 10) {
                 this.payload = false;
                 this.pullflag = true;
                 this.pullDownMsg = "没有更多内容...";
@@ -449,7 +449,7 @@ export default {
         display: flex;
         width:0.41rem;
         height:0.44rem;
-        background:url(../../assets/bb.png) no-repeat;
+        background:url(http://bmdt.zgn365.com/Public/bb.png) no-repeat;
         background-size:0.63rem auto;
         background-position: -0.19rem -0.71rem;
         margin-right:0.1rem;
@@ -471,5 +471,6 @@ export default {
 .content ul li {
   padding: 0 0.2rem;
   border-bottom: 0.1rem solid #f4f4f4;
+  box-sizing: border-box;
 }
 </style>

@@ -345,7 +345,8 @@ padding-bottom:0.3rem;
     padding-top: 0.2rem;
     .item_list {
       display: flex;
-      justify-content: center;
+      /*justify-content: center;*/
+      flex-wrap:wrap;
       padding: 0 0.3rem;
       span {
         padding: 0.1rem 0.25rem;
@@ -353,7 +354,7 @@ padding-bottom:0.3rem;
         background: #f7f7f7;
         font-size: 0.26rem;
         color: #999;
-        margin: 0 0.1rem;
+        margin: 0 0.05rem 0.2rem;
         &.active {
           color: #36b936;
           background: #f0fbf0;
