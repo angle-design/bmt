@@ -175,7 +175,7 @@ export default {
         font-size: 0.32rem;
         color: #333;
         text-align: center;
-        padding: 0.1rem 00.3rem;
+        padding: 0.25rem 0.3rem;
         line-height: 0.45rem;
         font-weight: bold;
       }

@@ -27,10 +27,22 @@
               </dd>
             </dl>
             <p>
-              <span :class="{'heightauto':contentflag}">{{hinfo.h_content}}</span>
+              <span :class="{'heightauto':contentflag}" ref="getheight">{{hinfo.h_content}}</span>
+              <span v-if="height>=100">
               <font v-if="contentflag" @tap="contentflag=false">查看完整简介</font>
               <font v-else @tap="contentflag=true">收起内容</font>
+              </span>
             </p>
+          </div>
+          <div class="otherquestion">
+            <span>TA开设的其他话题：</span>
+            <div>
+              <p
+                v-for="(hualist,index) in hinfo.hlist"
+                :key="index"
+                @tap="todetail(hualist.id)"
+              >{{hualist.h_title}},{{hualist.h_title2}}</p>
+            </div>
           </div>
           <!-- 提问 -->
           <div class="question">
@@ -103,8 +115,14 @@ export default {
       comtext: "",
       zanflag: false,
       awitem: {}, //解答某一项
-      isshow:1
+      isshow: 1,
+      height: 0
     };
+  },
+  watch: {
+    $route(to, from) {
+      this.$router.go(0);
+    }
   },
   mounted() {
     this.uid = this.$route.params.id;
@@ -112,6 +130,11 @@ export default {
     this.getList(this.uid);
   },
   methods: {
+    // 进入详情
+    todetail(id) {
+      this.$router.push("/askdetails/" + id);
+    },
+
     // 下面浮窗点赞
     togreat() {
       this.axios
@@ -129,8 +152,8 @@ export default {
     },
     // 提问
     toquestion() {
-      if(this.isshow==2){
-        this.$toast('提问已关闭');
+      if (this.isshow == 2) {
+        this.$toast("提问已关闭");
         return false;
       }
       var self = this;
@@ -139,7 +162,6 @@ export default {
           this.flag = true;
         }
       });
-
     },
     // 提交提问
     toSend(data) {
@@ -155,9 +177,9 @@ export default {
             if (res.data.code == 200) {
               //提问成功
               this.flag = false;
-              this.$toast('提问成功~')
+              this.$toast("提问成功~");
               //window.location.reload();
-                this.getList(this.uid);
+              this.getList(this.uid);
             }
           });
       }
@@ -179,10 +201,10 @@ export default {
           if (res.data.code == 200) {
             //提问成功
             this.awflag = false;
-            this.$toast('您已成功解答~')
-             //成功，刷新当前页面
-             // window.location.reload();
-              this.getList(this.uid);
+            this.$toast("您已成功解答~");
+            //成功，刷新当前页面
+            // window.location.reload();
+            this.getList(this.uid);
           }
         });
     },
@@ -208,8 +230,14 @@ export default {
           if (res.data) {
             this.hinfo = res.data.list;
             this.time = this.hinfo.h_etime.split(" ")[0];
-            this.isshow=this.hinfo.isnow;
-            // console.log(res.data.list)
+            this.isshow = this.hinfo.isnow;
+            // console.log(res.data.list)}
+            this.$nextTick(() => {
+              this.height = window.getComputedStyle(
+                this.$refs.getheight
+              ).height;
+              this.height=parseInt(this.height.substring(0,this.height.length - 2));
+            });
           }
         });
     },
@@ -380,11 +408,12 @@ export default {
       line-height: 0.4rem;
       margin-top: 0.2rem;
       span {
+        height: auto;
+        overflow: auto;
         &.heightauto {
           overflow: hidden;
-          display: -webkit-box;
-          -webkit-line-clamp: 4;
-          -webkit-box-orient: vertical;
+          max-height: 100px;
+          display: block;
         }
       }
       font {
@@ -447,30 +476,51 @@ export default {
         // font-size: 0.4rem;
         // margin-right: 0.1rem;
         display: flex;
-        width:0.41rem;
-        height:0.44rem;
-        background:url(http://bmdt.zgn365.com/Public/bb.png) no-repeat;
-        background-size:0.63rem auto;
+        width: 0.41rem;
+        height: 0.44rem;
+        background: url(http://bmdt.zgn365.com/Public/bb.png) no-repeat;
+        background-size: 0.63rem auto;
         background-position: -0.19rem -0.71rem;
-        margin-right:0.1rem;
+        margin-right: 0.1rem;
       }
       &:nth-child(2) {
-        i{
-          width:0.43rem;
-        height:0.38rem;
+        i {
+          width: 0.43rem;
+          height: 0.38rem;
           background-position: -0.19rem -1.27rem;
-          &.active{
+          &.active {
             background-position: -0.19rem -1.77rem;
           }
         }
-     
       }
     }
   }
 }
 .content ul li {
   padding: 0 0.2rem;
-  border-bottom: 0.1rem solid #f4f4f4;
+  border-bottom: 0.15rem solid #f4f4f4;
   box-sizing: border-box;
+}
+.otherquestion {
+  margin: 0.2rem 0.3rem 0.5rem;
+  font-size: 0.26rem;
+  span {
+    display: block;
+    color: #999;
+
+    margin-bottom: 0.23rem;
+  }
+  div {
+    background: #e9f8ea;
+    border-radius: 0.1rem;
+    padding: 0.05rem 0.15rem;
+    box-sizing: border-box;
+
+    p {
+      line-height: 0.4rem;
+      margin: 0.2rem 0;
+      height: auto;
+    }
+  }
 }
 </style>

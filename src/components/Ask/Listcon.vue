@@ -136,7 +136,7 @@ export default {
               position: absolute;
               top:0rem;
               content:'';
-              height:0.02rem;
+              height:0.01rem;
               background:#f4f4f4;
               right:0;
               left:1rem;
