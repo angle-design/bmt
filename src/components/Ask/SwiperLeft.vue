@@ -2,7 +2,7 @@
 <template>
   <div ref="wrapper" class="swiperLeft">
     <ul class="cont" ref="cont">
-      <li v-for="(item,index) in recommendList" :key="index" ref="lislide">
+      <li v-for="(item,index) in recommendList" :key="index" ref="lislide"  @click="toDeatils(item.id)">
         <dl v-if="item.uinfo">
           <dt>
             <img v-if="item.uinfo.a_image" :src="item.uinfo.a_image" />
@@ -26,7 +26,7 @@
             <font>回答</font>
           </span>
         </p>
-        <button @click="toDeatils(item.id)">问他</button>
+        <button>问他</button>
       </li>
     </ul>
   </div>

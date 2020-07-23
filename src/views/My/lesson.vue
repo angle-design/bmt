@@ -5,27 +5,35 @@
         <lessonitem :list="lesson" :ceflag="false"></lessonitem>
       </li>
     </ul>
+    <kong :flag="showflag"></kong>
   </div>
+
 </template>
 
 <script>
 import lessonitem from "@/components/Home/Lessonitem.vue";
+import kong from "@/components/kong.vue";
 export default {
   name: "topic",
   data() {
     return {
-      lessonlist: ""
+      lessonlist: "",
+        showflag:true
     };
   },
   created() {
     this.axios.get("/api/api/my/getMycourse").then(res => {
       if (res.data.code == 200) {
         this.lessonlist = res.data.list;
+          this.showflag = false;
+      }else{
+          this.showflag = true;
       }
     });
   },
   components: {
-    lessonitem
+    lessonitem,
+      kong
   }
 };
 </script>
@@ -37,7 +45,6 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 1.2rem;
   background: #fff;
   width: 100%;
   z-index: 2;
@@ -63,5 +70,8 @@ export default {
 }
 .lessonitem p button {
   display: none !important;
+}
+.kong{
+  margin-top:40%;
 }
 </style>

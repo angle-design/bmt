@@ -12,18 +12,18 @@
       <p>
         <font :class="[sendflag&&!title&&!hua_con?'tit_text error':'tit_text']">标题：</font>
         <span>
-          <input type="text" v-drop placeholder="我是中国科学技术馆馆长张玉林" v-model="title" />，
+          <input type="text" v-drop placeholder="我是" v-model="title" />，
         </span>
       </p>
       <p>
-        <input type="text" v-drop placeholder="关于中国科学技术馆问题(35字以内)" v-model="hua_con" />，
+        <input type="text" v-drop placeholder="关于(35字以内)" v-model="hua_con"  maxlength="35"/>，
         <font>问我吧！</font>
       </p>
     </div>
     <div>
       <p>
         <font :class="[sendflag&&!contenthua?'tit_text error':'tit_text']">内容：</font>
-        <textarea v-drop placeholder="请详细描述您的问题简介（400空以内)" v-model="contenthua"></textarea>
+        <textarea v-drop placeholder="请详细描述您的问题简介（400空以内)" v-model="contenthua" maxlength="400"></textarea>
       </p>
     </div>
     <div>
@@ -162,6 +162,8 @@ export default {
               position: "middle", //弹窗位置
               className: "mytoast" //自定义Toast 样式，需要自己提供一个类名
             });
+          }else if(res.data.code==408) {
+              this.$toast("请勿重复提交")
           }
         });
     },

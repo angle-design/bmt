@@ -84,8 +84,9 @@ export default {
         })
         .then(res => {
           if (res.data.list) {
-            this.topList = res.data.list.splice(0, 3);
-            this.list = res.data.list;
+            this.topList = res.data.list.slice(0,3);
+            this.list = res.data.list.slice(3)
+            console.log(this.list)
           }
         });
     },

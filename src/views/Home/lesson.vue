@@ -292,13 +292,13 @@ export default {
 .lesson {
   flex: 1;
   overflow: auto;
-  position: fixed;
+  // position: fixed;
   top: 0;
   left: 0;
 bottom:0;
 padding-bottom:0.3rem;
   background: #fff;
-  width: 100%;
+  // width: 100%;
   z-index: 12;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;

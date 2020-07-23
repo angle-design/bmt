@@ -29,11 +29,11 @@ export default {
 .collection {
   flex: 1;
   overflow: auto;
-  position: fixed;
+  // position: fixed;
   top: 0;
   left: 0;
   background: #fff;
-  width: 100%;
+  // width: 100%;
   z-index: 2;
   // padding-top: 1rem;
   height: 100%;

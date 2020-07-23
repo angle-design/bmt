@@ -14,13 +14,14 @@
             </dt>
             <dd>{{item.uinfo.a_uname}}</dd>
           </dl>
-          <font>{{item.tagname.name}}</font>
+          <font v-if="item.tagname">{{item.tagname.name}}</font>
         </div>
       </div>
       <p>{{item.h_title}},{{item.h_title2}}</p>
       <div class="ask_text">
         <font v-if="item.isnow==1">提问进行时</font>
-        <font v-if="item.isnow==2" style="color:#999;">提问已关闭</font>
+        <font v-if="item.isnow==3" style="color:#999;">提问已关闭</font>
+        <!-- <font v-if="item.isnow==2" style="color:#999;">提问已关闭</font> -->
         <p>
           <span>
             <i></i>
