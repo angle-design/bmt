@@ -4,7 +4,7 @@
     <div class="my">
       <p class="my_head">
          <img v-if="showflag" src="../../assets/mohead.png" />
-        <img v-else :src="userinfo.a_image" />
+        <img v-else :src="userinfo.a_image?userinfo.a_image:'../../assets/mohead.png'" />
        
         <span v-if="showflag" @click="$router.push('/login')">点击登录或注册</span>
         <span v-else>{{userinfo.a_uname}}</span>
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       userinfo: {},
-      showflag:true,
+      showflag:false,
       mylist: [
         { name: "提问", classname: "fa fa-star-o", routeto: "/my/quection" },
         { name: "评论", classname: "fa fa-star-o", routeto: "/my/comment" },
@@ -54,9 +54,11 @@ export default {
         // this.$router.push("/login");
       }
        if (res.data.code == 200) {
-        this.showflag=false
-        this.userinfo = res.data.list;
-      }
+           this.showflag = false;
+           this.userinfo = res.data.list;
+       }else{
+          this.showflag = true;
+       }
     });
   },
   components: {

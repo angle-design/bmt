@@ -57,6 +57,9 @@ export default {
             }
           })
           .then(res => {
+              if(res.data.code==404){
+                  this.kongflag=true
+              }
              if (res.data.list) {
                this.kongflag=false
               res.data.list.forEach(item => {
@@ -72,9 +75,7 @@ export default {
               this.pullflag = true;
               this.pullDownMsg = "没有更多内容...";
             }
-            if(res.data.code==404){
-            this.kongflag=true
-          }
+
           });
       }
     }

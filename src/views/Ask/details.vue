@@ -10,7 +10,8 @@
               <span>
                 {{time}} |
                 <font v-if="hinfo.isnow==1">提问进行时</font>
-                <font v-if="hinfo.isnow==2" style="color: #999" color="#999">提问已关闭</font>
+                 <font v-if="hinfo.isnow==2" style="color: #999" color="#999">待审核</font>
+                <font v-if="hinfo.isnow==3" style="color: #999" color="#999">提问已关闭</font>
               </span>
             </div>
           </div>
@@ -96,7 +97,7 @@ export default {
       ListInfo: [],
       payload: true,
       pullDownMsg: "",
-      pullflag: "",
+      pullflag: false,
       page: 1,
       order: 0,
       count: {},
@@ -129,7 +130,7 @@ export default {
     },
     // 提问
     toquestion() {
-      if(this.isshow==2){
+      if(this.isshow==2 || this.isshow==3){
         this.$toast('提问已关闭');
         return false;
       }
@@ -254,11 +255,14 @@ export default {
           }
         })
         .then(res => {
-          console.log(res.data.list);
+
           if (res.data.list) {
-            this.count = res.data.count;
             this.ListInfo = res.data.list;
+          }else{
+              this.pullflag = true;
+              this.pullDownMsg = "没有更多内容...";
           }
+            this.count = res.data.count;
         });
     },
     // 加载更多

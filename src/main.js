@@ -62,6 +62,12 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+router.beforeEach((to,from,next)=>{
+  if(to.meta.title){
+    document.title = to.meta.title;
+  }
+  next()
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
