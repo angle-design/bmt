@@ -3,7 +3,7 @@
     <div class="content">
       <div class="search_input">
         <div class="search_input_wrapper">
-          <input type="text" v-model="message" autofocus="autofocus" />
+          <input type="text" v-model="message" autofocus="autofocus" ref="input"/>
         </div>
       </div>
       <scroller ref="sa" :handleToScroll="shandleToScroll" :handleToTouchEnd="shandleToTouchEnd">
@@ -63,6 +63,11 @@ export default {
         }
       }
     },
+      changfouce(){
+          this.$nextTick((x)=>{   //正确写法
+              this.$refs.input.focus();
+          })
+      },
     shandleToTouchEnd(pos) {},
     search(aa) {
       if (this.sLoad && this.message) {
@@ -98,6 +103,9 @@ export default {
   deactivated() {
     this.$destroy(true);
   },
+    created(){
+        this.changfouce();
+    },
   watch: {
     message(newval) {
       this.spage = 1;
