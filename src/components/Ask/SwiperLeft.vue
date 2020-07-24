@@ -6,7 +6,7 @@
         <dl v-if="item.uinfo">
           <dt>
             <img v-if="item.uinfo.a_image" :src="item.uinfo.a_image" />
-            <img v-else src="../../assets/feng.jpg" />
+            <img v-else src="../../assets/mohead.png" />
             <font></font>
           </dt>
           <dd>{{item.uinfo.a_uname}}</dd>

@@ -40,8 +40,7 @@
         :colorActiveBack="colorActiveBack"
       ></tabNav>
       <div class="item_list" v-if="data2Arr">
-        <span
-                v-if="c2list"
+        <span v-if="c2list"
           v-for="(c2list,i) in data2Arr"
           :key="i"
           :class="c2idindex==i?'active':''"

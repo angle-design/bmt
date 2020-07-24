@@ -276,7 +276,8 @@ export default {
     }
     .pai {
       position: absolute;
-      top: 0rem;
+      top: 50%;
+      margin-top:-0.25rem;
       right: 0.2rem;
       img {
         width: 0.53rem;
@@ -294,9 +295,7 @@ export default {
         color: #999999;
         font-weight: bold;
       }
-      .smalltop {
-        margin-top: 0.2rem;
-      }
+    
     }
   }
 }

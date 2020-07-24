@@ -67,7 +67,8 @@
                 </li>
               </ul>
               <!-- 展开更多 -->
-              <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
+               <p :class="cl?'more aa':'more'" v-if="pullflag" >{{pullDownMsg}}</p>
+              <!-- <p :class="more {'aa',ListInfo}" v-if="pullflag" >{{pullDownMsg}}</p> -->
             </div>
           </div>
         </div>
@@ -118,7 +119,8 @@ export default {
       zanflag: false,
       awitem: {}, //解答某一项
       isshow: 1,
-      height: 0
+      height: 0,
+      cl:false
     };
   },
   watch: {
@@ -132,6 +134,7 @@ export default {
     this.uid = this.$route.params.id;
     this.getInfo(this.uid);
     this.getList(this.uid);
+    console.log(this.ListInfo)
   },
   methods: {
     // 进入详情
@@ -290,6 +293,7 @@ export default {
           if (res.data.list) {
             this.ListInfo = res.data.list;
           }else{
+            this.cl=true;
               this.pullflag = true;
               this.pullDownMsg = "没有更多内容...";
           }
@@ -529,5 +533,8 @@ export default {
       height: auto;
     }
   }
+}
+.more.aa{
+  margin-top:1rem;
 }
 </style>
