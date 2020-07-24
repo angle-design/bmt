@@ -97,6 +97,7 @@ import Listcon from "@/components/Ask/Listcon.vue";
 import Input from "@/components/Ask/Input.vue";
 export default {
   name: "adetails",
+    inject:['reload'],
   data() {
     return {
       awflag: false,
@@ -122,7 +123,9 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.$router.go(0);
+        if(this.$route.params.id){
+            this.reload();
+        }
     }
   },
   mounted() {

@@ -41,6 +41,7 @@
       ></tabNav>
       <div class="item_list" v-if="data2Arr">
         <span
+                v-if="c2list"
           v-for="(c2list,i) in data2Arr"
           :key="i"
           :class="c2idindex==i?'active':''"
@@ -211,9 +212,12 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
+
             this.lesson = res.data.list;
-            this.dataArr = res.data.list.clist;
-            this.id = this.dataArr[this.activeIndex].id;
+              if(res.data.list.clist.length>0){
+                  this.dataArr = res.data.list.clist;
+                  this.id = this.dataArr[this.activeIndex].id;
+              }
             // this.data2Arr = this.lesson.clist[this.activeIndex].c2list;
           }
         });
@@ -240,12 +244,17 @@ export default {
       this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
     },
     chooseItem(val) {
-      // console.log(val)
-    this.data2Arr=this.dataArr[val[0]].c2list;
+      console.log(val)
+
+      this.data2Arr=this.dataArr[val[0]].c2list;
       this.activeIndex = val[0];
       this.c2idindex = 0;
-      this.c2id = this.lesson.clist[this.activeIndex].c2list[0].id;
-      this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
+      console.log(this.lesson.clist[this.activeIndex].c2list[0])
+        if(this.lesson.clist[this.activeIndex].c2list[0]){
+            this.c2id = this.lesson.clist[this.activeIndex].c2list[0].id;
+            this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
+        }
+
     },
     descInput() {
       var txtVal = this.comtext.length;
