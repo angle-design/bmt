@@ -422,7 +422,8 @@ export default {
     white-space: nowrap;
     height:0.7rem;
     width:100%!important;
-     transition-duration:0.5s;
+     transition-duration:500ms;
+     transition-delay:0s;
     // justify-content: flex-start;
     .scroll-item {
       cursor: pointer;

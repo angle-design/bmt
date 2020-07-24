@@ -28,7 +28,7 @@
         </div>
         <p class="new_text" @click="$emit('toComment',listtop.id)">{{listtop.content}}</p>
       </div>
-      <div class="jieda" v-if="listtop.isq" @click="$emit('toaswer',listtop)"><i class="fa fa-star-o"></i>解答问题</div>
+      <div class="jieda" v-if="listtop.isq" @click="$emit('toaswer',listtop)"><img src="../../assets/bi.png">解答问题</div>
       <!-- 答 -->
       <div class="list_item list_answer" v-if="listtop.qlist">
         <div>
@@ -79,8 +79,8 @@ export default {
           aid: id
         })
         .then(res => {
-          if (res.data.code == 200) {
-           event.target.className = "active";
+          if (res.data.code == 200){
+            event.target.className = "active";
             event.target.nextElementSibling.innerHTML =
                   parseInt(event.target.nextElementSibling.innerHTML) + 1;
           } else if (res.data.code == 205) {
@@ -99,19 +99,24 @@ export default {
     color:#369836;
     padding:0.1rem 0;
     margin-top:0.2rem;
-    display: block;
+    display: flex;
     text-align: right;
     position: relative;
     margin-left:1rem;
+align-items: center;
+justify-content: flex-end;
+    img{
 
-    i{
-      margin-right:0.05rem;
+      width:0.24rem;
+      height:0.26rem;
+      margin-right:0.1rem;
+
     }
      &:after{
        position: absolute;
        top:0rem;
        content:'';
-       height:0.02rem;
+       height:0.01rem;
        background:#f4f4f4;
        right:0;
        left:0rem;
