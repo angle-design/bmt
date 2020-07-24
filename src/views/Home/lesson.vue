@@ -426,8 +426,9 @@ padding-bottom:0.3rem;
         textarea {
           height: 2rem;
           line-height: 0.4rem;
-          padding: 0 0.2rem;
+          padding:0.15rem 0.2rem 0;
           width: 5.7rem;
+          font-size:0.26rem;
         }
         span {
           position: absolute;
