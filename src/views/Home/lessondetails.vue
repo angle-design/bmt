@@ -115,6 +115,7 @@ export default {
           // console.log(res.data)
           if (res.data.code == 200) {
             this.lesson = res.data.list;
+            document.title = this.lesson.name
           }
         });
     }

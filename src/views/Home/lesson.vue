@@ -26,7 +26,7 @@
     </div>
     <!-- 列表 -->
 
-    <div class="lesson_con">
+    <div class="lesson_con" v-if="dataArr.length">
       <tabNav
         @choose-item="chooseItem"
         :dataArr="dataArr"
@@ -142,6 +142,8 @@ export default {
           this.collectflag = true;
         }
       });
+
+    // console.log(this.dataArr)
   },
   methods: {
     // 收藏
@@ -214,6 +216,7 @@ export default {
           if (res.data.code == 200) {
 
             this.lesson = res.data.list;
+            document.title = res.data.list.name
               if(res.data.list.clist.length>0){
                   this.dataArr = res.data.list.clist;
                   this.id = this.dataArr[this.activeIndex].id;

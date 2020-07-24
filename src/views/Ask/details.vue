@@ -233,6 +233,7 @@ export default {
         .then(res => {
           if (res.data) {
             this.hinfo = res.data.list;
+            // document.title = this.hinfo.h_title+this.hinfo.h_title2;
             this.time = this.hinfo.h_etime.split(" ")[0];
             this.isshow = this.hinfo.isnow;
             // console.log(res.data.list)}

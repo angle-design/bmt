@@ -163,7 +163,7 @@ export default {
               className: "mytoast" //自定义Toast 样式，需要自己提供一个类名
             });
           }else if(res.data.code==408) {
-              this.$toast("请勿重复提交")
+              this.$toast("您已提交成功，请勿重复提交。")
           }
         });
     },

@@ -39,7 +39,7 @@ export default new Router({
       path: '/login',
       component: ()=>import("../views/Login/index.vue"),
         meta: {
-            title:'登陆页'
+            title:'报名大厅'
         }
     },
     // 设置新密码
@@ -47,7 +47,7 @@ export default new Router({
       path: '/setpassword',
       component: ()=>import("../views/Login/setpassword"),
         meta: {
-            title:'修改密码'
+            title:'报名大厅'
         }
     },
     // 找回密码
@@ -55,7 +55,7 @@ export default new Router({
       path: '/backpassword',
       component: ()=>import("../views/Login/backpassword"),
         meta: {
-            title:'找回密码'
+            title:'报名大厅'
         }
     },
     // 注册
@@ -63,7 +63,7 @@ export default new Router({
       path: '/register',
       component: ()=>import("../views/Login/register.vue"),
         meta: {
-            title:'注册'
+            title:'报名大厅'
         }
     },
 
@@ -106,7 +106,7 @@ export default new Router({
       path: '/mechanism',
       component: ()=>import("../views/Mechanism/index.vue"),
         meta: {
-            title:'机构入住'
+            title:'机构入驻'
         }
     },
     {
@@ -137,7 +137,7 @@ export default new Router({
       path: '/comment/:id',
       component: ()=>import("../views/Ask/Comment.vue"),
         meta: {
-            title:'回答列表'
+            title:'评论'
         }
 
     },
@@ -232,7 +232,7 @@ export default new Router({
       path: '/askdetails/:id',
       component: ()=>import("../views/Ask/details.vue"),
         meta: {
-            title:'问答详情'
+            title:'问吧'
         },
     }
 
