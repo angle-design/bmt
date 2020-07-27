@@ -70,9 +70,12 @@ export default {
           })
           .then(res => {
             if (res.data.list) {
-              res.data.list.forEach(item => {
-                this.quesctionlist.push(item);
-              });
+
+                var list = res.data.list;
+                for (var i in list){
+                    this.quesctionlist.push(list[i]);
+                }
+
               if (res.data.list.length < 10) {
                 this.payload = false;
                 this.pullflag = true;

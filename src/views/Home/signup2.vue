@@ -103,6 +103,11 @@ export default {
             .then(res => {
                 // console.log(res.data)
                 if (res.data.code == 200) {
+                    if(res.data.list.ist==2){
+                        this.$toast("该课程禁止报名");
+                        this.$router.push("/home");
+                        return false;
+                    }
                     this.courseName = res.data.list.name;
                 }
             });

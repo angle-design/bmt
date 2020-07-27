@@ -39,14 +39,14 @@
         :colorActiveText="colorActiveText"
         :colorActiveBack="colorActiveBack"
       ></tabNav>
-      <div class="item_list" v-if="data2Arr">
-        <span v-if="c2list"
-          v-for="(c2list,i) in data2Arr"
-          :key="i"
-          :class="c2idindex==i?'active':''"
-          @click="csidclick(i)"
-        >{{c2list.name}}</span>
-      </div>
+      <!--<div class="item_list" v-if="data2Arr">-->
+        <!--<span v-if="c2list"-->
+          <!--v-for="(c2list,i) in data2Arr"-->
+          <!--:key="i"-->
+          <!--:class="c2idindex==i?'active':''"-->
+          <!--@click="csidclick(i)"-->
+        <!--&gt;{{c2list.name}}</span>-->
+      <!--</div>-->
       <ul>
         <li v-for="(lesson,index) in lessonlist" :key="index">
           <lessonitem :list="lesson" :ceflag="true"></lessonitem>
@@ -60,7 +60,7 @@
         <li
           v-for="(zan,index) in zanlist"
           :key="index"
-          @click="tagzan(index)"
+          @clic="tagzan(index)"
           :class="[zan.check?'active':'']"
         >
           {{zan.name}}
@@ -251,11 +251,8 @@ export default {
       this.data2Arr=this.dataArr[val[0]].c2list;
       this.activeIndex = val[0];
       this.c2idindex = 0;
-      console.log(this.lesson.clist[this.activeIndex].c2list[0])
-        if(this.lesson.clist[this.activeIndex].c2list[0]){
-            this.c2id = this.lesson.clist[this.activeIndex].c2list[0].id;
-            this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
-        }
+      this.getList(this.sid, this.dataArr[this.activeIndex].id,0);
+
 
     },
     descInput() {
