@@ -106,6 +106,7 @@ export default {
       border-bottom: 0.02rem solid #e7e7e7;
       line-height: 0.4rem;
       .title {
+        color:#369836;
         span {
           color: #999999;
         }

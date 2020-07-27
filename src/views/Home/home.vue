@@ -9,18 +9,17 @@
           </div>
         </div>
         <!-- 分类 -->
-        <tabNav
-          @choose-item="chooseItem"
-          :dataArr="dataArr"
-          :activeIndexParent="activeIndex"
-          :navWH="navWH"
-          :scrollMargin="scrollMargin"
-          :scrollWay="scrollWay"
-          :colorText="colorText"
-          :colorBack="colorBack"
-          :colorActiveText="colorActiveText"
-          :colorActiveBack="colorActiveBack"
-        ></tabNav>
+        <Nav direction="x" :activeIndex="activeIndex">
+          <div
+            class="scrollBarItem"
+            v-for="(item, index) in dataArr"
+            :key="index"
+            @click="changeNav(item, index)"
+            :class="index === activeIndex ? 'active' : null"
+          >
+            <div>{{item.name}}</div>
+          </div>
+        </Nav>
         <!-- 轮播图 -->
         <div class="picbody">
           <div class="swiper-container pic_container" ref="piccontainer">
@@ -64,7 +63,7 @@
 import kong from "@/components/kong.vue";
 import Tab from "@/components/TabBar";
 import mechanitem from "@/components/Home/Mechanism.vue";
-import tabNav from "@/components/Home/Centernav.vue";
+ import Nav from '../../components/Home/Nav';
 import Swiper from "../../../static/css/swiper.min";
 import "../../../static/css/swiper.min.css";
 export default {
@@ -93,37 +92,45 @@ export default {
   },
   components: {
     Tab,
-    tabNav,
+    Nav,
     kong,
     mechanitem
   },
   mounted() {
-      this.payload = true;
-      this.page = 1;
+    this.payload = true;
+    this.page = 1;
     this.cc();
     this.getalist();
     //this.getmechanlist(this.xuan, this.page);
   },
   methods: {
+    changeNav(item, index) {
+      this.page = 1;
+      this.payload = true;
+      this.list = [];
+      this.$refs.aa.scroll.refresh();
+      this.activeIndex = index;
+      this.xuan = this.dataArr[this.activeIndex].id;
+      this.getmechanlist(this.xuan, this.page);
+    },
     handleToScroll(pos) {
-        // console.log(this.payload)
+      // console.log(this.payload)
       //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
 
-          // console.log(this.payload)
-        this.pullDownMsg = "上拉加载...";
-        if (this.$refs.aa.scroll.y <= this.$refs.aa.scroll.maxScrollY + 20) {
-          //使用refresh 方法 来更新scroll 解决无法滚动的问题
-          this.page++;
-          this.$nextTick(() => {
-              if (this.payload) {
-                 this.getmechanlist(this.xuan, this.page);
-              }else{
-                  this.pullDownMsg = "精彩课程待更新...";
-              }
-            this.$refs.aa.scroll.refresh();
-          });
-        }
-
+      // console.log(this.payload)
+      // this.pullDownMsg = "上拉加载...";
+      if (this.$refs.aa.scroll.y <= this.$refs.aa.scroll.maxScrollY + 20) {
+        //使用refresh 方法 来更新scroll 解决无法滚动的问题
+        this.page++;
+        this.$nextTick(() => {
+          if (this.payload) {
+            this.getmechanlist(this.xuan, this.page);
+          } else {
+            this.pullDownMsg = "精彩课程待更新...";
+          }
+          this.$refs.aa.scroll.refresh();
+        });
+      }
     },
     //获取首页分类
     getalist() {
@@ -131,8 +138,8 @@ export default {
         if (res.data.code == 200) {
           this.dataArr = res.data.list;
           this.xuan = this.dataArr[0].id;
-            this.getmechanlist(this.xuan,this.page);
-            // console.log(111);
+          this.getmechanlist(this.xuan, this.page);
+          // console.log(111);
         }
       });
     },
@@ -148,7 +155,7 @@ export default {
           })
           .then(res => {
             if (res.data.code == 200) {
-               this.kongflag=false
+              this.kongflag = false;
               if (res.data.list) {
                 res.data.list.forEach(item => {
                   this.list.push(item);
@@ -158,14 +165,14 @@ export default {
                   this.pullDownMsg = "精彩课程待更新...";
                 }
               }
-            }else if(res.data.code==400){
+            } else if (res.data.code == 400) {
               // this.kongflag=true;
-               this.payload = false;
-                this.pullflag = true;
-            }else{
-                this.kongflag=true;
-                this.payload = false;
-                this.pullflag = false;
+              this.payload = false;
+              this.pullflag = true;
+            } else {
+              this.kongflag = true;
+              this.payload = false;
+              this.pullflag = false;
             }
           });
       }
@@ -183,14 +190,6 @@ export default {
         },
         touchStartStopPropagation: true
       });
-    },
-    chooseItem(val) {
-      this.page = 1;
-      this.payload = true;
-      this.list = [];
-      this.activeIndex = val[0];
-      this.xuan = this.dataArr[this.activeIndex].id;
-      this.getmechanlist(this.xuan, this.page);
     },
 
     //获取轮播图
@@ -222,7 +221,7 @@ export default {
   flex-direction: column;
   background: #f8f8f8;
   padding-bottom: 0.2rem;
- 
+
   .searchbody {
     background: #fff;
     padding: 0.3rem 0 0.1rem;
@@ -277,7 +276,7 @@ export default {
     .pai {
       position: absolute;
       top: 50%;
-      margin-top:-0.25rem;
+      margin-top: -0.25rem;
       right: 0.2rem;
       img {
         width: 0.53rem;
@@ -295,9 +294,37 @@ export default {
         color: #999999;
         font-weight: bold;
       }
-    
     }
   }
 }
-
+.scrollBarItem {
+    padding:0 0.2rem;
+      cursor: pointer;
+      font-size:0.28rem;
+      height:0.7rem;
+      line-height:0.75rem;
+      display: inline-block;
+      color:#666;
+      // transition: left 0.3s ease-in;
+}
+	 	.active{
+      font-size:0.32rem;
+      font-weight:bold;
+      position: relative;
+      color:#36b936;
+    div{
+      font-weight:bold;
+    }
+      &:after{
+        content:'';
+        position: absolute;
+        bottom:0rem;
+        left:50%;
+        width:0.3rem;
+        margin-left:-0.15rem;
+        border-radius:0.3rem;
+        height:0.08rem;
+        background: #36b936;
+      }
+	}
 </style>

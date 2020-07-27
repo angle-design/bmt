@@ -35,7 +35,7 @@
               </span>
             </p>
           </div>
-          <div class="otherquestion">
+          <div class="otherquestion" v-if="hinfo.hlist">
             <span>TA开设的其他话题：</span>
             <div>
               <p
@@ -424,7 +424,7 @@ export default {
         overflow: auto;
         &.heightauto {
           overflow: hidden;
-          max-height: 100px;
+          max-height: 107px;
           display: block;
         }
       }

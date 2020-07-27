@@ -202,7 +202,7 @@ export default {
       this.page = 1;
       // 拉取商家信息
       this.pullflag = true;
-      this.pullDownMsg = "上拉加载...";
+      // this.pullDownMsg = "上拉加载...";
       this.axios
         .get("/api/api/Ask/getreply", {
           params: {
