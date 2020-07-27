@@ -245,7 +245,7 @@ export default {
   .picbody {
     margin: 0 0.25rem 0.2rem;
     .swiper-container {
-      width: 100%;
+      width: 7rem;
       height: 2.54rem;
       border-radius: 0.2rem;
       overflow: hidden;
