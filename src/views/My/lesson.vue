@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       lessonlist: "",
-        showflag:true,
+        showflag:false,
         msg:'暂无报名的课程'
     };
   },

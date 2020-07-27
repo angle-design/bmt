@@ -35,7 +35,7 @@ export default {
       payload: true,
       pullDownMsg: "",
       pullflag: "",
-        showflag:true,
+        showflag:false,
         msg:'暂无评论'
     };
   },
