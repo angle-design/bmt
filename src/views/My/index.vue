@@ -3,8 +3,8 @@
     <!-- 首页 -->
     <div class="my">
       <p class="my_head">
-         <img v-if="showflag" src="../../assets/mohead.png" />
-        <img v-else :src="userinfo.a_image?userinfo.a_image:'../../assets/mohead.png'" />
+         <img v-if="showflag" src="/static/images/mohead.png" />
+        <img v-else :src="userinfo.a_image?userinfo.a_image:'/static/images/mohead.png'" />
        
         <span v-if="showflag" @click="$router.push('/login')">点击登录或注册</span>
         <span v-else>{{userinfo.a_uname}}</span>

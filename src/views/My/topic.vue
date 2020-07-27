@@ -17,7 +17,9 @@
        
         <!-- 展开更多 -->
         <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
+        <kong :flag="showflag" :msg="msg"></kong>
       </div>
+
     </scroller>
      <mt-actionsheet :actions="actions" v-model="sheetVisible" class="sheet"></mt-actionsheet>
   </div>
@@ -25,6 +27,7 @@
 
 <script>
 import { Actionsheet, Toast } from "mint-ui";
+import kong from "@/components/kong.vue";
 export default {
   name: "topic",
   data() {
@@ -41,9 +44,15 @@ export default {
       page: 1,
       payload: true,
       pullDownMsg: "",
-      pullflag: ""
+      pullflag: "",
+        showflag:true,
+        msg:'暂无话题'
     };
   },
+    components: {
+
+        kong
+    },
   mounted() {
     this.getlist();
   },
@@ -72,6 +81,10 @@ export default {
             }
           })
           .then(res => {
+              if(res.data.code==404){
+                  this.kongflag=true
+                  return false;
+              }
             if (res.data.list) {
               res.data.list.forEach(item => {
                 this.toplist.push(item);
@@ -81,6 +94,8 @@ export default {
                 this.pullflag = true;
                 this.pullDownMsg = "没有更多内容...";
               }
+            }else if(this.page==1){
+                this.showflag = true;
             } else {
               this.payload = false;
               this.pullflag = true;
@@ -165,5 +180,8 @@ export default {
       }
     }
   }
+}
+.kong{
+  margin-top:40%;
 }
 </style>
