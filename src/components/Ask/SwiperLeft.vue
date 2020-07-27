@@ -14,15 +14,15 @@
         </dl>
         <p>
           <span>
-            <font>{{item.hinfo.qcount}}</font>
+            <font>{{item.hinfo.hcount}}</font>
             <font>话题</font>
           </span>
           <span>
-            <font>{{item.hinfo.qcount}}</font>
+            <font>{{item.hinfo.acount}}</font>
             <font>提问</font>
           </span>
           <span>
-            <font>{{item.hinfo.acount}}</font>
+            <font>{{item.hinfo.qcount}}</font>
             <font>回答</font>
           </span>
         </p>

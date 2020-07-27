@@ -50,8 +50,8 @@
             <!-- tab -->
             <div class="question_tab">
               <p>
-                <font>共{{count.acount}}个回答</font>
-                <font>{{count.qcount}}个提问</font>
+                <font>共{{count.qcount}}个回答</font>
+                <font>{{count.acount}}个提问</font>
               </p>
               <p>
                 <span @tap="toNew" :class="order==1?'active':''">最新</span>
