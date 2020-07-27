@@ -5,7 +5,7 @@
         <lessonitem :list="lesson" :ceflag="false"></lessonitem>
       </li>
     </ul>
-    <kong :flag="showflag"></kong>
+    <kong :flag="showflag" :msg="msg"></kong>
   </div>
 
 </template>
@@ -18,7 +18,8 @@ export default {
   data() {
     return {
       lessonlist: "",
-        showflag:true
+        showflag:true,
+        msg:'暂无报名的课程'
     };
   },
   created() {

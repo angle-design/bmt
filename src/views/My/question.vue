@@ -24,12 +24,14 @@
         </ul>
         <!-- 展开更多 -->
         <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
+        <kong :flag="showflag" :msg="msg"></kong>
       </div>
     </scroller>
   </div>
 </template>
 
 <script>
+    import kong from "@/components/kong.vue";
 export default {
   name: "question",
   data() {
@@ -38,12 +40,18 @@ export default {
       page: 1,
       payload: true,
       pullDownMsg: "",
-      pullflag: ""
+      pullflag: "",
+        showflag:true,
+        msg:'暂无提问'
     };
   },
   mounted() {
     this.getlist();
   },
+    components: {
+
+        kong
+    },
   methods: {
      //进入详情
     toDeatils(id) {
@@ -69,6 +77,10 @@ export default {
             }
           })
           .then(res => {
+              if(res.data.code==404){
+                  this.kongflag=true
+                  return false;
+              }
             if (res.data.list) {
 
                 var list = res.data.list;
@@ -81,6 +93,8 @@ export default {
                 this.pullflag = true;
                 this.pullDownMsg = "没有更多内容...";
               }
+            }else if(this.page==1){
+                this.showflag = true;
             } else {
               this.payload = false;
               this.pullflag = true;
@@ -159,5 +173,8 @@ export default {
       }
     }
   }
+}
+.kong{
+  margin-top:40%;
 }
 </style>

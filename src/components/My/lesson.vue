@@ -9,7 +9,7 @@
       </ul>
          <!-- 展开更多 -->
         <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
-    <kong :flag="kongflag"></kong>
+    <kong :flag="kongflag" :msg="msg"></kong>
   </div>
     </scroller>
 </div>
@@ -25,7 +25,8 @@ export default {
       payload: true,
       pullDownMsg: "",
       pullflag: true,
-      kongflag: false
+      kongflag: false,
+        msg:'暂无收藏的课程'
     };
   },
   mounted(){
@@ -59,6 +60,7 @@ export default {
           .then(res => {
               if(res.data.code==404){
                   this.kongflag=true
+                  return false;
               }
              if (res.data.list) {
                this.kongflag=false

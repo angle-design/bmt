@@ -1,14 +1,18 @@
 <template>
   <div class="kong" v-if="flag">
       <img src="../assets/kong.png" />
-      <p>暂无数据</p>
+      <p>{{msg}}</p>
   </div>
 </template>
 <script>
 export default {
   name: "kong",
   props: {
-    flag: Boolean
+    flag: Boolean,
+      msg: {
+          type: String,
+          default: "暂无数据"
+      },
   }
 };
 </script>
