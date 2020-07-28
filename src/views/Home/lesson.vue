@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="lesson">
-    <!-- <scroller> -->
+     <scroller>
     <div>
     <div class="lesson_body">
       <div class="lesson_top">
@@ -60,8 +60,9 @@
         <li
           v-for="(zan,index) in zanlist"
           :key="index"
-          @clic="tagzan(index)"
-          :class="[zan.check?'active':'']"
+          @tap="tagzan(index)"
+          :class="[zan.check?'active1':'']"
+          ref="tagzan"
         >
           {{zan.name}}
           <i class="fa fa-thumbs-up"></i>
@@ -83,7 +84,7 @@
       <i class="fa fa-times-circle" @click="videoflag=false"></i>
     </div>
     </div>
-    <!-- </scroller> -->
+     </scroller>
   </div>
 </template>
 
@@ -94,6 +95,7 @@ import lessonitem from "@/components/Home/Lessonitem.vue";
 
 export default {
   name: "",
+    inject:['reload'],
   data() {
     return {
       videoflag: false,
@@ -144,6 +146,9 @@ export default {
 
     // console.log(this.dataArr)
   },
+  activated(){
+      this.reload();
+  },
   methods: {
     // 收藏
     toCollect() {
@@ -168,10 +173,18 @@ export default {
           }
         });
     },
+    initlisten(){
+        let emel = this.$refs.tagzan;
+
+    },
     // 点击选中评价
     tagzan(index) {
       var check = this.zanlist[index].check;
-      this.zanlist[index].check = check === true ? false : true;
+      // alert(check);
+
+      var c = check === true ? false : true;
+      this.$forceUpdate();
+      this.$set(this.zanlist[index],"check",c);
       if (this.zanlist[index].check) {
         this.zanlist[index].shu = 1;
       } else {
@@ -409,7 +422,7 @@ padding-bottom:0.3rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        &.active {
+        &.active1 {
           background: #fef8e9;
           i {
             color: #ffbc00;
