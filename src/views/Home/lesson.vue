@@ -129,26 +129,23 @@ export default {
     };
   },
   created() {
-    this.sid = this.$route.query.id;
-    this.getLessonList(this.sid);
-    // 看看用户是不是收藏了
-    this.axios
-      .post("/api/api/school/checkiscollect", {
-        type: 1,
-        sid: this.$route.query.id
-      })
-      .then(res => {
-        console.log(res.data)
-        if (res.data.code == 200) {
-          this.collectflag = true;
-        }
-      });
-
-    // console.log(this.dataArr)
+      this.sid = this.$route.query.id;
+      this.getLessonList(this.sid);
+      // 看看用户是不是收藏了
+      this.axios
+          .post("/api/api/school/checkiscollect", {
+              type: 1,
+              sid: this.$route.query.id
+          })
+          .then(res => {
+              if (res.data.code == 200) {
+                  this.collectflag = true;
+              }
+          });
   },
-  activated(){
-      this.reload();
-  },
+  // activated(){
+  //     this.reload();
+  // },
   methods: {
     // 收藏
     toCollect() {
@@ -173,10 +170,6 @@ export default {
           }
         });
     },
-    initlisten(){
-        let emel = this.$refs.tagzan;
-
-    },
     // 点击选中评价
     tagzan(index) {
       var list = [];
@@ -195,6 +188,7 @@ export default {
       }
       this.zanlist = [];
       this.zanlist = list;
+      window.scroll(0,-1)
     },
     // 评价提交
     commit() {
@@ -231,14 +225,13 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
-
             this.lesson = res.data.list;
             document.title = res.data.list.name
               if(res.data.list.clist.length>0){
                   this.dataArr = res.data.list.clist;
                   this.id = this.dataArr[this.activeIndex].id;
+                  this.getList(sid,this.id,0)
               }
-            // this.data2Arr = this.lesson.clist[this.activeIndex].c2list;
           }
         });
     },
@@ -252,7 +245,6 @@ export default {
           }
         })
         .then(res => {
-          // console.log(res.data);
           if (res.data.code == 200) {
             this.lessonlist = res.data.list;
           }
@@ -264,14 +256,10 @@ export default {
       this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
     },
     chooseItem(val) {
-      console.log(val)
-
       this.data2Arr=this.dataArr[val[0]].c2list;
       this.activeIndex = val[0];
       this.c2idindex = 0;
       this.getList(this.sid, this.dataArr[this.activeIndex].id,0);
-
-
     },
     descInput() {
       var txtVal = this.comtext.length;
