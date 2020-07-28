@@ -102,6 +102,8 @@ export default {
     this.cc();
     this.getalist();
     //this.getmechanlist(this.xuan, this.page);
+    this.$refs.aa.scroll.options.eventPassthrough='horizontal';
+    console.log(this.$refs.aa.scroll.options.eventPassthrough)
   },
   methods: {
     changeNav(item, index) {
@@ -109,9 +111,12 @@ export default {
       this.payload = true;
       this.list = [];
       this.$refs.aa.scroll.refresh();
+       this.$refs.aa.scroll.options.eventPassthrough='horizontal';
+       console.log(this.$refs.aa.scroll.options.eventPassthrough)
       this.activeIndex = index;
       this.xuan = this.dataArr[this.activeIndex].id;
       this.getmechanlist(this.xuan, this.page);
+      
     },
     handleToScroll(pos) {
       // console.log(this.payload)
@@ -128,6 +133,7 @@ export default {
           } else {
             this.pullDownMsg = "精彩课程待更新...";
           }
+           this.$refs.aa.scroll.options.eventPassthrough='horizontal';
           this.$refs.aa.scroll.refresh();
         });
       }

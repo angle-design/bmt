@@ -82,7 +82,7 @@ export default {
           })
           .then(res => {
               if(res.data.code==404){
-                  this.kongflag=true
+                  this.showflag=true
                   return false;
               }
             if (res.data.list) {
