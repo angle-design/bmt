@@ -146,6 +146,7 @@ export default new Router({
       path: '/my',
       component: ()=>import("../views/My/index.vue"),
         meta: {
+            // keepAlive: true,
             title:'我的'
         }
     },

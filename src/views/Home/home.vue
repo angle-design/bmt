@@ -16,6 +16,7 @@
             :key="index"
             @click="changeNav(item, index)"
             :class="index === activeIndex ? 'active' : null"
+
           >
             <div>{{item.name}}</div>
           </div>
@@ -63,7 +64,7 @@
 import kong from "@/components/kong.vue";
 import Tab from "@/components/TabBar";
 import mechanitem from "@/components/Home/Mechanism.vue";
- import Nav from '../../components/Home/Nav';
+import Nav from "@/components/Home/Tabnav.vue";
 import Swiper from "../../../static/css/swiper.min";
 import "../../../static/css/swiper.min.css";
 export default {
@@ -87,7 +88,7 @@ export default {
       payload: true,
       pullDownMsg: "",
       pullflag: true,
-      kongflag: false
+      kongflag: false,
     };
   },
   components: {
@@ -101,6 +102,7 @@ export default {
     this.page = 1;
     this.cc();
     this.getalist();
+
     //this.getmechanlist(this.xuan, this.page);
   },
   methods: {
@@ -114,11 +116,7 @@ export default {
       this.getmechanlist(this.xuan, this.page);
     },
     handleToScroll(pos) {
-      // console.log(this.payload)
-      //上拉加载 总高度>下拉的高度+数值(20仅供参考) 触发加载更多
 
-      // console.log(this.payload)
-      // this.pullDownMsg = "上拉加载...";
       if (this.$refs.aa.scroll.y <= this.$refs.aa.scroll.maxScrollY + 20) {
         //使用refresh 方法 来更新scroll 解决无法滚动的问题
         this.page++;
@@ -146,6 +144,7 @@ export default {
     // 获取首页列表
     getmechanlist(cid, page) {
       if (this.payload) {
+          this.payload = false;
         this.axios
           .get("/api/api/school/getSlist", {
             params: {
@@ -163,6 +162,8 @@ export default {
                 if (this.page >= 1 && res.data.list.length < 10) {
                   this.pullflag = true;
                   this.pullDownMsg = "精彩课程待更新...";
+                }else{
+                    this.payload = true;
                 }
               }
             } else if (res.data.code == 400) {

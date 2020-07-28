@@ -73,10 +73,7 @@ export default {
           })
           .then(res => {
             if (res.data.list) {
-                if(res.data.code==404){
-                    this.kongflag=true
-                    return false;
-                }
+
               res.data.list.forEach(item => {
                 this.replylist.push(item);
               });

@@ -81,10 +81,7 @@ export default {
             }
           })
           .then(res => {
-              if(res.data.code==404){
-                  this.kongflag=true
-                  return false;
-              }
+
             if (res.data.list) {
               res.data.list.forEach(item => {
                 this.toplist.push(item);
