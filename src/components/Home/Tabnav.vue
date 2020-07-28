@@ -1,6 +1,6 @@
 <template>
   <div class="" id="topnav">
-      <div class="scrollBarWrapper" :style="scrollBarWrapperStyle">
+      <div class="scrollBarWrapper" :style="scrollBarWrapperStyle"  ref="navv">
     <div
       class="scrollBarContent"
       :class="direction === 'y' ? 'directionY' : 'directionX'"
@@ -13,7 +13,9 @@
 </template>
 
 <script>
+    import Bscroll from 'better-scroll'
 export default {
+        name:"nav",
   props: {
     direction: {
       type: String,
@@ -46,7 +48,28 @@ export default {
           };
     }
   },
+  mounted(){
+
+  },
+  created(){
+      this.$nextTick(() => {
+          var scroll_=new Bscroll(this.$refs.navv,{
+              tap:true,
+              click: true, //better-scroll 默认会阻止浏览器的原生 click 事件。当设置为 true，better-scroll 会派发一个 click 事件，我们会给派发的 event 参数加一个私有属性 _constructed，值为 true。
+              probeType: 2, //这个属性设置之后可以监听得到了
+              mouseWheel: true,
+              stopPropagation:true,
+              scrollX:true,
+              scrollY:false,
+              bounce:false,
+              eventPassthrough: 'horizontal',
+          });
+
+      })
+
+  },
   activated() {
+
 
     this.initItemDisplay();
     this.handleChange();
@@ -68,7 +91,7 @@ export default {
         const content = this.$refs.scrollBarContent; // 发生滑动的元素
         const activeItem = content.children[this.activeIndex]; // 当前选中的元素
         if(!activeItem) return false;
-        
+
         const scrollOption = {
           top: 0,
           left: 0,

@@ -24,7 +24,7 @@
         </ul>
         <!-- 展开更多 -->
         <p class="more" v-if="pullflag">{{pullDownMsg}}</p>
-        <kong :flag="showflag" :msg="msg"></kong>
+        <kong :flag="kongflag" :msg="msg"></kong>
       </div>
     </scroller>
   </div>
@@ -41,7 +41,7 @@ export default {
       payload: true,
       pullDownMsg: "",
       pullflag: "",
-        showflag:false,
+        kongflag:false,
         msg:'暂无提问'
     };
   },
@@ -77,10 +77,7 @@ export default {
             }
           })
           .then(res => {
-              if(res.data.code==404){
-                  this.kongflag=true
-                  return false;
-              }
+
             if (res.data.list) {
 
                 var list = res.data.list;

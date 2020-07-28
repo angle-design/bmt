@@ -37,7 +37,7 @@
                 payload: true
             };
         },
-        activated() {
+        created() {
             this.getList()
         },
         methods: {
@@ -59,6 +59,7 @@
             },
             getList() {
                 if (this.payload) {
+                    this.payload = false;
                     this.axios.get("/api/Api/index/getNewlist", {
                         params: {
                             p: this.page,
@@ -69,9 +70,11 @@
                                 this.list.push(item);
                             });
                             if (res.data.list.length < 10) {
-                                this.payload = false;
+
                                 this.pullflag = true;
                                 this.pullDownMsg = "精彩课程待更新...";
+                            }else{
+                                this.payload = true;
                             }
                         }
                     });
@@ -94,6 +97,7 @@
     display: flex;
     flex-direction: column;
     background: #f8f8f8;
+    height: 100%;
 
     ul {
       li {
