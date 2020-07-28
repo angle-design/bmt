@@ -179,17 +179,22 @@ export default {
     },
     // 点击选中评价
     tagzan(index) {
-      var check = this.zanlist[index].check;
-      // alert(check);
-
-      var c = check === true ? false : true;
-      this.$forceUpdate();
-      this.$set(this.zanlist[index],"check",c);
-      if (this.zanlist[index].check) {
-        this.zanlist[index].shu = 1;
-      } else {
-        this.zanlist[index].shu = 0;
+      var list = [];
+      for(var i in this.zanlist){
+          var item = this.zanlist[i];
+          if(i==index){
+              var c = item.check === true ? false : true;
+              item.check = c;
+              if (item.check) {
+                  item.shu = 1;
+              } else {
+                  item.shu = 0;
+              }
+          }
+          list.push(item);
       }
+      this.zanlist = [];
+      this.zanlist = list;
     },
     // 评价提交
     commit() {
