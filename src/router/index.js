@@ -23,7 +23,7 @@ export default new Router({
       name: 'lessoni',
       component: ()=>import("../views/Home/lesson"),
         meta: {
-            title:'机构详情'
+            title:''
         }
     },
     {
@@ -146,7 +146,7 @@ export default new Router({
       path: '/my',
       component: ()=>import("../views/My/index.vue"),
         meta: {
-            // keepAlive: true,
+            keepAlive: true,
             title:'我的'
         }
     },

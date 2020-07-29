@@ -35,7 +35,7 @@
               </span>
             </p>
           </div>
-          <div class="otherquestion" v-if="hinfo.hlist">
+          <div class="otherquestion" v-if="listflag">
             <span>TA开设的其他话题：</span>
             <div>
               <p
@@ -120,7 +120,8 @@ export default {
       awitem: {}, //解答某一项
       isshow: 1,
       height: 0,
-      cl:false
+      cl:false,
+      listflag:false
     };
   },
   watch: {
@@ -236,6 +237,9 @@ export default {
         .then(res => {
           if (res.data) {
             this.hinfo = res.data.list;
+            if(this.hinfo.hlist.length>0){
+              this.listflag=true
+            }
             // document.title = this.hinfo.h_title+this.hinfo.h_title2;
             this.time = this.hinfo.h_etime.split(" ")[0];
             this.isshow = this.hinfo.isnow;
@@ -280,7 +284,7 @@ export default {
       this.page = 1;
       // 拉取商家信息
       this.pullflag = true;
-      this.pullDownMsg = "上拉加载...";
+      // this.pullDownMsg = "上拉加载...";
       this.axios
         .get("/api/api/Ask/getAlist", {
           params: {

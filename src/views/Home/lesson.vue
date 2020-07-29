@@ -484,6 +484,10 @@ export default {
       }
     }
   }
+    #topnav{
+  box-shadow: none!important;
+  background: none;
+}
 }
 .scrollBarItem {
   padding: 0 0.2rem;
