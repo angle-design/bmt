@@ -1,101 +1,100 @@
 <!--  -->
 <template>
   <div class="lesson">
-     <scroller>
-    <div>
-    <div class="lesson_body">
-      <div class="lesson_top">
-        <div>
-          <h4>{{lesson.name}}</h4>
-          <p>
-            <img src="../../assets/zan.png" />
-            <font>{{lesson.cnum}}人</font>参与投票
-          </p>
+    <scroller>
+      <div>
+        <div class="lesson_body">
+          <div class="lesson_top">
+            <div>
+              <h4>{{lesson.name}}</h4>
+              <p>
+                <img src="../../assets/zan.png" />
+                <font>{{lesson.cnum}}人</font>参与投票
+              </p>
+            </div>
+            <span>
+              <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @click="toCollect"></i>
+              <!-- <i class="fa fa-share-square-o"></i> -->
+            </span>
+          </div>
+          <SwiperLeft
+            v-if="lesson.piclist"
+            :videolist="lesson.piclist"
+            :len="lesson.piclist.length"
+            @toVideo="toVideo"
+          />
         </div>
-        <span>
-          <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @click="toCollect"></i>
-          <!-- <i class="fa fa-share-square-o"></i> -->
-        </span>
-      </div>
-      <SwiperLeft
-        v-if="lesson.piclist"
-        :videolist="lesson.piclist"
-        :len="lesson.piclist.length"
-        @toVideo="toVideo"
-      />
-    </div>
-    <!-- 列表 -->
+        <!-- 列表 -->
 
-    <div class="lesson_con" v-if="dataArr.length">
-      <tabNav
-        @choose-item="chooseItem"
-        :dataArr="dataArr"
-        :activeIndexParent="activeIndex"
-        :navWH="navWH"
-        :scrollMargin="scrollMargin"
-        :scrollWay="scrollWay"
-        :colorText="colorText"
-        :colorBack="colorBack"
-        :colorActiveText="colorActiveText"
-        :colorActiveBack="colorActiveBack"
-      ></tabNav>
-      <!--<div class="item_list" v-if="data2Arr">-->
-        <!--<span v-if="c2list"-->
+        <div class="lesson_con" v-if="dataArr.length">
+          <tabNav direction="x" :activeIndex="activeIndex">
+            <div
+              class="scrollBarItem"
+              v-for="(item, index) in dataArr"
+              :key="index"
+              @click="changeNav(item, index)"
+              :class="index === activeIndex ? 'active' : null"
+            >
+              <div>{{item.name}}</div>
+            </div>
+          </tabNav>
+          <!--<div class="item_list" v-if="data2Arr">-->
+          <!--<span v-if="c2list"-->
           <!--v-for="(c2list,i) in data2Arr"-->
           <!--:key="i"-->
           <!--:class="c2idindex==i?'active':''"-->
           <!--@click="csidclick(i)"-->
-        <!--&gt;{{c2list.name}}</span>-->
-      <!--</div>-->
-      <ul>
-        <li v-for="(lesson,index) in lessonlist" :key="index">
-          <lessonitem :list="lesson" :ceflag="true"></lessonitem>
-        </li>
-      </ul>
-    </div>
-    <!-- 评价 -->
-    <div class="lesson_star">
-      <h4>我要评价</h4>
-      <ul>
-        <li
-          v-for="(zan,index) in zanlist"
-          :key="index"
-          @click="tagzan(index)"
-          :class="[zan.check?'active1':'']"
-          ref="tagzan"
-        >
-          {{zan.name}}
-          <i class="fa fa-thumbs-up"></i>
-        </li>
-      </ul>
-      <div>
-        <p>
-          <textarea placeholder="老师认真负责" v-drop v-model="comtext" @input="descInput"></textarea>
-          <span>
-            还剩
-            <font>{{remnant}}</font>字~
-          </span>
-        </p>
-        <button @click="commit">提交</button>
+          <!--&gt;{{c2list.name}}</span>-->
+          <!--</div>-->
+          <ul>
+            <li v-for="(lesson,index) in lessonlist" :key="index">
+              <lessonitem :list="lesson" :ceflag="true"></lessonitem>
+            </li>
+          </ul>
+        </div>
+        <!-- 评价 -->
+        <div class="lesson_star">
+          <h4>我要评价</h4>
+          <ul>
+            <li v-for="(zan,index) in zanlist" :key="index" @click="tagzan(index)" ref="tagzan">
+              <p v-if="!zan.check">
+                {{zan.name}}
+                <i class="fa fa-thumbs-up"></i>
+              </p>
+              <p v-else class="active">
+                {{zan.name}}
+                <i class="fa fa-thumbs-up"></i>
+              </p>
+            </li>
+          </ul>
+          <div>
+            <p>
+              <textarea placeholder="老师认真负责" v-drop v-model="comtext" @input="descInput"></textarea>
+              <span>
+                还剩
+                <font>{{remnant}}</font>字~
+              </span>
+            </p>
+            <button @click="commit">提交</button>
+          </div>
+        </div>
+        <div class="video_pup" v-if="videoflag">
+          <video :src="video" controls="controls" autoplay>您的浏览器不支持 video 标签。</video>
+          <i class="fa fa-times-circle" @click="videoflag=false"></i>
+        </div>
       </div>
-    </div>
-    <div class="video_pup" v-if="videoflag">
-      <video :src="video" controls="controls" autoplay>您的浏览器不支持 video 标签。</video>
-      <i class="fa fa-times-circle" @click="videoflag=false"></i>
-    </div>
-    </div>
-     </scroller>
+    </scroller>
   </div>
 </template>
 
 <script>
 import SwiperLeft from "@/components/Home/Swipervideo.vue";
-import tabNav from "@/components/Home/Centernav.vue";
+import tabNav from "@/components/Home/Tabnav.vue";
 import lessonitem from "@/components/Home/Lessonitem.vue";
 
 export default {
   name: "",
-    inject:['reload'],
+  inject: ["reload"],
   data() {
     return {
       videoflag: false,
@@ -117,7 +116,7 @@ export default {
         { name: "课程体系", shu: 0, check: false },
         { name: "教学成果", shu: 0, check: false },
         { name: "服务质量", shu: 0, check: false },
-        { name: "师资力量", shu: 0, check: false }
+        { name: "师资力量", shu: 0, check: false },
       ],
       lesson: {}, //课程详情
       dataArr: [], //一级分类
@@ -125,23 +124,23 @@ export default {
       id: 0, //获取二级分类id
       c2idindex: 0, //二级分类index
       data2Arr: [], //二级分类内容
-      collectflag: false
+      collectflag: false,
     };
   },
   created() {
-      this.sid = this.$route.query.id;
-      this.getLessonList(this.sid);
-      // 看看用户是不是收藏了
-      this.axios
-          .post("/api/api/school/checkiscollect", {
-              type: 1,
-              sid: this.$route.query.id
-          })
-          .then(res => {
-              if (res.data.code == 200) {
-                  this.collectflag = true;
-              }
-          });
+    this.sid = this.$route.query.id;
+    this.getLessonList(this.sid);
+    // 看看用户是不是收藏了
+    this.axios
+      .post("/api/api/school/checkiscollect", {
+        type: 1,
+        sid: this.$route.query.id,
+      })
+      .then((res) => {
+        if (res.data.code == 200) {
+          this.collectflag = true;
+        }
+      });
   },
   // activated(){
   //     this.reload();
@@ -152,15 +151,15 @@ export default {
       this.axios
         .post("/api/api/school/schoolCollect", {
           type: 1,
-          sid: this.sid
+          sid: this.sid,
         })
-        .then(res => {
+        .then((res) => {
           console.log(res.data);
           if (res.data.code == 200) {
-            if (res.data.list.status ==2) {
+            if (res.data.list.status == 2) {
               this.collectflag = false;
               return false;
-            } else if (res.data.list.status ==1) {
+            } else if (res.data.list.status == 1) {
               this.collectflag = true;
               this.$toast("收藏成功");
             }
@@ -172,17 +171,17 @@ export default {
     },
     // 点击选中评价
     tagzan(index) {
-        var check = this.zanlist[index].check;
-        // alert(check);
-        var c = check === true ? false : true;
-        this.$forceUpdate();
-        this.$set(this.zanlist[index],"check",c);
-        if (this.zanlist[index].check) {
-            this.zanlist[index].shu = 1;
-        } else {
-            this.zanlist[index].shu = 0;
-        }
-      window.scroll(0,-1)
+      var check = this.zanlist[index].check;
+      // alert(check);
+      var c = check === true ? false : true;
+      this.$forceUpdate();
+      this.$set(this.zanlist[index], "check", c);
+      if (this.zanlist[index].check) {
+        this.zanlist[index].shu = 1;
+      } else {
+        this.zanlist[index].shu = 0;
+      }
+      window.scroll(0, -1);
     },
     // 评价提交
     commit() {
@@ -194,14 +193,14 @@ export default {
           jiaoxue: this.zanlist[2].shu,
           fuwu: this.zanlist[3].shu,
           shizi: this.zanlist[4].shu,
-          dianping: this.comtext
+          dianping: this.comtext,
         })
-        .then(res => {
+        .then((res) => {
           console.log(res.data);
           if (res.data.code == 200) {
             this.$toast("评价提交成功！");
-          }else if(res.data.code==205){
-            this.$router.push('/login')
+          } else if (res.data.code == 205) {
+            this.$router.push("/login");
           }
         });
     },
@@ -214,18 +213,18 @@ export default {
       this.axios
         .get("/api/api/school/getSinfo", {
           params: {
-            sid: sid
-          }
+            sid: sid,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 200) {
             this.lesson = res.data.list;
-            document.title = res.data.list.name
-              if(res.data.list.clist.length>0){
-                  this.dataArr = res.data.list.clist;
-                  this.id = this.dataArr[this.activeIndex].id;
-                  this.getList(sid,this.id,0)
-              }
+            document.title = res.data.list.name;
+            if (res.data.list.clist.length > 0) {
+              this.dataArr = res.data.list.clist;
+              this.id = this.dataArr[this.activeIndex].id;
+              this.getList(sid, this.id, 0);
+            }
           }
         });
     },
@@ -235,10 +234,10 @@ export default {
           params: {
             sid: sid,
             cid: id,
-            c2id: c2id
-          }
+            c2id: c2id,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 200) {
             this.lessonlist = res.data.list;
           }
@@ -249,22 +248,29 @@ export default {
       this.c2id = this.lesson.clist[this.activeIndex].c2list[i].id;
       this.getList(this.sid, this.dataArr[this.activeIndex].id, this.c2id);
     },
-    chooseItem(val) {
-      this.data2Arr=this.dataArr[val[0]].c2list;
-      this.activeIndex = val[0];
+    // chooseItem(val) {
+    //   this.data2Arr=this.dataArr[val[0]].c2list;
+    //   this.activeIndex = val[0];
+    //   this.c2idindex = 0;
+    //   this.getList(this.sid, this.dataArr[this.activeIndex].id,0);
+    // },
+    changeNav(item, index) {
+      this.activeIndex = index;
+      this.data2Arr = this.dataArr[index].c2list;
+      this.activeIndex = index;
       this.c2idindex = 0;
-      this.getList(this.sid, this.dataArr[this.activeIndex].id,0);
+      this.getList(this.sid, this.dataArr[this.activeIndex].id, 0);
     },
     descInput() {
       var txtVal = this.comtext.length;
       this.remnant = 200 - txtVal;
-    }
+    },
   },
   components: {
     SwiperLeft,
     tabNav,
-    lessonitem
-  }
+    lessonitem,
+  },
 };
 </script>
 
@@ -303,8 +309,8 @@ export default {
   // position: fixed;
   top: 0;
   left: 0;
-bottom:0;
-padding-bottom:0.3rem;
+  bottom: 0;
+  padding-bottom: 0.3rem;
   background: #fff;
   // width: 100%;
   z-index: 12;
@@ -354,7 +360,7 @@ padding-bottom:0.3rem;
     .item_list {
       display: flex;
       /*justify-content: center;*/
-      flex-wrap:wrap;
+      flex-wrap: wrap;
       padding: 0 0.3rem;
       span {
         padding: 0.1rem 0.25rem;
@@ -409,12 +415,26 @@ padding-bottom:0.3rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        &.active1 {
+        p {
+          border-radius: 0.4rem;
+          display: flex;
+          width: 2.8rem;
+          height: 0.8rem;
+          align-items: center;
+          justify-content: center;
+        }
+        .active {
           background: #fef8e9;
           i {
             color: #ffbc00;
           }
         }
+        // &.active1 {
+        //   background: #fef8e9;
+        //   i {
+        //     color: #ffbc00;
+        //   }
+        // }
         i {
           color: #dadada;
           margin-left: 0.2rem;
@@ -434,9 +454,9 @@ padding-bottom:0.3rem;
         textarea {
           height: 2rem;
           line-height: 0.4rem;
-          padding:0.15rem 0.2rem 0;
+          padding: 0.15rem 0.2rem 0;
           width: 5.7rem;
-          font-size:0.26rem;
+          font-size: 0.26rem;
         }
         span {
           position: absolute;
@@ -463,6 +483,36 @@ padding-bottom:0.3rem;
         justify-content: center;
       }
     }
+  }
+}
+.scrollBarItem {
+  padding: 0 0.2rem;
+  cursor: pointer;
+  font-size: 0.28rem;
+  height: 0.7rem;
+  line-height: 0.75rem;
+  display: inline-block;
+  color: #666;
+  // transition: left 0.3s ease-in;
+}
+.active {
+  font-size: 0.32rem;
+  font-weight: bold;
+  position: relative;
+  color: #36b936;
+  div {
+    font-weight: bold;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0rem;
+    left: 50%;
+    width: 0.3rem;
+    margin-left: -0.15rem;
+    border-radius: 0.3rem;
+    height: 0.08rem;
+    background: #36b936;
   }
 }
 </style>
