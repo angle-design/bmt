@@ -306,7 +306,7 @@ export default {
   color: #666;
   // transition: left 0.3s ease-in;
 }
-.active {
+.scrollBarItem.active {
   font-size: 0.32rem;
   font-weight: bold;
   position: relative;

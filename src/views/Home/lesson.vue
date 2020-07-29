@@ -13,7 +13,7 @@
               </p>
             </div>
             <span>
-              <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @click="toCollect"></i>
+              <i :class="[collectflag?'fa fa-star':'fa fa-star-o']" @tap="toCollect"></i>
               <!-- <i class="fa fa-share-square-o"></i> -->
             </span>
           </div>
@@ -32,7 +32,7 @@
               class="scrollBarItem"
               v-for="(item, index) in dataArr"
               :key="index"
-              @click="changeNav(item, index)"
+              @tap="changeNav(item, index)"
               :class="index === activeIndex ? 'active' : null"
             >
               <div>{{item.name}}</div>
@@ -56,7 +56,7 @@
         <div class="lesson_star">
           <h4>我要评价</h4>
           <ul>
-            <li v-for="(zan,index) in zanlist" :key="index" @click="tagzan(index)" ref="tagzan">
+            <li v-for="(zan,index) in zanlist" :key="index" @tap="tagzan(index)" ref="tagzan">
               <p v-if="!zan.check">
                 {{zan.name}}
                 <i class="fa fa-thumbs-up"></i>
@@ -80,7 +80,7 @@
         </div>
         <div class="video_pup" v-if="videoflag">
           <video :src="video" controls="controls" autoplay>您的浏览器不支持 video 标签。</video>
-          <i class="fa fa-times-circle" @click="videoflag=false"></i>
+          <i class="fa fa-times-circle" @tap="videoflag=false"></i>
         </div>
       </div>
     </scroller>
@@ -495,7 +495,7 @@ export default {
   color: #666;
   // transition: left 0.3s ease-in;
 }
-.active {
+.scrollBarItem.active {
   font-size: 0.32rem;
   font-weight: bold;
   position: relative;
