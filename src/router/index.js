@@ -100,7 +100,7 @@ export default new Router({
     {
       path: '/lesson',
       component: ()=>import("../views/Lesson/index.vue"),
-      meta: { keepAlive: true ,title:'课程头条'},
+      meta: { title:'课程头条'},
     },
     {
       path: '/mechanism',

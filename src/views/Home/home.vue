@@ -104,8 +104,7 @@ export default {
     this.getalist();
 
     //this.getmechanlist(this.xuan, this.page);
-    this.$refs.aa.scroll.options.eventPassthrough='horizontal';
-    console.log(this.$refs.aa.scroll.options.eventPassthrough)
+
   },
   methods: {
     changeNav(item, index) {

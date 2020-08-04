@@ -28,10 +28,6 @@
             mouseWheel: true,
             scrollX:true,
             scrollY:true,
-<<<<<<< HEAD
-            // bounce:false
-=======
->>>>>>> bb007578fafbd18252db4047f43cd106fb512d01
           });
           this.scroll=scroll;
           scroll.on('scroll',(pos)=>{

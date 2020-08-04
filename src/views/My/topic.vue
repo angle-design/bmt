@@ -81,14 +81,6 @@ export default {
             }
           })
           .then(res => {
-<<<<<<< HEAD
-              if(res.data.code==404){
-                  this.showflag=true
-                  return false;
-              }
-=======
-
->>>>>>> bb007578fafbd18252db4047f43cd106fb512d01
             if (res.data.list) {
               res.data.list.forEach(item => {
                 this.toplist.push(item);
