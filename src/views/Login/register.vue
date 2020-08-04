@@ -27,12 +27,13 @@
       :error="errors.password"
       fontclass="font2"
     />
-      <!-- 忘记密码 -->
+    <!-- 忘记密码 -->
     <router-link tag="p" to="/backpassword" class="forget">忘记密码?</router-link>
     <!-- 登录按钮 -->
     <div class="login_btn">
-      <p @click="agreementflag=true">
-        <i class="fa fa-check-circle"></i>阅读并同意《报名大厅服务协议》
+      <p @click.self="agreementflag=true">
+        <i :class="[ys1?'fa fa-check-circle':'fa fa-circle-thin']" @click.capture="qiehuan"></i>阅读并同意
+        <font  @click.self="agreementflag=true">《报名大厅服务协议》</font>
       </p>
       <button @click="handleLogin">确定</button>
     </div>
@@ -42,7 +43,7 @@
         <i class="fa fa-times-circle" @click="agreementflag=false"></i>
         <h3>报名大厅服务协议</h3>
         <p>国内功能很强大且图标内容很丰富的矢量图标库,提供矢量图标下载、在线存储、格式转换等功能。国内功能很强大且图标内容很丰富的矢量图标库,提供矢量图标下载、在线存储、格式转换等功能。国内功能很强大且图标内容很丰富的矢量图标库,提供矢量图标下载、在线存储、格式转换等功能。国内功能很强大且图标内容很丰富的矢量图标库,提供矢量图标下载、在线存储、格式转换等功能。国内功能很强大且图标内容很丰富的矢量图标库,提供矢量图标下载、在线存储、格式转换等功能。国内功能很强大且图标内容很丰富的矢量图标库,提供矢量图标下载、在线存储、格式转换等功能。国内功能很强大且图标内容很丰富的矢量图标库,提供矢量图标下载、在线存储、格式转换等功能。</p>
-        <button @click="agreementflag=false">同意</button>
+        <!-- <button @click="agreementflag=false">同意</button> -->
       </div>
     </div>
   </div>
@@ -64,26 +65,34 @@ export default {
       disabled: false,
       fontclass: "fa fa-user-o",
       lock: "fa fa-unlock-alt",
+      ys1: true
     };
   },
   computed: {},
   methods: {
+    qiehuan() {
+      this.ys1 = !this.ys1;
+    },
     handleLogin() {
-      // 发送请求
+      // // 发送请求
       if (!this.validatePhone() || !this.validatePassword()) {
         return false;
       }
-        this.errors = {};
-      this.axios.post("/api/api/user/register", {
+      if(!this.ys1){
+         this.$toast("请勾选报名大厅服务协议哦～")
+      }
+      this.errors = {};
+      this.axios
+        .post("/api/api/user/register", {
           phone: this.phone,
-          passwd:this.password,
+          passwd: this.password,
           code: this.verifyCode
         })
         .then(res => {
-          if(res.data.code==200){
-          // 检验成功 设置登录状态并且跳转到
+          if (res.data.code == 200) {
+            // 检验成功 设置登录状态并且跳转到
             this.$router.push("/login");
-          }else{
+          } else {
             this.errors = {
               password: res.data.msg
             };
@@ -91,7 +100,6 @@ export default {
         })
         .catch(err => {
           // 返回错误信息
-
         });
     },
     getVerifyCode() {
@@ -104,7 +112,7 @@ export default {
           })
           .then(res => {
             console.log(res);
-          })
+          });
       }
     },
     validateBtn() {
@@ -126,7 +134,7 @@ export default {
     validatePhone() {
       if (!this.phone) {
         this.errors = {
-          phone:"手机号码不能为空"
+          phone: "手机号码不能为空"
         };
         return false;
       } else if (!/^1[345678]\d{9}$/.test(this.phone)) {
@@ -239,7 +247,9 @@ export default {
 .login_btn {
   margin-top: 1.5rem;
 }
-
+.login_btn font {
+  color: #369836;
+}
 .login_des {
   color: #aaa;
   line-height: 22px;
