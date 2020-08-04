@@ -68,6 +68,7 @@ export default {
       margin-bottom: 0.22rem;
     }
   }
+
 }
 .lessonitem p button {
   display: none !important;
@@ -75,4 +76,5 @@ export default {
 .kong{
   margin-top:40%;
 }
+
 </style>

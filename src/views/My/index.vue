@@ -45,7 +45,7 @@ export default {
       ]
     };
   },
-  created() {
+  activated() {
     this.axios.get("/api/api/my/getUinfo").then(res => {
       console.log(res.data);
       if (res.data.code == 205) {

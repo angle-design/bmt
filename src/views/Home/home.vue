@@ -9,18 +9,17 @@
           </div>
         </div>
         <!-- 分类 -->
-        <Nav direction="x" :activeIndex="activeIndex">
+        <tabNav direction="x" :activeIndex="activeIndex">
           <div
             class="scrollBarItem"
             v-for="(item, index) in dataArr"
             :key="index"
             @click="changeNav(item, index)"
             :class="index === activeIndex ? 'active' : null"
-
           >
             <div>{{item.name}}</div>
           </div>
-        </Nav>
+        </tabNav>
         <!-- 轮播图 -->
         <div class="picbody">
           <div class="swiper-container pic_container" ref="piccontainer">
@@ -64,7 +63,7 @@
 import kong from "@/components/kong.vue";
 import Tab from "@/components/TabBar";
 import mechanitem from "@/components/Home/Mechanism.vue";
-import Nav from "@/components/Home/Tabnav.vue";
+import tabNav from "@/components/Home/Tabnav.vue";
 import Swiper from "../../../static/css/swiper.min";
 import "../../../static/css/swiper.min.css";
 export default {
@@ -93,9 +92,9 @@ export default {
   },
   components: {
     Tab,
-    Nav,
+    tabNav,
     kong,
-    mechanitem
+    mechanitem,
   },
   mounted() {
     this.payload = true;
@@ -120,7 +119,6 @@ export default {
       
     },
     handleToScroll(pos) {
-
       if (this.$refs.aa.scroll.y <= this.$refs.aa.scroll.maxScrollY + 20) {
         //使用refresh 方法 来更新scroll 解决无法滚动的问题
         this.page++;
@@ -137,7 +135,7 @@ export default {
     },
     //获取首页分类
     getalist() {
-      this.axios.get("/api/api/school/getScate").then(res => {
+      this.axios.get("/api/api/school/getScate").then((res) => {
         if (res.data.code == 200) {
           this.dataArr = res.data.list;
           this.xuan = this.dataArr[0].id;
@@ -149,26 +147,26 @@ export default {
     // 获取首页列表
     getmechanlist(cid, page) {
       if (this.payload) {
-          this.payload = false;
+        this.payload = false;
         this.axios
           .get("/api/api/school/getSlist", {
             params: {
               cid: cid,
-              p: page
-            }
+              p: page,
+            },
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 200) {
               this.kongflag = false;
               if (res.data.list) {
-                res.data.list.forEach(item => {
+                res.data.list.forEach((item) => {
                   this.list.push(item);
                 });
                 if (this.page >= 1 && res.data.list.length < 10) {
                   this.pullflag = true;
                   this.pullDownMsg = "精彩课程待更新...";
-                }else{
-                    this.payload = true;
+                } else {
+                  this.payload = true;
                 }
               }
             } else if (res.data.code == 400) {
@@ -188,23 +186,23 @@ export default {
         loop: true, // 循环模式选项
         // 如果需要分页器
         pagination: {
-          el: this.$refs.picpagination
+          el: this.$refs.picpagination,
         },
         autoplay: {
           delay: 2000,
-          disableOnInteraction: false
+          disableOnInteraction: false,
         },
-        touchStartStopPropagation: true
+        touchStartStopPropagation: true,
       });
     },
 
     //获取轮播图
     cc() {
-      this.axios.get("/api/api/index/getSlider").then(res => {
+      this.axios.get("/api/api/index/getSlider").then((res) => {
         if (res.data.code == 200) {
           this.slideList = res.data.list;
         }
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.swipertwoInit();
           return false;
         });
@@ -212,8 +210,8 @@ export default {
     },
     tosearch() {
       this.$router.push("/home/search");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -304,33 +302,33 @@ export default {
   }
 }
 .scrollBarItem {
-    padding:0 0.2rem;
-      cursor: pointer;
-      font-size:0.28rem;
-      height:0.7rem;
-      line-height:0.75rem;
-      display: inline-block;
-      color:#666;
-      // transition: left 0.3s ease-in;
+  padding: 0 0.2rem;
+  cursor: pointer;
+  font-size: 0.28rem;
+  height: 0.7rem;
+  line-height: 0.75rem;
+  display: inline-block;
+  color: #666;
+  // transition: left 0.3s ease-in;
 }
-	 	.active{
-      font-size:0.32rem;
-      font-weight:bold;
-      position: relative;
-      color:#36b936;
-    div{
-      font-weight:bold;
-    }
-      &:after{
-        content:'';
-        position: absolute;
-        bottom:0rem;
-        left:50%;
-        width:0.3rem;
-        margin-left:-0.15rem;
-        border-radius:0.3rem;
-        height:0.08rem;
-        background: #36b936;
-      }
-	}
+.active {
+  font-size: 0.32rem;
+  font-weight: bold;
+  position: relative;
+  color: #36b936;
+  div {
+    font-weight: bold;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0rem;
+    left: 50%;
+    width: 0.3rem;
+    margin-left: -0.15rem;
+    border-radius: 0.3rem;
+    height: 0.08rem;
+    background: #36b936;
+  }
+}
 </style>
